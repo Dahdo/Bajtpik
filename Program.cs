@@ -82,7 +82,7 @@ namespace Client {
 
             #region Representation2
             //instantiation
-            IDictionary<int, Object> libaryMap = new Dictionary<int, Object>()
+            IDictionary<int, Object> libraryMap = new Dictionary<int, Object>()
             {
                 {-1, null }, //for all nullable values ex: nickname
                 //Authors
@@ -186,35 +186,35 @@ namespace Client {
 
             Console.WriteLine("BOOKS:\n");
             int bookListIndex = secondaryBookstore.Books;
-            foreach (int bookIndex in (List<int>)libaryMap[bookListIndex]) {
-                Representation2.Book book = (Representation2.Book)libaryMap[bookIndex];
-                Console.Write($"{libaryMap[book.Title]} by Author(s):");
+            foreach (int bookIndex in (List<int>)libraryMap[bookListIndex]) {
+                Representation2.Book book = (Representation2.Book)libraryMap[bookIndex];
+                Console.Write($"{libraryMap[book.Title]} by Author(s):");
 
                 int authorListIndex = book.Authors;
-                foreach (int authorIndex in (List<int>)libaryMap[authorListIndex]) {
-                    Representation2.Author author = (Representation2.Author)libaryMap[authorIndex];
-                    Console.Write($" {libaryMap[author.Name]} {libaryMap[author.Surname]} {libaryMap[author.Nickaname]} born in {libaryMap[author.BirthYear]}");
+                foreach (int authorIndex in (List<int>)libraryMap[authorListIndex]) {
+                    Representation2.Author author = (Representation2.Author)libraryMap[authorIndex];
+                    Console.Write($" {libraryMap[author.Name]} {libraryMap[author.Surname]} {libraryMap[author.Nickaname]} born in {libraryMap[author.BirthYear]}");
                 }  
-                Console.WriteLine($" publication year: {libaryMap[book.Year]} page count: {libaryMap[book.PageCount]}");
+                Console.WriteLine($" publication year: {libraryMap[book.Year]} page count: {libraryMap[book.PageCount]}");
             }
 
             Console.WriteLine("\nNEWSPAPERS:\n");
             int newspaperListIndex = secondaryBookstore.Newspapers;
-            foreach (int newspaperIndex in (List<int>)libaryMap[newspaperListIndex]) {
-                Representation2.NewsPaper newspaper = (Representation2.NewsPaper)libaryMap[newspaperIndex];
-                Console.WriteLine($"{libaryMap[newspaper.Title]} publication year: {libaryMap[newspaper.Year]} page count: {libaryMap[newspaper.PageCount]}");
+            foreach (int newspaperIndex in (List<int>)libraryMap[newspaperListIndex]) {
+                Representation2.NewsPaper newspaper = (Representation2.NewsPaper)libraryMap[newspaperIndex];
+                Console.WriteLine($"{libraryMap[newspaper.Title]} publication year: {libraryMap[newspaper.Year]} page count: {libraryMap[newspaper.PageCount]}");
             }
 
             Console.WriteLine("\nBOARD GAMES:\n");
             int boardGameListIndex = secondaryBookstore.BoardGames;
-            foreach (int boardGameIndex in (List<int>)libaryMap[boardGameListIndex]) {
-                Representation2.BoardGame boardGame = (Representation2.BoardGame)libaryMap[boardGameIndex];
-                Console.Write($"{libaryMap[boardGame.Title]} min players: {libaryMap[boardGame.MinPlayer]} max players: {libaryMap[boardGame.MaxPlayer]} difficulty: {libaryMap[boardGame.Diffuculty]} by Author(s):");
+            foreach (int boardGameIndex in (List<int>)libraryMap[boardGameListIndex]) {
+                Representation2.BoardGame boardGame = (Representation2.BoardGame)libraryMap[boardGameIndex];
+                Console.Write($"{libraryMap[boardGame.Title]} min players: {libraryMap[boardGame.MinPlayer]} max players: {libraryMap[boardGame.MaxPlayer]} difficulty: {libraryMap[boardGame.Diffuculty]} by Author(s):");
 
                 int authorListIndex = boardGame.Authors;
-                foreach (int authorIndex in (List<int>)libaryMap[authorListIndex]) {
-                    Representation2.Author author = (Representation2.Author)libaryMap[authorIndex];
-                    Console.Write($" {libaryMap[author.Name]} {libaryMap[author.Surname]} {libaryMap[author.Nickaname]} born in {libaryMap[author.BirthYear]}");
+                foreach (int authorIndex in (List<int>)libraryMap[authorListIndex]) {
+                    Representation2.Author author = (Representation2.Author)libraryMap[authorIndex];
+                    Console.Write($" {libraryMap[author.Name]} {libraryMap[author.Surname]} {libraryMap[author.Nickaname]} born in {libraryMap[author.BirthYear]}");
                 }
                 Console.WriteLine();
             }
