@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Client {
     internal class Program {
 
-       public static IDictionary<int, Object> bookStoreMap;
+        public static IDictionary<int, Object> bookStoreMap;
 
         public static void Main(string[] args) {
 
@@ -170,12 +170,14 @@ namespace Client {
                 {125, new Representation1.NewsPaper(122, 123, 124) }
             };
 
+            #region withoutAdapter
+
             List<int> bookList_1 = new List<int> { 89, 94, 99, 104, 109 };
             List<int> newsPaperList_1 = new List<int> { 113, 117, 121, 125 };
             List<int> boardGameList_1 = new List<int> { 66, 72, 78, 84 };
 
             //printing 
-            Console.WriteLine("\n------------------------Secondary Representation---------------------");
+            Console.WriteLine("\n------------------------Representation1 (without Adapter)---------------------");
 
             Console.WriteLine("BOOKS:\n");
             foreach (int bookIndex in bookList_1) {
@@ -208,31 +210,59 @@ namespace Client {
                 }
                 Console.WriteLine();
             }
-
             #endregion
 
-            ////Adapter tests
-            ////book
-            //Representation1.Book testBook = new Representation1.Book(85, 86, 87, 88);
-            //Interface1.Book adaptedTestBook = new Adapter1.BookAdapter(testBook);
+            #region withAdapter
 
-            //    Console.Write($"{adaptedTestBook.Title} by Author(s):");
-            //    foreach (Interface1.Author author in adaptedTestBook.Authors)
-            //        Console.Write($" {author.Name} {author.Surname} {author.Nickaname} born in {author.BirthYear}");
-            //    Console.WriteLine($" publication year: {adaptedTestBook.Year} page count: {adaptedTestBook.PageCount}");
-            ////newspaper
-            //Representation1.NewsPaper nwp = new Representation1.NewsPaper(110, 111, 112);
-            //Interface1.NewsPaper adaptednwp = new Adapter1.NewsPaperAdapter(nwp);
+            //Books
+            Interface1.Book book1_1a = new Adapter1.BookAdapter(new Representation1.Book(85, 86, 87, 88));
+            Interface1.Book book2_1a = new Adapter1.BookAdapter(new Representation1.Book(90, 91, 92, 93));
+            Interface1.Book book3_1a = new Adapter1.BookAdapter(new Representation1.Book(95, 96, 97, 98));
+            Interface1.Book book4_1a = new Adapter1.BookAdapter(new Representation1.Book(100, 101, 102, 103));
+            Interface1.Book book5_1a = new Adapter1.BookAdapter(new Representation1.Book(105, 106, 107, 108));
 
-            //Console.WriteLine($"{adaptednwp.Title} publication year: {adaptednwp.Year} page count: {adaptednwp.PageCount}");
+            //Newspapers
+            Interface1.NewsPaper newsPaper1_1a = new Adapter1.NewsPaperAdapter(new Representation1.NewsPaper(110, 111, 112));
+            Interface1.NewsPaper newsPaper2_1a = new Adapter1.NewsPaperAdapter(new Representation1.NewsPaper(114, 115, 116));
+            Interface1.NewsPaper newsPaper3_1a = new Adapter1.NewsPaperAdapter(new Representation1.NewsPaper(118, 119, 120));
+            Interface1.NewsPaper newsPaper4_1a = new Adapter1.NewsPaperAdapter(new Representation1.NewsPaper(122, 123, 124));
 
-            ////boardgames
-            //Representation1.BoardGame testBgame = new Representation1.BoardGame(61, 62, 63, 64, 65);
-            //Interface1.BoardGame adaptedBgame = new Adapter1.BoardGameAdapter(testBgame);
+            //BoardGames
+            Interface1.BoardGame boardGame1_1a = new Adapter1.BoardGameAdapter(new Representation1.BoardGame(61, 62, 63, 64, 65));
+            Interface1.BoardGame boardGame2_1a = new Adapter1.BoardGameAdapter(new Representation1.BoardGame(67, 68, 69, 70, 71));
+            Interface1.BoardGame boardGame3_1a = new Adapter1.BoardGameAdapter(new Representation1.BoardGame(73, 74, 75, 76, 77));
+            Interface1.BoardGame boardGame4_1a = new Adapter1.BoardGameAdapter(new Representation1.BoardGame(79, 80, 81, 82, 83));
 
-            //Console.Write($"{adaptedBgame.Title} min players: {adaptedBgame.MinPlayer} max players: {adaptedBgame.MaxPlayer} difficulty: {adaptedBgame.Diffuculty} by Author(s):");
-            //foreach (Interface1.Author author in adaptedBgame.Authors)
-            //    Console.Write($" {author.Name} {author.Surname} {author.Nickaname} born in {author.BirthYear}");
+            List<Interface1.Book> bookList_1a = new List<Interface1.Book> { book1_1a, book2_1a, book3_1a, book4_1a, book5 };
+            List<Interface1.NewsPaper> newsPaperList_1a = new List<Interface1.NewsPaper> { newsPaper1_1a, newsPaper2_1a, newsPaper3_1a, newsPaper4_1a };
+            List<Interface1.BoardGame> boardGameList_1a = new List<Interface1.BoardGame> { boardGame1_1a, boardGame2_1a, boardGame3_1a, boardGame4_1a };
+
+
+            //printing 
+            Console.WriteLine("\n\n------------------------Representation1 (With Adapter) ---------------------");
+            Console.WriteLine("BOOKS:\n");
+            foreach (Interface1.Book book in bookList_1a) {
+                Console.Write($"{book.Title} by Author(s):");
+                foreach (Interface1.Author author in book.Authors)
+                    Console.Write($" {author.Name} {author.Surname} {author.Nickaname} born in {author.BirthYear}");
+                Console.WriteLine($" publication year: {book.Year} page count: {book.PageCount}");
+            }
+
+            Console.WriteLine("\nNEWSPAPERS:\n");
+            foreach (Interface1.NewsPaper newspaper in newsPaperList_1a) {
+                Console.WriteLine($"{newspaper.Title} publication year: {newspaper.Year} page count: {newspaper.PageCount}");
+            }
+
+            Console.WriteLine("\nBOARD GAMES:\n");
+            foreach (Interface1.BoardGame bgame in boardGameList_1a) {
+                Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
+                foreach (Interface1.Author author in bgame.Authors)
+                    Console.Write($" {author.Name} {author.Surname} {author.Nickaname} born in {author.BirthYear}");
+                Console.WriteLine();
+            }
+            #endregion
+
+            #endregion
         }
     }
 }
