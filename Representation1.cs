@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Representation2 {
-    public class BookStore {
-        public int Books { get; set; }
-        public int Newspapers { get; set; }
-        public int BoardGames { get; set; }
-        public BookStore(int books, int newspapers, int boardGames) {
-            this.Books = books;
-            this.Newspapers =newspapers;
-            this.BoardGames = boardGames;
-        }
-    }
+﻿namespace Representation1 {
     public class Book {
         public int Title { get; set; }
         public int Authors { get; set; }

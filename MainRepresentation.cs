@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Representation1 {
-    public class BookStore {
-        public List<Book> Books { get; set; }
-        public List<NewsPaper> Newspapers { get; set; }
-        public List<BoardGame> BoardGames { get; set; }
-        public BookStore(List<Book> books, List<NewsPaper> newspapers, List<BoardGame> boardGames) {
-            this.Books = new List<Book>(books);
-            this.Newspapers = new List<NewsPaper>(newspapers);
-            this.BoardGames = new List<BoardGame>(boardGames);
-        }
-    }
-    public class Book {
+﻿namespace MainRepresentation {
+    public class Book : Interface1.Book {
         public string Title { get; set; }
-        public List<Author> Authors { get; set; }
+        public List<Interface1.Author> Authors { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
 
@@ -22,11 +9,11 @@ namespace Representation1 {
             this.Title = Title;
             this.Year = year;
             this.PageCount = pageCount;
-            this.Authors = new List<Author>(authors);
+            this.Authors = new List<Interface1.Author>(authors);
         }
     }
 
-    public class NewsPaper {
+    public class NewsPaper : Interface1.NewsPaper {
         public string Title { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
@@ -37,22 +24,22 @@ namespace Representation1 {
             this.PageCount = pageCount;
         }
     }
-    public class BoardGame {
+    public class BoardGame : Interface1.BoardGame {
         public string Title { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
         public int Diffuculty { get; set; }
-        public List<Author> Authors { get; set; }
+        public List<Interface1.Author> Authors { get; set; }
         public BoardGame(string title, int minplayer, int maxplayer, int difficulty, List<Author> authors) {
             this.Title = title;
             this.MinPlayer = minplayer;
             this.MaxPlayer = maxplayer;
             this.Diffuculty = difficulty;
-            this.Authors = new List<Author>(authors);
+            this.Authors = new List<Interface1.Author>(authors);
         }
     }
 
-    public class Author {
+    public class Author : Interface1.Author {
         public string Name { get; set; }
         public string Surname { get; set; }
         public string? Nickaname { get; set; }
