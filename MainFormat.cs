@@ -42,14 +42,14 @@
     public class Author : Interface1.Author {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string? Nickaname { get; set; }
+        public string? Nickname { get; set; }
         public int BirthYear { get; set; }
 
         public Author(string name, string surname, int birthYear, string nickName = null) {
             this.Name = name;
             this.Surname = surname;
             this.BirthYear = birthYear;
-            this.Nickaname = nickName;
+            this.Nickname = nickName;
         }
     }
 }

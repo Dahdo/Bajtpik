@@ -43,14 +43,14 @@
     public class Author {
         public int Name { get; set; }
         public int Surname { get; set; }
-        public int Nickaname { get; set; }
+        public int Nickname { get; set; }
         public int BirthYear { get; set; }
 
         public Author(int name, int surname, int birthYear, int nickName = -1) {
             this.Name = name;
             this.Surname = surname;
             this.BirthYear = birthYear;
-            this.Nickaname = nickName;
+            this.Nickname = nickName;
         }
     }
 }

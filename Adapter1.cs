@@ -2,19 +2,41 @@
 namespace Adapter1 {
     public class BookAdapter : Book {
         private readonly SecondaryFormat.Book book;
+        private readonly int numRepr;
         string Book.Title {
-            get => (string)Client.Program.stringMap[book.Title];
-            set => Client.Program.stringMap[book.Title] = value; 
+            get {
+                if (numRepr == 1)
+                   return Client.Program.stringMap[book.Title];
+                else
+                    return Client.Program.stringHashMap[book.Title];
+            }
+            set {
+                if(numRepr == 1)
+                    Client.Program.stringMap[book.Title] = value;
+                else
+                    Client.Program.stringHashMap[book.Title] = value;
+            }
         }
         List<Author> Book.Authors {
             get {
-                List<Author> authorList = new List<Author>();
-                foreach (SecondaryFormat.Author author in Client.Program.authorListMap[book.Authors]) {
-                    authorList.Add(new MainFormat.Author(Client.Program.stringMap[author.Name], 
-                    Client.Program.stringMap[author.Surname], Client.Program.intMap[author.BirthYear],
-                    Client.Program.stringMap[author.Nickaname]));
+                if(numRepr == 1) {
+                    List<Author> authorList = new List<Author>();
+                    foreach (SecondaryFormat.Author author in Client.Program.authorListMap[book.Authors]) {
+                        authorList.Add(new MainFormat.Author(Client.Program.stringMap[author.Name],
+                        Client.Program.stringMap[author.Surname], Client.Program.intMap[author.BirthYear],
+                        Client.Program.stringMap[author.Nickname]));
+                    }
+                    return authorList;
                 }
-                return authorList;
+                else {
+                    List<Author> authorList = new List<Author>();
+                    foreach (SecondaryFormat.Author author in Client.Program.authorListMap[book.Authors]) {
+                        authorList.Add(new MainFormat.Author(Client.Program.stringHashMap[author.Name],
+                        Client.Program.stringHashMap[author.Surname], Client.Program.intMap[author.BirthYear],
+                        Client.Program.stringHashMap[author.Nickname]));
+                    }
+                    return authorList;
+                }
             }
             set {}
             
@@ -28,16 +50,28 @@ namespace Adapter1 {
             set => Client.Program.intMap[book.PageCount] = value;
         }
 
-        public BookAdapter(SecondaryFormat.Book book) {
+        public BookAdapter(SecondaryFormat.Book book, int numRepr) {
             this.book = book;
+            this.numRepr = numRepr;
         }
     }
 
     public class NewsPaperAdapter : NewsPaper {
         private readonly SecondaryFormat.NewsPaper newsPaper;
+        private readonly int numRepr;
         string NewsPaper.Title {
-            get => (string)Client.Program.stringMap[newsPaper.Title];
-            set => Client.Program.stringMap[newsPaper.Title] = value;
+            get {
+                if(numRepr == 1)
+                    return Client.Program.stringMap[newsPaper.Title];
+                else
+                    return Client.Program.stringHashMap[newsPaper.Title];
+            }
+            set {
+                if(numRepr == 1)
+                    Client.Program.stringMap[newsPaper.Title] = value;
+                else
+                    Client.Program.stringHashMap[newsPaper.Title] = value;
+            }
         }
         int NewsPaper.Year {
             get => (int)Client.Program.intMap[newsPaper.Year];
@@ -48,16 +82,28 @@ namespace Adapter1 {
             set => Client.Program.intMap[newsPaper.PageCount] = value;
         }
 
-        public NewsPaperAdapter(SecondaryFormat.NewsPaper newspaper) {
+        public NewsPaperAdapter(SecondaryFormat.NewsPaper newspaper, int numRepr) {
             this.newsPaper = newspaper;
+            this.numRepr = numRepr;
         }
     }
 
     public class BoardGameAdapter : BoardGame {
         private readonly SecondaryFormat.BoardGame boardGame;
+        private readonly int numRepr;
         string BoardGame.Title {
-            get => (string)Client.Program.stringMap[boardGame.Title];
-            set => Client.Program.stringMap[boardGame.Title] = value;
+            get {
+                if(numRepr == 1)
+                    return Client.Program.stringMap[boardGame.Title];
+                else 
+                    return Client.Program.stringHashMap[boardGame.Title];
+            }
+            set {
+                if (numRepr == 1)
+                    Client.Program.stringMap[boardGame.Title] = value;
+                else
+                    Client.Program.stringHashMap[boardGame.Title] = value;
+            }
         }
         int BoardGame.MinPlayer {
             get => (int)Client.Program.intMap[boardGame.MinPlayer];
@@ -73,44 +119,88 @@ namespace Adapter1 {
         }
         List<Author> BoardGame.Authors {
             get {
-                List<Author> authorList = new List<Author>();
-                foreach (SecondaryFormat.Author author in Client.Program.authorListMap[boardGame.Authors]) {
-                    authorList.Add(new MainFormat.Author(Client.Program.stringMap[author.Name],
-                    Client.Program.stringMap[author.Surname], Client.Program.intMap[author.BirthYear],
-                    Client.Program.stringMap[author.Nickaname]));
+                if(numRepr == 1) {
+                    List<Author> authorList = new List<Author>();
+                    foreach (SecondaryFormat.Author author in Client.Program.authorListMap[boardGame.Authors]) {
+                        authorList.Add(new MainFormat.Author(Client.Program.stringMap[author.Name],
+                        Client.Program.stringMap[author.Surname], Client.Program.intMap[author.BirthYear],
+                        Client.Program.stringMap[author.Nickname]));
+                    }
+                    return authorList;
                 }
-                return authorList;
+                else {
+                    List<Author> authorList = new List<Author>();
+                    foreach (SecondaryFormat.Author author in Client.Program.authorListMap[boardGame.Authors]) {
+                        authorList.Add(new MainFormat.Author(Client.Program.stringHashMap[author.Name],
+                        Client.Program.stringHashMap[author.Surname], Client.Program.intMap[author.BirthYear],
+                        Client.Program.stringHashMap[author.Nickname]));
+                    }
+                    return authorList;
+                }
             }
 
             set {}
         }
 
-        public BoardGameAdapter(SecondaryFormat.BoardGame boardGame) {
+        public BoardGameAdapter(SecondaryFormat.BoardGame boardGame, int numRepr) {
             this.boardGame = boardGame;
+            this.numRepr = numRepr;
         }
     }
 
     public class AuthorAdapter : Author {
         private readonly SecondaryFormat.Author author;
+        private readonly int numRepr;
         string Author.Name {
-            get => (string)Client.Program.stringMap[author.Name];
-            set => Client.Program.stringMap[author.Name] = value;
+            get {
+                if(numRepr == 1)
+                    return Client.Program.stringMap[author.Name];
+                else
+                    return Client.Program.stringHashMap[author.Name];
+            }
+            set {
+                if (numRepr == 1)
+                    Client.Program.stringMap[author.Name] = value;
+                else
+                    Client.Program.stringHashMap[author.Name] = value;
+            }
         }
         string Author.Surname {
-            get => (string)Client.Program.stringMap[author.Surname];
-            set => Client.Program.stringMap[author.Surname] = value;
+            get {
+                if (numRepr == 1)
+                    return Client.Program.stringMap[author.Surname];
+                else
+                    return Client.Program.stringHashMap[author.Surname];
+            }
+            set {
+                if (numRepr == 1)
+                    Client.Program.stringMap[author.Surname] = value;
+                else
+                    Client.Program.stringHashMap[author.Surname] = value;
+            }
         }
-        string? Author.Nickaname {
-            get => (string)Client.Program.stringMap[author.Nickaname];
-            set => Client.Program.stringMap[author.Nickaname] = value;
+        string? Author.Nickname {
+            get {
+                if (numRepr == 1)
+                    return Client.Program.stringMap[author.Nickname];
+                else
+                    return Client.Program.stringHashMap[author.Nickname];
+            }
+            set {
+                if (numRepr == 1)
+                    Client.Program.stringMap[author.Nickname] = value;
+                else
+                    Client.Program.stringHashMap[author.Nickname] = value;
+            }
         }
         int Author.BirthYear {
             get => (int)Client.Program.intMap[author.BirthYear];
             set => Client.Program.intMap[author.BirthYear] = value;
         }
 
-        public AuthorAdapter(SecondaryFormat.Author author) {
+        public AuthorAdapter(SecondaryFormat.Author author, int numRepr) {
             this.author = author;
+            this.numRepr = numRepr;
         }
     }
 }
