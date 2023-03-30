@@ -1,7 +1,7 @@
 ﻿using Interface1;
 namespace Adapter1 {
     public class BookAdapter : Book {
-        private readonly Representation1.Book book;
+        private readonly SecondaryFormat.Book book;
         string Book.Title {
             get => (string)Client.Program.bookStoreMap[book.Title];
             set => Client.Program.bookStoreMap[book.Title] = value; 
@@ -10,8 +10,8 @@ namespace Adapter1 {
             get {
                 List<Author> authorList = new List<Author>();
                 foreach (int authorIndex in (List<int>)Client.Program.bookStoreMap[book.Authors]) {
-                    Representation1.Author author = (Representation1.Author)Client.Program.bookStoreMap[authorIndex];
-                    authorList.Add(new MainRepresentation.Author((string)Client.Program.bookStoreMap[author.Name], 
+                    SecondaryFormat.Author author = (SecondaryFormat.Author)Client.Program.bookStoreMap[authorIndex];
+                    authorList.Add(new MainFormat.Author((string)Client.Program.bookStoreMap[author.Name], 
                     (string)Client.Program.bookStoreMap[author.Surname], (int)Client.Program.bookStoreMap[author.BirthYear],
                     (string)Client.Program.bookStoreMap[author.Nickaname]));
                 }
@@ -29,13 +29,13 @@ namespace Adapter1 {
             set => Client.Program.bookStoreMap[book.PageCount] = value;
         }
 
-        public BookAdapter(Representation1.Book book) {
+        public BookAdapter(SecondaryFormat.Book book) {
             this.book = book;
         }
     }
 
     public class NewsPaperAdapter : NewsPaper {
-        private readonly Representation1.NewsPaper newsPaper;
+        private readonly SecondaryFormat.NewsPaper newsPaper;
         string NewsPaper.Title {
             get => (string)Client.Program.bookStoreMap[newsPaper.Title];
             set => Client.Program.bookStoreMap[newsPaper.Title] = value;
@@ -49,13 +49,13 @@ namespace Adapter1 {
             set => Client.Program.bookStoreMap[newsPaper.PageCount] = value;
         }
 
-        public NewsPaperAdapter(Representation1.NewsPaper newspaper) {
+        public NewsPaperAdapter(SecondaryFormat.NewsPaper newspaper) {
             this.newsPaper = newspaper;
         }
     }
 
     public class BoardGameAdapter : BoardGame {
-        private readonly Representation1.BoardGame boardGame;
+        private readonly SecondaryFormat.BoardGame boardGame;
         string BoardGame.Title {
             get => (string)Client.Program.bookStoreMap[boardGame.Title];
             set => Client.Program.bookStoreMap[boardGame.Title] = value;
@@ -76,8 +76,8 @@ namespace Adapter1 {
             get {
                 List<Author> authorList = new List<Author>();
                 foreach (int authorIndex in (List<int>)Client.Program.bookStoreMap[boardGame.Authors]) {
-                    Representation1.Author author = (Representation1.Author)Client.Program.bookStoreMap[authorIndex];
-                    authorList.Add(new MainRepresentation.Author((string)Client.Program.bookStoreMap[author.Name], 
+                    SecondaryFormat.Author author = (SecondaryFormat.Author)Client.Program.bookStoreMap[authorIndex];
+                    authorList.Add(new MainFormat.Author((string)Client.Program.bookStoreMap[author.Name], 
                     (string)Client.Program.bookStoreMap[author.Surname], (int)Client.Program.bookStoreMap[author.BirthYear],
                     (string)Client.Program.bookStoreMap[author.Nickaname]));
                 }
@@ -87,13 +87,13 @@ namespace Adapter1 {
             set {}
         }
 
-        public BoardGameAdapter(Representation1.BoardGame boardGame) {
+        public BoardGameAdapter(SecondaryFormat.BoardGame boardGame) {
             this.boardGame = boardGame;
         }
     }
 
     public class AuthorAdapter : Author {
-        private readonly Representation1.Author author;
+        private readonly SecondaryFormat.Author author;
         string Author.Name {
             get => (string)Client.Program.bookStoreMap[author.Name];
             set => Client.Program.bookStoreMap[author.Name] = value;
@@ -111,7 +111,7 @@ namespace Adapter1 {
             set => Client.Program.bookStoreMap[author.BirthYear] = value;
         }
 
-        public AuthorAdapter(Representation1.Author author) {
+        public AuthorAdapter(SecondaryFormat.Author author) {
             this.author = author;
         }
     }

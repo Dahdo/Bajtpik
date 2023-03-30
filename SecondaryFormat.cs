@@ -1,4 +1,4 @@
-﻿namespace Representation1 {
+﻿namespace SecondaryFormat {
     public class Book {
         public int Title { get; set; }
         public int Authors { get; set; }

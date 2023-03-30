@@ -1,4 +1,4 @@
-﻿namespace MainRepresentation {
+﻿namespace MainFormat {
     public class Book : Interface1.Book {
         public string Title { get; set; }
         public List<Interface1.Author> Authors { get; set; }
