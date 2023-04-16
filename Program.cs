@@ -1,6 +1,11 @@
-﻿using SecondaryFormat;
+﻿//#define PRINTMAIN
+//#define PRINTREP1
+//#define PRINTREP4
+
+using SecondaryFormat;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Client {
     internal class Program {
@@ -9,13 +14,15 @@ namespace Client {
         public static Dictionary<int, int> intMap;
         public static Dictionary<int, List<SecondaryFormat.Author>> authorListMap;
 
+
         //representation4
         public static Dictionary<int, string> stringHashMap;
+        public static Dictionary<int, List<SecondaryFormat.Author>> authorListHashMap;
 
         public static void Main(string[] args) {
 
-            #region MainRepresentation
-            #region instantiation
+#region MainRepresentation
+    #region instantiation
             //Authors
             MainFormat.Author douglas = new MainFormat.Author("Douglas", "Adams", 1952);
             MainFormat.Author tom = new MainFormat.Author("Tom", "Wolfe", 1930);
@@ -57,6 +64,7 @@ namespace Client {
             List<MainFormat.NewsPaper> newsPaperList_m = new List<MainFormat.NewsPaper> { nwp1, nwp2, nwp3, nwp4 };
             List<MainFormat.BoardGame> boardGameList_m = new List<MainFormat.BoardGame> { scythe, catan, scrabble, twilightImperium };
 
+    #if PRINTMAIN
             //printing 
             Console.WriteLine("------------------------Main Representation---------------------");
             Console.WriteLine("BOOKS:\n");
@@ -79,11 +87,12 @@ namespace Client {
                     Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
                 Console.WriteLine();
             }
+    #endif
 
-            #endregion
+#endregion
 
-            #region Representation1
-            #region instantiation
+#region Representation1
+    #region instantiation
             stringMap = new Dictionary<int, string>() {
                 //authors names & surnames
                 {-1, "" }, //for all nullable values i.e nickname
@@ -169,15 +178,16 @@ namespace Client {
             SecondaryFormat.NewsPaper nwp2_s = new SecondaryFormat.NewsPaper(41, 39, 40);
             SecondaryFormat.NewsPaper nwp3_s = new SecondaryFormat.NewsPaper(42, 41, 42);
             SecondaryFormat.NewsPaper nwp4_s = new SecondaryFormat.NewsPaper(43, 43, 44);
-            #endregion
-            #region withoutAdapter
+    #endregion
+    #region withoutAdapter
 
             List<SecondaryFormat.Book> bookList_1 = new List<SecondaryFormat.Book> { book1_s, book2_s, book3_s, book4_s, book5_s};
             List<SecondaryFormat.NewsPaper> newsPaperList_1 = new List<SecondaryFormat.NewsPaper> { nwp1_s, nwp2_s, nwp3_s, nwp4_s };
             List<SecondaryFormat.BoardGame> boardGameList_1 = new List<SecondaryFormat.BoardGame> {boardGame1_s, boardGame2_s, boardGame3_s, boardGame4_s };
 
+    #if PRINTREP1
             //printing 
-            Console.WriteLine("\n------------------------SecondaryFormat (without Adapter)---------------------");
+            Console.WriteLine("\n------------------------Representation 1 (without Adapter)---------------------");
 
             Console.WriteLine("BOOKS:\n");
             foreach (SecondaryFormat.Book book in bookList_1) {
@@ -203,9 +213,10 @@ namespace Client {
                 }
                 Console.WriteLine();
             }
-            #endregion
+    #endif
+    #endregion
 
-            #region withAdapter
+    #region withAdapter
 
             //Books
             Interface1.Book book1_1a = new Adapter1.BookAdapter(book1_s, 1);
@@ -230,9 +241,9 @@ namespace Client {
             List<Interface1.NewsPaper> newsPaperList_1a = new List<Interface1.NewsPaper> { nwp1_1a, nwp2_1a, nwp3_1a, nwp4_1a };
             List<Interface1.BoardGame> boardGameList_1a = new List<Interface1.BoardGame> { boardGame1_1a, boardGame2_1a, boardGame3_1a, boardGame4_1a };
 
-
+    #if PRINTREP1
             //printing 
-            Console.WriteLine("\n\n------------------------SecondaryFormat (With Adapter) ---------------------");
+            Console.WriteLine("\n\n------------------------Representation 1 (With Adapter) ---------------------");
             Console.WriteLine("BOOKS:\n");
             foreach (Interface1.Book book in bookList_1a) {
                 Console.Write($"{book.Title} by Author(s):");
@@ -253,11 +264,12 @@ namespace Client {
                     Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
                 Console.WriteLine();
             }
-            #endregion
+    #endif
+    #endregion
 
-            #endregion
+#endregion
 
-            #region Representation4
+#region Representation4
             Dictionary<int, int> keys = new Dictionary<int, int>();
             stringHashMap = new Dictionary<int, string>();
             for(int i = 0; i < stringMap.Count - 1; i++) {
@@ -279,73 +291,93 @@ namespace Client {
             keys.Add(-1, -1);
 
             //Authors
-            SecondaryFormat.Author douglas_s = new SecondaryFormat.Author(0, 1, 0);
-            SecondaryFormat.Author tom_s = new SecondaryFormat.Author(2, 3, 1);
-            SecondaryFormat.Author elmar_s = new SecondaryFormat.Author(4, 5, 2);
-            SecondaryFormat.Author michael1_s = new SecondaryFormat.Author(6, 7, 3);
-            SecondaryFormat.Author ulf_s = new SecondaryFormat.Author(8, 9, 4);
-            SecondaryFormat.Author michael2_s = new SecondaryFormat.Author(10, 11, 5);
-            SecondaryFormat.Author frank_s = new SecondaryFormat.Author(12, 13, 6);
-            SecondaryFormat.Author terry_s = new SecondaryFormat.Author(14, 15, 7);
-            SecondaryFormat.Author neil_s = new SecondaryFormat.Author(16, 17, 8);
-            SecondaryFormat.Author jamey_s = new SecondaryFormat.Author(18, 19, 9);
-            SecondaryFormat.Author jakub_s = new SecondaryFormat.Author(20, 21, 10, 22);
-            SecondaryFormat.Author klaus_s = new SecondaryFormat.Author(23, 24, 11);
-            SecondaryFormat.Author alfred_s = new SecondaryFormat.Author(25, 26, 12);
-            SecondaryFormat.Author james_s = new SecondaryFormat.Author(27, 28, 13);
-            SecondaryFormat.Author christian_s = new SecondaryFormat.Author(29, 30, 14);
+            SecondaryFormat.Author douglas_s4 = new SecondaryFormat.Author(keys[0], keys[1], 0);
+            SecondaryFormat.Author tom_s4 = new SecondaryFormat.Author(keys[2], keys[3], 1);
+            SecondaryFormat.Author elmar_s4 = new SecondaryFormat.Author(keys[4], keys[5], 2);
+            SecondaryFormat.Author michael1_s4 = new SecondaryFormat.Author(keys[6], keys[7], 3);
+            SecondaryFormat.Author ulf_s4 = new SecondaryFormat.Author(keys[8], keys[9], 4);
+            SecondaryFormat.Author michael2_s4 = new SecondaryFormat.Author(keys[10], keys[11], 5);
+            SecondaryFormat.Author frank_s4 = new SecondaryFormat.Author(keys[12], keys[13], 6);
+            SecondaryFormat.Author terry_s4 = new SecondaryFormat.Author(keys[14], keys[15], 7);
+            SecondaryFormat.Author neil_s4 = new SecondaryFormat.Author(keys[16], keys[17], 8);
+            SecondaryFormat.Author jamey_s4 = new SecondaryFormat.Author(keys[18], keys[19], 9);
+            SecondaryFormat.Author jakub_s4 = new SecondaryFormat.Author(keys[20], keys[21], 10, keys[22]);
+            SecondaryFormat.Author klaus_s4 = new SecondaryFormat.Author(keys[23], keys[24], 11);
+            SecondaryFormat.Author alfred_s4 = new SecondaryFormat.Author(keys[25], keys[26], 12);
+            SecondaryFormat.Author james_s4 = new SecondaryFormat.Author(keys[27], keys[28], 13);
+            SecondaryFormat.Author christian_s4 = new SecondaryFormat.Author(keys[29], keys[30], 14);
+
+            authorListHashMap = new Dictionary<int, List<SecondaryFormat.Author>>() {
+                //Board game authors lists
+                {0, new List<SecondaryFormat.Author>(){jamey_s4, jakub_s4} }, {1, new List<SecondaryFormat.Author>(){klaus_s4} },
+                {2, new List<SecondaryFormat.Author>(){james_s4, alfred_s4} }, {3, new List<SecondaryFormat.Author>(){christian_s4} },
+                //books author list
+                {4, new List<SecondaryFormat.Author>(){douglas_s4} }, {5, new List<SecondaryFormat.Author>(){tom_s4} },
+                {6, new List<SecondaryFormat.Author>(){elmar_s4, michael1_s4, ulf_s4, michael2_s4} },
+                {7, new List<SecondaryFormat.Author>(){frank_s4} }, {8, new List<SecondaryFormat.Author>(){terry_s4, neil_s4} }
+
+            };
 
             //Books
-            SecondaryFormat.Book book1_s = new SecondaryFormat.Book(35, 27, 28, 4);
-            SecondaryFormat.Book book2_s = new SecondaryFormat.Book(36, 29, 30, 5);
-            SecondaryFormat.Book book3_s = new SecondaryFormat.Book(37, 31, 32, 6);
-            SecondaryFormat.Book book4_s = new SecondaryFormat.Book(38, 33, 34, 7);
-            SecondaryFormat.Book book5_s = new SecondaryFormat.Book(39, 35, 36, 8);
+            SecondaryFormat.Book book1_s4 = new SecondaryFormat.Book(keys[35], 27, 28, 4);
+            SecondaryFormat.Book book2_s4 = new SecondaryFormat.Book(keys[36], 29, 30, 5);
+            SecondaryFormat.Book book3_s4 = new SecondaryFormat.Book(keys[37], 31, 32, 6);
+            SecondaryFormat.Book book4_s4 = new SecondaryFormat.Book(keys[38], 33, 34, 7);
+            SecondaryFormat.Book book5_s4 = new SecondaryFormat.Book(keys[39], 35, 36, 8);
 
             //BoardGames
-            SecondaryFormat.BoardGame boardGame1_s = new SecondaryFormat.BoardGame(31, 15, 16, 17, 0);
-            SecondaryFormat.BoardGame boardGame2_s = new SecondaryFormat.BoardGame(32, 18, 19, 20, 1);
-            SecondaryFormat.BoardGame boardGame3_s = new SecondaryFormat.BoardGame(33, 21, 22, 23, 2);
-            SecondaryFormat.BoardGame boardGame4_s = new SecondaryFormat.BoardGame(34, 24, 25, 26, 3);
+            SecondaryFormat.BoardGame boardGame1_s4 = new SecondaryFormat.BoardGame(keys[31], 15, 16, 17, 0);
+            SecondaryFormat.BoardGame boardGame2_s4 = new SecondaryFormat.BoardGame(keys[32], 18, 19, 20, 1);
+            SecondaryFormat.BoardGame boardGame3_s4 = new SecondaryFormat.BoardGame(keys[33], 21, 22, 23, 2);
+            SecondaryFormat.BoardGame boardGame4_s4 = new SecondaryFormat.BoardGame(keys[34], 24, 25, 26, 3);
 
             //Newspapers
-            SecondaryFormat.NewsPaper nwp1_s = new SecondaryFormat.NewsPaper(40, 37, 38);
-            SecondaryFormat.NewsPaper nwp2_s = new SecondaryFormat.NewsPaper(41, 39, 40);
-            SecondaryFormat.NewsPaper nwp3_s = new SecondaryFormat.NewsPaper(42, 41, 42);
-            SecondaryFormat.NewsPaper nwp4_s = new SecondaryFormat.NewsPaper(43, 43, 44);
+            SecondaryFormat.NewsPaper nwp1_s4 = new SecondaryFormat.NewsPaper(keys[40], 37, 38);
+            SecondaryFormat.NewsPaper nwp2_s4 = new SecondaryFormat.NewsPaper(keys[41], 39, 40);
+            SecondaryFormat.NewsPaper nwp3_s4 = new SecondaryFormat.NewsPaper(keys[42], 41, 42);
+            SecondaryFormat.NewsPaper nwp4_s4 = new SecondaryFormat.NewsPaper(keys[43], 43, 44);
 
             //Books
-            Interface1.Book book1_4a = new Adapter1.BookAdapter(book1_s, 4);
-            Interface1.Book book2_4a = new Adapter1.BookAdapter(book2_s, 4);
-            Interface1.Book book3_4a = new Adapter1.BookAdapter(book3_s, 4);
-            Interface1.Book book4_4a = new Adapter1.BookAdapter(book4_s, 4);
-            Interface1.Book book5_4a = new Adapter1.BookAdapter(book5_s, 4);
+            Interface1.Book book1_4a = new Adapter1.BookAdapter(book1_s4, 4);
+            Interface1.Book book2_4a = new Adapter1.BookAdapter(book2_s4, 4);
+            Interface1.Book book3_4a = new Adapter1.BookAdapter(book3_s4, 4);
+            Interface1.Book book4_4a = new Adapter1.BookAdapter(book4_s4, 4);
+            Interface1.Book book5_4a = new Adapter1.BookAdapter(book5_s4, 4);
 
             //Newspapers
-            Interface1.NewsPaper nwp1_4a = new Adapter1.NewsPaperAdapter(nwp1_s, 4);
-            Interface1.NewsPaper nwp2_4a = new Adapter1.NewsPaperAdapter(nwp2_s, 4);
-            Interface1.NewsPaper nwp3_4a = new Adapter1.NewsPaperAdapter(nwp3_s, 4);
-            Interface1.NewsPaper nwp4_4a = new Adapter1.NewsPaperAdapter(nwp4_s, 4);
+            Interface1.NewsPaper nwp1_4a = new Adapter1.NewsPaperAdapter(nwp1_s4, 4);
+            Interface1.NewsPaper nwp2_4a = new Adapter1.NewsPaperAdapter(nwp2_s4, 4);
+            Interface1.NewsPaper nwp3_4a = new Adapter1.NewsPaperAdapter(nwp3_s4, 4);
+            Interface1.NewsPaper nwp4_4a = new Adapter1.NewsPaperAdapter(nwp4_s4, 4);
 
             //BoardGames
-            Interface1.BoardGame boardGame1_4a = new Adapter1.BoardGameAdapter(boardGame1_s, 4);
-            Interface1.BoardGame boardGame2_4a = new Adapter1.BoardGameAdapter(boardGame2_s, 4);
-            Interface1.BoardGame boardGame3_4a = new Adapter1.BoardGameAdapter(boardGame3_s, 4);
-            Interface1.BoardGame boardGame4_4a = new Adapter1.BoardGameAdapter(boardGame4_s, 4);
+            Interface1.BoardGame boardGame1_4a = new Adapter1.BoardGameAdapter(boardGame1_s4, 4);
+            Interface1.BoardGame boardGame2_4a = new Adapter1.BoardGameAdapter(boardGame2_s4, 4);
+            Interface1.BoardGame boardGame3_4a = new Adapter1.BoardGameAdapter(boardGame3_s4, 4);
+            Interface1.BoardGame boardGame4_4a = new Adapter1.BoardGameAdapter(boardGame4_s4, 4);
 
             List<Interface1.Book> bookList_4a = new List<Interface1.Book> { book1_4a, book2_4a, book3_4a, book4_4a, book5_4a };
             List<Interface1.NewsPaper> newsPaperList_4a = new List<Interface1.NewsPaper> { nwp1_4a, nwp2_4a, nwp3_4a, nwp4_4a };
             List<Interface1.BoardGame> boardGameList_4a = new List<Interface1.BoardGame> { boardGame1_4a, boardGame2_4a, boardGame3_4a, boardGame4_4a };
 
-
+    #if PRINTREP4
             //printing 
             Console.WriteLine("\n\n------------------------Representation 4 (With Adapter) ---------------------");
-            Console.WriteLine("BOOKS:\n");
+            Console.WriteLine("BOOKS [with atleast one author born after 1970]:\n");
             foreach (Interface1.Book book in bookList_4a) {
-                Console.Write($"{book.Title} by Author(s):");
-                foreach (Interface1.Author author in book.Authors)
-                    Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
-                Console.WriteLine($" publication year: {book.Year} page count: {book.PageCount}");
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append($"{book.Title} by Author(s):");
+                bool bornAfter1970 = false;
+                foreach (Interface1.Author author in book.Authors) {
+                    if (author.BirthYear > 1970) {
+                        bornAfter1970 = true;
+                        stringBuilder.Append($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
+                    }
+                }
+                if (bornAfter1970) {
+                    stringBuilder.Append($" publication year: {book.Year} page count: {book.PageCount}");
+                    Console.WriteLine(stringBuilder);
+                }
             }
 
             Console.WriteLine("\nNEWSPAPERS:\n");
@@ -353,15 +385,25 @@ namespace Client {
                 Console.WriteLine($"{newspaper.Title} publication year: {newspaper.Year} page count: {newspaper.PageCount}");
             }
 
-            Console.WriteLine("\nBOARD GAMES:\n");
+            Console.WriteLine("\nBOARD GAMES [with atleast one author born after 1970]:\n");
             foreach (Interface1.BoardGame bgame in boardGameList_4a) {
-                Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
-                foreach (Interface1.Author author in bgame.Authors)
-                    Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
-                Console.WriteLine();
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
+                bool bornAfter1970 = false;
+                foreach (Interface1.Author author in bgame.Authors) {
+                    if(author.BirthYear > 1970) {
+                        bornAfter1970 = true;
+                        stringBuilder.Append($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
+                    }
+                }
+                if(bornAfter1970) {
+                    stringBuilder.Append("\n");
+                    Console.WriteLine(stringBuilder);                    
+                }
             }
+    #endif
 
-            #endregion
+#endregion
         }
     }
 }

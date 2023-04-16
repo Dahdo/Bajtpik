@@ -30,7 +30,7 @@ namespace Adapter1 {
                 }
                 else {
                     List<Author> authorList = new List<Author>();
-                    foreach (SecondaryFormat.Author author in Client.Program.authorListMap[book.Authors]) {
+                    foreach (SecondaryFormat.Author author in Client.Program.authorListHashMap[book.Authors]) {
                         authorList.Add(new MainFormat.Author(Client.Program.stringHashMap[author.Name],
                         Client.Program.stringHashMap[author.Surname], Client.Program.intMap[author.BirthYear],
                         Client.Program.stringHashMap[author.Nickname]));
@@ -130,7 +130,7 @@ namespace Adapter1 {
                 }
                 else {
                     List<Author> authorList = new List<Author>();
-                    foreach (SecondaryFormat.Author author in Client.Program.authorListMap[boardGame.Authors]) {
+                    foreach (SecondaryFormat.Author author in Client.Program.authorListHashMap[boardGame.Authors]) {
                         authorList.Add(new MainFormat.Author(Client.Program.stringHashMap[author.Name],
                         Client.Program.stringHashMap[author.Surname], Client.Program.intMap[author.BirthYear],
                         Client.Program.stringHashMap[author.Nickname]));
