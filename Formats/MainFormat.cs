@@ -1,7 +1,7 @@
 ﻿namespace MainFormat {
-    public class Book : Interface1.Book {
+    public class Book : Project1_Interface1.Book {
         public string Title { get; set; }
-        public List<Interface1.Author> Authors { get; set; }
+        public List<Project1_Interface1.Author> Authors { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
 
@@ -9,11 +9,11 @@
             this.Title = Title;
             this.Year = year;
             this.PageCount = pageCount;
-            this.Authors = new List<Interface1.Author>(authors);
+            this.Authors = new List<Project1_Interface1.Author>(authors);
         }
     }
 
-    public class NewsPaper : Interface1.NewsPaper {
+    public class NewsPaper : Project1_Interface1.NewsPaper {
         public string Title { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
@@ -24,22 +24,22 @@
             this.PageCount = pageCount;
         }
     }
-    public class BoardGame : Interface1.BoardGame {
+    public class BoardGame : Project1_Interface1.BoardGame {
         public string Title { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
         public int Diffuculty { get; set; }
-        public List<Interface1.Author> Authors { get; set; }
+        public List<Project1_Interface1.Author> Authors { get; set; }
         public BoardGame(string title, int minplayer, int maxplayer, int difficulty, List<Author> authors) {
             this.Title = title;
             this.MinPlayer = minplayer;
             this.MaxPlayer = maxplayer;
             this.Diffuculty = difficulty;
-            this.Authors = new List<Interface1.Author>(authors);
+            this.Authors = new List<Project1_Interface1.Author>(authors);
         }
     }
 
-    public class Author : Interface1.Author {
+    public class Author : Project1_Interface1.Author {
         public string Name { get; set; }
         public string Surname { get; set; }
         public string? Nickname { get; set; }

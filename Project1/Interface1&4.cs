@@ -1,4 +1,4 @@
-﻿namespace Interface1 {
+﻿namespace Project1_Interface1 {
     public interface Book {
         public string Title { get; set; }
         public List<Author> Authors { get; set; }

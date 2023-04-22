@@ -1,5 +1,5 @@
-﻿using Interface1;
-namespace Adapter1 {
+﻿using Project1_Interface1;
+namespace Project1_Adapter1 {
     public class BookAdapter : Book {
         private readonly SecondaryFormat.Book book;
         private readonly int numRepr;
