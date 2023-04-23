@@ -1,5 +1,5 @@
-﻿using project2_iterators;
-namespace Project2_Interfaces {
+﻿using Project2_Iterators;
+namespace Project2_Collections {
     public abstract class BajtpikCollection<T> {
         public abstract bool Remove(T item);
         public abstract void Add(T item);
@@ -13,7 +13,9 @@ namespace Project2_Interfaces {
         internal abstract T? Next(T item);
         internal abstract T? Prev(T item);
     }
+}
 
+namespace Project2_Iterators {
     public abstract class BajtpikIterator<T> {
         public abstract T Current();
         public abstract bool Move();

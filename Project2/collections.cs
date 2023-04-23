@@ -1,6 +1,4 @@
-﻿using Project2_Interfaces;
-using project2_iterators;
-
+﻿using Project2_Iterators;
 namespace Project2_Collections {
     public class Vector<T> : BajtpikCollection<T> {
         private T[] Items;

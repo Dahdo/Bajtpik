@@ -1,5 +1,5 @@
-﻿using Project2_Interfaces;
-namespace project2_iterators {
+﻿using Project2_Collections;
+namespace Project2_Iterators {
     public class ForwardIterator<T> : BajtpikIterator<T> {
 
         private BajtpikCollection<T> collection;
