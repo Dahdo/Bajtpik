@@ -1,6 +1,6 @@
-﻿#define PRINTMAIN
-#define PRINTREP1
-#define PRINTREP4
+﻿//#define PRINTMAIN
+//#define PRINTREP1
+//#define PRINTREP4
 #define PRINTPROJ2_0
 #define PRINTPROJ2_2
 
@@ -482,6 +482,10 @@ namespace Client {
                     Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
                 }
             }
+
+            Project1_Adapter.NewsPaper testNwp = Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.Find(nwpVector,(T) => T.Year == 1869 , false);
+            Console.WriteLine("Moment of truth:");
+            Console.WriteLine($"{testNwp.Title} publication year: {testNwp.Year} page count: {testNwp.PageCount}");
 
 
 
