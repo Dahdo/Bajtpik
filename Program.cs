@@ -410,90 +410,126 @@ namespace Client {
 
             #region Project2_0
 
-            Project2_Collections.Vector<Project1_Adapter.Book> bookVector = new Project2_Collections.Vector<Project1_Adapter.Book>();
-            bookVector.Add(book1_4a);
-            bookVector.Add(book2_4a);
-            bookVector.Add(book1_1a);
-            bookVector.Remove(book1_4a);
-            Console.WriteLine($"the size: {bookVector.Size()}");
+            //Project2_Collections.Vector<Project1_Adapter.Book> bookVector = new Project2_Collections.Vector<Project1_Adapter.Book>();
+            //bookVector.Add(book1_4a);
+            //bookVector.Add(book2_4a);
+            //bookVector.Add(book1_1a);
+            //bookVector.Remove(book1_4a);
+            //Console.WriteLine($"the size: {bookVector.Size()}");
 
-            Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper> nwpList
-                = new Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper>();
-            nwpList.Add(nwp1_4a);
-            nwpList.Add(nwp2_4a);
-            nwpList.Add(nwp3_4a);
-            nwpList.Add(nwp4_4a);
-            nwpList.Remove(nwp4_4a);
-            Console.WriteLine($"the size: {nwpList.Size()}");
+            //Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper> nwpList
+            //    = new Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper>();
+            //nwpList.Add(nwp1_4a);
+            //nwpList.Add(nwp2_4a);
+            //nwpList.Add(nwp3_4a);
+            //nwpList.Add(nwp4_4a);
+            //nwpList.Remove(nwp4_4a);
+            //Console.WriteLine($"the size: {nwpList.Size()}");
 
-            Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> fit =
-                nwpList.GetForwardIterator();
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> fit =
+            //    nwpList.GetForwardIterator();
 
-            Console.WriteLine("\nNEWSPAPERS:\n");
-            Console.WriteLine($"{fit.Current().Title} publication year: {fit.Current().Year} page count: {fit.Current().PageCount}");
+            //Console.WriteLine("\nNEWSPAPERS:\n");
+            //Console.WriteLine($"{fit.Current().Title} publication year: {fit.Current().Year} page count: {fit.Current().PageCount}");
 
-            for (int i = 0; i < 100; i++) {
-                if (fit.Move()) {
-                    Console.WriteLine($"{fit.Current().Title} publication year: {fit.Current().Year} page count: {fit.Current().PageCount}");
-                }
-            }
+            //for (int i = 0; i < 100; i++) {
+            //    if (fit.Move()) {
+            //        Console.WriteLine($"{fit.Current().Title} publication year: {fit.Current().Year} page count: {fit.Current().PageCount}");
+            //    }
+            //}
 
-            Console.WriteLine("---Reverse mode----");
-            Project2_Iterators.ReverseIterator<Project1_Adapter.NewsPaper> rit =
-                nwpList.GetReverseIterator();
-            Console.WriteLine("\nNEWSPAPERS:\n");
-            Console.WriteLine($"{rit.Current().Title} publication year: {rit.Current().Year} page count: {rit.Current().PageCount}");
-            for (int i = 0; i < 100; i++) {
-                if (rit.Move()) {
-                    Console.WriteLine($"{rit.Current().Title} publication year: {rit.Current().Year} page count: {rit.Current().PageCount}");
-                }
-            }
+            //Console.WriteLine("---Reverse mode----");
+            //Project2_Iterators.ReverseIterator<Project1_Adapter.NewsPaper> rit =
+            //    nwpList.GetReverseIterator();
+            //Console.WriteLine("\nNEWSPAPERS:\n");
+            //Console.WriteLine($"{rit.Current().Title} publication year: {rit.Current().Year} page count: {rit.Current().PageCount}");
+            //for (int i = 0; i < 100; i++) {
+            //    if (rit.Move()) {
+            //        Console.WriteLine($"{rit.Current().Title} publication year: {rit.Current().Year} page count: {rit.Current().PageCount}");
+            //    }
+            //}
 
-            Console.WriteLine("-----------------");
-            Project2_Collections.Vector<Project1_Adapter.NewsPaper> nwpVector
-                = new Project2_Collections.Vector<Project1_Adapter.NewsPaper>();
-            nwpVector.Add(nwp1_4a);
-            nwpVector.Add(nwp2_4a);
-            nwpVector.Add(nwp3_4a);
-            nwpVector.Add(nwp4_4a);
-            nwpVector.Remove(nwp4_4a);
-            Console.WriteLine($"the size: {nwpVector.Size()}");
+            //Console.WriteLine("-----------------");
+            //Project2_Collections.Vector<Project1_Adapter.NewsPaper> nwpHeap
+            //    = new Project2_Collections.Vector<Project1_Adapter.NewsPaper>();
+            //nwpHeap.Add(nwp1_4a);
+            //nwpHeap.Add(nwp2_4a);
+            //nwpHeap.Add(nwp3_4a);
+            //nwpHeap.Add(nwp4_4a);
+            //nwpHeap.Remove(nwp4_4a);
+            //Console.WriteLine($"the size: {nwpHeap.Size()}");
 
-            Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> fit2 =
-                nwpVector.GetForwardIterator();
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> fit2 =
+            //    nwpHeap.GetForwardIterator();
 
-            Console.WriteLine("\nNEWSPAPERS:\n");
-            Console.WriteLine($"{fit2.Current().Title} publication year: {fit2.Current().Year} page count: {fit2.Current().PageCount}");
+            //Console.WriteLine("\nNEWSPAPERS:\n");
+            //Console.WriteLine($"{fit2.Current().Title} publication year: {fit2.Current().Year} page count: {fit2.Current().PageCount}");
 
-            for (int i = 0; i < 100; i++) {
-                if (fit2.Move()) {
-                    //Console.WriteLine("\nNEWSPAPERS:\n");
-                    Console.WriteLine($"{fit2.Current().Title} publication year: {fit.Current().Year} page count: {fit2.Current().PageCount}");
-                }
-            }
+            //for (int i = 0; i < 100; i++) {
+            //    if (fit2.Move()) {
+            //        //Console.WriteLine("\nNEWSPAPERS:\n");
+            //        Console.WriteLine($"{fit2.Current().Title} publication year: {fit.Current().Year} page count: {fit2.Current().PageCount}");
+            //    }
+            //}
 
-            Console.WriteLine("---Reverse mode----");
-            Project2_Iterators.ReverseIterator<Project1_Adapter.NewsPaper> rit2 =
-                nwpVector.GetReverseIterator();
-            Console.WriteLine("\nNEWSPAPERS:\n");
-            Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
-            for (int i = 0; i < 100; i++) {
-                if (rit2.Move()) {
-                    Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
-                }
-            }
+            //Console.WriteLine("---Reverse mode----");
+            //Project2_Iterators.ReverseIterator<Project1_Adapter.NewsPaper> rit2 =
+            //    nwpHeap.GetReverseIterator();
+            //Console.WriteLine("\nNEWSPAPERS:\n");
+            //Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
+            //for (int i = 0; i < 100; i++) {
+            //    if (rit2.Move()) {
+            //        Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
+            //    }
+            //}
 
-            //Project1_Adapter.NewsPaper testNwp = Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.Find(nwpVector,(T) => T.Year == 1869 , false);
+            ////Project1_Adapter.NewsPaper testNwp = Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.Find(nwpHeap,(T) => T.Year == 1869 , false);
+            ////Console.WriteLine("Moment of truth:");
+            ////Console.WriteLine($"{testNwp.Title} publication year: {testNwp.Year} page count: {testNwp.PageCount}");
             //Console.WriteLine("Moment of truth:");
-            //Console.WriteLine($"{testNwp.Title} publication year: {testNwp.Year} page count: {testNwp.PageCount}");
-            Console.WriteLine("Moment of truth:");
-            Project2_Algorithms.Algorithms<Project1_Adapter.Book>.Print(bookVector, (T) => T.Year < 2030, false);
+            //Project2_Algorithms.Algorithms<Project1_Adapter.Book>.Print(bookVector, (T) => T.Year < 2030, false);
 
-            
-#if PRINTPROJ2_0
+            //------Heap
 
-#endif
-            #endregion
+            //Project2_Collections.Heap<Project1_Adapter.NewsPaper> nwpHeap
+            //    = new Project2_Collections.Heap<Project1_Adapter.NewsPaper>((a, b) => a.PageCount < b.PageCount);
+            //nwpHeap.Add(nwp1_4a);
+            //nwpHeap.Add(nwp2_4a);
+            //nwpHeap.Add(nwp3_4a);
+            //nwpHeap.Add(nwp4_4a);
+            //nwpHeap.Remove();
+            //Console.WriteLine($"the size: {nwpHeap.Size()}");
+
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> fit2 =
+            //    nwpHeap.GetForwardIterator();
+
+            //Console.WriteLine("\nNEWSPAPERS:\n");
+            //Console.WriteLine($"{fit2.Current().Title} publication year: {fit2.Current().Year} page count: {fit2.Current().PageCount}");
+
+            //for (int i = 0; i < 100; i++) {
+            //    if (fit2.Move()) {
+            //        //Console.WriteLine("\nNEWSPAPERS:\n");
+            //        Console.WriteLine($"{fit2.Current().Title} publication year: {fit2.Current().Year} page count: {fit2.Current().PageCount}");
+            //    }
+            //}
+
+            //Console.WriteLine("---Reverse mode----");
+            //Project2_Iterators.ReverseIterator<Project1_Adapter.NewsPaper> rit2 =
+            //    nwpHeap.GetReverseIterator();
+            //Console.WriteLine("\nNEWSPAPERS:\n");
+            //Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
+            //for (int i = 0; i < 100; i++) {
+            //    if (rit2.Move()) {
+            //        Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
+            //    }
+            //}
+
+           
+            ////Console.WriteLine("Moment of truth:");
+            ////Project2_Algorithms.Algorithms<Project1_Adapter.Book>.Print(bookVector, (T) => T.Year < 2030, false);
+
+
+#endregion
         }
     }
 }

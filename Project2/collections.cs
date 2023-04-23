@@ -200,4 +200,112 @@ namespace Project2_Collections {
             return new ReverseIterator<T>(this);
         }
     }
+
+
+    //Project2 part2
+    public class Heap<T> : BajtpikCollection<T> {
+        private readonly Func<T, T, bool> Comparator;
+        private List<T> HeapList;
+
+        public Heap(Func<T, T, bool> comparator) {
+            this.Comparator = comparator;
+            HeapList = new List<T>();
+        }
+
+        public override ForwardIterator<T> GetForwardIterator() {
+            return new ForwardIterator<T>(this);
+        }
+
+        public override ReverseIterator<T> GetReverseIterator() {
+            return new ReverseIterator<T>(this);
+        }
+
+
+        public override void Add(T item) {
+            HeapList.Add(item);
+            int current = HeapList.Count - 1;
+
+            while(current > 0) {
+                int parent = (current - 1) / 2;
+                if (Comparator(HeapList[current], HeapList[parent])) {
+                    T tmpItem = HeapList[current];
+                    HeapList[current] = HeapList[parent];
+                    HeapList[parent] = tmpItem;
+                    current = parent;
+                }
+                else
+                    break;
+            }
+        }
+        public T Remove() {
+            if (this.HeapList.Count == 0)
+                return default;
+
+            T returnItem = HeapList[0];
+            HeapList[0] = HeapList[HeapList.Count - 1];
+            HeapList.RemoveAt(HeapList.Count - 1);
+            int current = 0;
+
+            while(current * 2 + 1 < HeapList.Count) {
+                int left = current * 2 + 1;
+                int right = current * 2 + 2;
+                int smallest = left;
+
+                if (right < HeapList.Count && Comparator(HeapList[right], HeapList[left]))
+                    smallest = right;
+
+                if (Comparator(HeapList[smallest], HeapList[current])) {
+                    T tmpItem = HeapList[current];
+                    HeapList[current] = HeapList[smallest];
+                    HeapList[smallest] = tmpItem;
+                    current = smallest;
+                }
+                else
+                    break;
+            }
+            return returnItem;
+        }
+
+        public override int Size() {
+            return HeapList.Count;
+        }
+        //this method is obsolete in case of a heap
+        public override bool Remove(T item) {
+            throw new NotImplementedException();
+        }
+
+        //for iterators's sake
+        //iterators just iterates throught the list. no regards to it being a heap
+
+        internal override T? First() {
+            if (HeapList.Count == 0)
+                return default;
+            else
+                return HeapList[0];
+        }
+
+        internal override T? Last() {
+            if (HeapList.Count == 0)
+                return default;
+            else
+                return HeapList[HeapList.Count - 1];
+        }
+
+        internal override T? Next(T item) {
+            int nextIndex = HeapList.IndexOf(item) + 1;
+            if (nextIndex < HeapList.Count)
+                return HeapList[nextIndex];
+            else
+                return default;
+        }
+
+        internal override T? Prev(T item) {
+            int prevIndex = HeapList.IndexOf(item) - 1;
+            if (prevIndex > -1)
+                return HeapList[prevIndex];
+            else
+                return default;
+        }
+    }
+
 }
