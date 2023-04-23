@@ -1,9 +1,23 @@
-﻿
-namespace Project2_Interface1 {
-    public interface BajtpikCollection<T> {
-        public bool Remove(T item);
-        public void Add(T item);
-        public int Size();
+﻿using project2_iterators;
+namespace Project2_Interfaces {
+    public abstract class BajtpikCollection<T> {
+        public abstract bool Remove(T item);
+        public abstract void Add(T item);
+        public abstract int Size();
+        public abstract ForwardIterator<T> GetForwardIterator();
+        public abstract ReverseIterator<T> GetReverseIterator();
 
+        //for iterators' sake
+        internal abstract T? First();
+        internal abstract T? Last();
+        internal abstract T? Next(T item);
+        internal abstract T? Prev(T item);
+    }
+
+    public abstract class BajtpikIterator<T> {
+        public abstract T Current();
+        public abstract bool Move();
+        public abstract void Reset();
+        public abstract bool IsDone();
     }
 }

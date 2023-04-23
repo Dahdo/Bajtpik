@@ -1,5 +1,5 @@
-﻿using Project2_Interface1;
-using System.Threading;
+﻿using Project2_Interfaces;
+using project2_iterators;
 
 namespace Project2_Collections {
     public class Vector<T> : BajtpikCollection<T> {
@@ -11,7 +11,7 @@ namespace Project2_Collections {
             Count = 0;
         }
 
-        public void Add(T item) {
+        public override void Add(T item) {
             Array.Resize(ref Items, ++Count);
             Items[Count - 1] = item;
         }
@@ -36,20 +36,61 @@ namespace Project2_Collections {
             return true;
         }
 
-        public bool Remove(T item) {
-            for(int i = 0; i < Count; i++) {
-                if( EqualityComparer<T>.Default.Equals(Items[i], item))
-                       return RemoveAt(i);
+        private int IndexOf(T item) {
+            for (int i = 0; i < Count; i++) {
+                if (EqualityComparer<T>.Default.Equals(Items[i], item))
+                    return i;
             }
-            return false;
+            return -1;
         }
 
-        public int Size() {
+        public override bool Remove(T item) {
+            int index = IndexOf(item);
+
+            if (index > -1)
+                return RemoveAt(index);
+            else
+                return false;
+        }
+
+        public override int Size() {
             return Count;
+        }
+
+        //for iterators' sake
+
+        internal override T? First() {
+            return Items[0];
+        }
+        internal override T? Last() {
+            return Items[Count - 1];
+        }
+        internal override T? Prev(T item) {
+            int index = IndexOf(item);
+            if (index > 0)
+                return Items[index - 1];
+            else
+                return default;
+        }
+
+        internal override T? Next(T item) {
+            int index = IndexOf(item);
+            if (index < Count - 1)
+                return Items[index + 1];
+            else
+                return default;
+        }
+
+        public override ForwardIterator<T> GetForwardIterator() {
+            return new ForwardIterator<T>(this);
+        }
+
+        public override ReverseIterator<T> GetReverseIterator() {
+            return new ReverseIterator<T>(this);
         }
     }
 
-
+    //DoublyLinkedList
     public class DoublelyLinkedList<T> : BajtpikCollection<T> {
 
         private class Node {
@@ -69,7 +110,7 @@ namespace Project2_Collections {
         public DoublelyLinkedList() {
             Head = Tail = null;
         }
-        public void Add(T item) {
+        public override void Add(T item) {
             Node tmpNode = new Node(item);
 
             if(Head == null)
@@ -83,7 +124,7 @@ namespace Project2_Collections {
             Count++;
         }
 
-        public bool Remove(T item) {
+        public override bool Remove(T item) {
             Node currentNode = Head;
             while(currentNode != null) {
                 if (EqualityComparer<T>.Default.Equals(currentNode.Data, item)) {
@@ -108,8 +149,57 @@ namespace Project2_Collections {
 
             return false;
         }
-        public int Size() {
+        public override int Size() {
             return Count;
+        }
+
+        //for iterators's sake
+
+        private Node GetNodeOf(T data) {
+            Node currentNode = Head;
+            while (currentNode != null) {
+                if (EqualityComparer<T>.Default.Equals(currentNode.Data, data)) {
+                    return currentNode;
+                }
+
+                currentNode = currentNode.Next;
+            }
+
+            return null;
+        }
+
+        internal override T First() {
+            if (Head == null)
+                return default(T);
+            return Head.Data;
+        }
+        internal override T Last() {
+            if (Tail == null)
+                return default(T);
+            return Tail.Data;
+        }
+        internal override T Prev(T item) {
+            Node currNode = GetNodeOf(item);
+
+            if (currNode.Prev == null)
+                return default(T);
+            return currNode.Prev.Data;
+        }
+
+        internal override T Next(T item) {
+            Node currNode = GetNodeOf(item);
+
+            if (currNode.Next == null)
+                return default(T);
+            return currNode.Next.Data;
+        }
+
+        public override ForwardIterator<T> GetForwardIterator() {
+            return new ForwardIterator<T>(this);
+        }
+
+        public override ReverseIterator<T> GetReverseIterator() {
+            return new ReverseIterator<T>(this);
         }
     }
 }

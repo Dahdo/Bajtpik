@@ -222,48 +222,48 @@ namespace Client {
     #region withAdapter
 
             //Books
-            Project1_Interface1.Book book1_1a = new Project1_Adapter1.BookAdapter(book1_s, 1);
-            Project1_Interface1.Book book2_1a = new Project1_Adapter1.BookAdapter(book2_s, 1);
-            Project1_Interface1.Book book3_1a = new Project1_Adapter1.BookAdapter(book3_s, 1);
-            Project1_Interface1.Book book4_1a = new Project1_Adapter1.BookAdapter(book4_s, 1);
-            Project1_Interface1.Book book5_1a = new Project1_Adapter1.BookAdapter(book5_s, 1);
+            Project1_Interfaces.Book book1_1a = new Project1_Adapters.BookAdapter(book1_s, 1);
+            Project1_Interfaces.Book book2_1a = new Project1_Adapters.BookAdapter(book2_s, 1);
+            Project1_Interfaces.Book book3_1a = new Project1_Adapters.BookAdapter(book3_s, 1);
+            Project1_Interfaces.Book book4_1a = new Project1_Adapters.BookAdapter(book4_s, 1);
+            Project1_Interfaces.Book book5_1a = new Project1_Adapters.BookAdapter(book5_s, 1);
 
             //Newspapers
-            Project1_Interface1.NewsPaper nwp1_1a = new Project1_Adapter1.NewsPaperAdapter(nwp1_s, 1);
-            Project1_Interface1.NewsPaper nwp2_1a = new Project1_Adapter1.NewsPaperAdapter(nwp2_s, 1);
-            Project1_Interface1.NewsPaper nwp3_1a = new Project1_Adapter1.NewsPaperAdapter(nwp3_s, 1);
-            Project1_Interface1.NewsPaper nwp4_1a = new Project1_Adapter1.NewsPaperAdapter(nwp4_s, 1);
+            Project1_Interfaces.NewsPaper nwp1_1a = new Project1_Adapters.NewsPaperAdapter(nwp1_s, 1);
+            Project1_Interfaces.NewsPaper nwp2_1a = new Project1_Adapters.NewsPaperAdapter(nwp2_s, 1);
+            Project1_Interfaces.NewsPaper nwp3_1a = new Project1_Adapters.NewsPaperAdapter(nwp3_s, 1);
+            Project1_Interfaces.NewsPaper nwp4_1a = new Project1_Adapters.NewsPaperAdapter(nwp4_s, 1);
 
             //BoardGames
-            Project1_Interface1.BoardGame boardGame1_1a = new Project1_Adapter1.BoardGameAdapter(boardGame1_s, 1);
-            Project1_Interface1.BoardGame boardGame2_1a = new Project1_Adapter1.BoardGameAdapter(boardGame2_s, 1);
-            Project1_Interface1.BoardGame boardGame3_1a = new Project1_Adapter1.BoardGameAdapter(boardGame3_s, 1);
-            Project1_Interface1.BoardGame boardGame4_1a = new Project1_Adapter1.BoardGameAdapter(boardGame4_s, 1);
+            Project1_Interfaces.BoardGame boardGame1_1a = new Project1_Adapters.BoardGameAdapter(boardGame1_s, 1);
+            Project1_Interfaces.BoardGame boardGame2_1a = new Project1_Adapters.BoardGameAdapter(boardGame2_s, 1);
+            Project1_Interfaces.BoardGame boardGame3_1a = new Project1_Adapters.BoardGameAdapter(boardGame3_s, 1);
+            Project1_Interfaces.BoardGame boardGame4_1a = new Project1_Adapters.BoardGameAdapter(boardGame4_s, 1);
 
-            List<Project1_Interface1.Book> bookList_1a = new List<Project1_Interface1.Book> { book1_1a, book2_1a, book3_1a, book4_1a, book5_1a };
-            List<Project1_Interface1.NewsPaper> newsPaperList_1a = new List<Project1_Interface1.NewsPaper> { nwp1_1a, nwp2_1a, nwp3_1a, nwp4_1a };
-            List<Project1_Interface1.BoardGame> boardGameList_1a = new List<Project1_Interface1.BoardGame> { boardGame1_1a, boardGame2_1a, boardGame3_1a, boardGame4_1a };
+            List<Project1_Interfaces.Book> bookList_1a = new List<Project1_Interfaces.Book> { book1_1a, book2_1a, book3_1a, book4_1a, book5_1a };
+            List<Project1_Interfaces.NewsPaper> newsPaperList_1a = new List<Project1_Interfaces.NewsPaper> { nwp1_1a, nwp2_1a, nwp3_1a, nwp4_1a };
+            List<Project1_Interfaces.BoardGame> boardGameList_1a = new List<Project1_Interfaces.BoardGame> { boardGame1_1a, boardGame2_1a, boardGame3_1a, boardGame4_1a };
 
     #if PRINTREP1
             //printing 
             Console.WriteLine("\n\n------------------------Representation 1 (With Adapter) ---------------------");
             Console.WriteLine("BOOKS:\n");
-            foreach (Interface1.Book book in bookList_1a) {
+            foreach (Project1_Interfaces.Book book in bookList_1a) {
                 Console.Write($"{book.Title} by Author(s):");
-                foreach (Interface1.Author author in book.Authors)
+                foreach (Project1_Interfaces.Author author in book.Authors)
                     Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
                 Console.WriteLine($" publication year: {book.Year} page count: {book.PageCount}");
             }
 
             Console.WriteLine("\nNEWSPAPERS:\n");
-            foreach (Interface1.NewsPaper newspaper in newsPaperList_1a) {
+            foreach (Project1_Interfaces.NewsPaper newspaper in newsPaperList_1a) {
                 Console.WriteLine($"{newspaper.Title} publication year: {newspaper.Year} page count: {newspaper.PageCount}");
             }
 
             Console.WriteLine("\nBOARD GAMES:\n");
-            foreach (Interface1.BoardGame bgame in boardGameList_1a) {
+            foreach (Project1_Interfaces.BoardGame bgame in boardGameList_1a) {
                 Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
-                foreach (Interface1.Author author in bgame.Authors)
+                foreach (Project1_Interfaces.Author author in bgame.Authors)
                     Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
                 Console.WriteLine();
             }
@@ -341,37 +341,37 @@ namespace Client {
             SecondaryFormat.NewsPaper nwp4_s4 = new SecondaryFormat.NewsPaper(keys[43], 43, 44);
 
             //Books
-            Project1_Interface1.Book book1_4a = new Project1_Adapter1.BookAdapter(book1_s4, 4);
-            Project1_Interface1.Book book2_4a = new Project1_Adapter1.BookAdapter(book2_s4, 4);
-            Project1_Interface1.Book book3_4a = new Project1_Adapter1.BookAdapter(book3_s4, 4);
-            Project1_Interface1.Book book4_4a = new Project1_Adapter1.BookAdapter(book4_s4, 4);
-            Project1_Interface1.Book book5_4a = new Project1_Adapter1.BookAdapter(book5_s4, 4);
+            Project1_Interfaces.Book book1_4a = new Project1_Adapters.BookAdapter(book1_s4, 4);
+            Project1_Interfaces.Book book2_4a = new Project1_Adapters.BookAdapter(book2_s4, 4);
+            Project1_Interfaces.Book book3_4a = new Project1_Adapters.BookAdapter(book3_s4, 4);
+            Project1_Interfaces.Book book4_4a = new Project1_Adapters.BookAdapter(book4_s4, 4);
+            Project1_Interfaces.Book book5_4a = new Project1_Adapters.BookAdapter(book5_s4, 4);
 
             //Newspapers
-            Project1_Interface1.NewsPaper nwp1_4a = new Project1_Adapter1.NewsPaperAdapter(nwp1_s4, 4);
-            Project1_Interface1.NewsPaper nwp2_4a = new Project1_Adapter1.NewsPaperAdapter(nwp2_s4, 4);
-            Project1_Interface1.NewsPaper nwp3_4a = new Project1_Adapter1.NewsPaperAdapter(nwp3_s4, 4);
-            Project1_Interface1.NewsPaper nwp4_4a = new Project1_Adapter1.NewsPaperAdapter(nwp4_s4, 4);
+            Project1_Interfaces.NewsPaper nwp1_4a = new Project1_Adapters.NewsPaperAdapter(nwp1_s4, 4);
+            Project1_Interfaces.NewsPaper nwp2_4a = new Project1_Adapters.NewsPaperAdapter(nwp2_s4, 4);
+            Project1_Interfaces.NewsPaper nwp3_4a = new Project1_Adapters.NewsPaperAdapter(nwp3_s4, 4);
+            Project1_Interfaces.NewsPaper nwp4_4a = new Project1_Adapters.NewsPaperAdapter(nwp4_s4, 4);
 
             //BoardGames
-            Project1_Interface1.BoardGame boardGame1_4a = new Project1_Adapter1.BoardGameAdapter(boardGame1_s4, 4);
-            Project1_Interface1.BoardGame boardGame2_4a = new Project1_Adapter1.BoardGameAdapter(boardGame2_s4, 4);
-            Project1_Interface1.BoardGame boardGame3_4a = new Project1_Adapter1.BoardGameAdapter(boardGame3_s4, 4);
-            Project1_Interface1.BoardGame boardGame4_4a = new Project1_Adapter1.BoardGameAdapter(boardGame4_s4, 4);
+            Project1_Interfaces.BoardGame boardGame1_4a = new Project1_Adapters.BoardGameAdapter(boardGame1_s4, 4);
+            Project1_Interfaces.BoardGame boardGame2_4a = new Project1_Adapters.BoardGameAdapter(boardGame2_s4, 4);
+            Project1_Interfaces.BoardGame boardGame3_4a = new Project1_Adapters.BoardGameAdapter(boardGame3_s4, 4);
+            Project1_Interfaces.BoardGame boardGame4_4a = new Project1_Adapters.BoardGameAdapter(boardGame4_s4, 4);
 
-            List<Project1_Interface1.Book> bookList_4a = new List<Project1_Interface1.Book> { book1_4a, book2_4a, book3_4a, book4_4a, book5_4a };
-            List<Project1_Interface1.NewsPaper> newsPaperList_4a = new List<Project1_Interface1.NewsPaper> { nwp1_4a, nwp2_4a, nwp3_4a, nwp4_4a };
-            List<Project1_Interface1.BoardGame> boardGameList_4a = new List<Project1_Interface1.BoardGame> { boardGame1_4a, boardGame2_4a, boardGame3_4a, boardGame4_4a };
+            List<Project1_Interfaces.Book> bookList_4a = new List<Project1_Interfaces.Book> { book1_4a, book2_4a, book3_4a, book4_4a, book5_4a };
+            List<Project1_Interfaces.NewsPaper> newsPaperList_4a = new List<Project1_Interfaces.NewsPaper> { nwp1_4a, nwp2_4a, nwp3_4a, nwp4_4a };
+            List<Project1_Interfaces.BoardGame> boardGameList_4a = new List<Project1_Interfaces.BoardGame> { boardGame1_4a, boardGame2_4a, boardGame3_4a, boardGame4_4a };
 
 #if PRINTREP4
             //printing 
             Console.WriteLine("\n\n------------------------Representation 4 (With Adapter) ---------------------");
             Console.WriteLine("BOOKS [with atleast one author born after 1970]:\n");
-            foreach (Interface1.Book book in bookList_4a) {
+            foreach (Project1_Interfaces.Book book in bookList_4a) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append($"{book.Title} by Author(s):");
                 bool bornAfter1970 = false;
-                foreach (Interface1.Author author in book.Authors) {
+                foreach (Project1_Interfaces.Author author in book.Authors) {
                     if (author.BirthYear > 1970) {
                         bornAfter1970 = true;
                         stringBuilder.Append($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
@@ -384,16 +384,16 @@ namespace Client {
             }
 
             Console.WriteLine("\nNEWSPAPERS:\n");
-            foreach (Interface1.NewsPaper newspaper in newsPaperList_4a) {
+            foreach (Project1_Interfaces.NewsPaper newspaper in newsPaperList_4a) {
                 Console.WriteLine($"{newspaper.Title} publication year: {newspaper.Year} page count: {newspaper.PageCount}");
             }
 
             Console.WriteLine("\nBOARD GAMES [with atleast one author born after 1970]:\n");
-            foreach (Interface1.BoardGame bgame in boardGameList_4a) {
+            foreach (Project1_Interfaces.BoardGame bgame in boardGameList_4a) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
                 bool bornAfter1970 = false;
-                foreach (Interface1.Author author in bgame.Authors) {
+                foreach (Project1_Interfaces.Author author in bgame.Authors) {
                     if(author.BirthYear > 1970) {
                         bornAfter1970 = true;
                         stringBuilder.Append($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
@@ -409,21 +409,79 @@ namespace Client {
             #endregion
 
             #region Project2_0
-            Project2_Collections.Vector<Project1_Interface1.Book> bookVector = new Project2_Collections.Vector<Project1_Interface1.Book>();
+
+            Project2_Collections.Vector<Project1_Interfaces.Book> bookVector = new Project2_Collections.Vector<Project1_Interfaces.Book>();
             bookVector.Add(book1_4a);
             bookVector.Add(book2_4a);
             bookVector.Add(book1_1a);
-            bookVector.Remove(book3_4a);
+            bookVector.Remove(book1_4a);
             Console.WriteLine($"the size: {bookVector.Size()}");
 
-            Project2_Collections.DoublelyLinkedList<Project1_Interface1.NewsPaper> nwpList
-                = new Project2_Collections.DoublelyLinkedList<Project1_Interface1.NewsPaper>();
+            Project2_Collections.DoublelyLinkedList<Project1_Interfaces.NewsPaper> nwpList
+                = new Project2_Collections.DoublelyLinkedList<Project1_Interfaces.NewsPaper>();
+            nwpList.Add(nwp1_4a);
+            nwpList.Add(nwp2_4a);
+            nwpList.Add(nwp3_4a);
             nwpList.Add(nwp4_4a);
-            nwpList.Add(nwp1_1a);
-            nwpList.Add(nwp4_4a);
-            nwpList.Add(nwp1_1a);
-            nwpList.Remove(nwp2_4a);
+            nwpList.Remove(nwp4_4a);
             Console.WriteLine($"the size: {nwpList.Size()}");
+
+            project2_iterators.ForwardIterator<Project1_Interfaces.NewsPaper> fit =
+                nwpList.GetForwardIterator();
+
+            Console.WriteLine("\nNEWSPAPERS:\n");
+            Console.WriteLine($"{fit.Current().Title} publication year: {fit.Current().Year} page count: {fit.Current().PageCount}");
+
+            for (int i = 0; i < 100; i++) {
+                if (fit.Move()) {
+                    Console.WriteLine($"{fit.Current().Title} publication year: {fit.Current().Year} page count: {fit.Current().PageCount}");
+                }
+            }
+
+            Console.WriteLine("---Reverse mode----");
+            project2_iterators.ReverseIterator<Project1_Interfaces.NewsPaper> rit =
+                nwpList.GetReverseIterator();
+            Console.WriteLine("\nNEWSPAPERS:\n");
+            Console.WriteLine($"{rit.Current().Title} publication year: {rit.Current().Year} page count: {rit.Current().PageCount}");
+            for (int i = 0; i < 100; i++) {
+                if (rit.Move()) {
+                    Console.WriteLine($"{rit.Current().Title} publication year: {rit.Current().Year} page count: {rit.Current().PageCount}");
+                }
+            }
+
+            Console.WriteLine("-----------------");
+            Project2_Collections.Vector<Project1_Interfaces.NewsPaper> nwpVector
+                = new Project2_Collections.Vector<Project1_Interfaces.NewsPaper>();
+            nwpVector.Add(nwp1_4a);
+            nwpVector.Add(nwp2_4a);
+            nwpVector.Add(nwp3_4a);
+            nwpVector.Add(nwp4_4a);
+            nwpVector.Remove(nwp4_4a);
+            Console.WriteLine($"the size: {nwpVector.Size()}");
+
+            project2_iterators.ForwardIterator<Project1_Interfaces.NewsPaper> fit2 =
+                nwpVector.GetForwardIterator();
+
+            Console.WriteLine("\nNEWSPAPERS:\n");
+            Console.WriteLine($"{fit2.Current().Title} publication year: {fit2.Current().Year} page count: {fit2.Current().PageCount}");
+
+            for (int i = 0; i < 100; i++) {
+                if (fit2.Move()) {
+                    //Console.WriteLine("\nNEWSPAPERS:\n");
+                    Console.WriteLine($"{fit2.Current().Title} publication year: {fit.Current().Year} page count: {fit2.Current().PageCount}");
+                }
+            }
+
+            Console.WriteLine("---Reverse mode----");
+            project2_iterators.ReverseIterator<Project1_Interfaces.NewsPaper> rit2 =
+                nwpVector.GetReverseIterator();
+            Console.WriteLine("\nNEWSPAPERS:\n");
+            Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
+            for (int i = 0; i < 100; i++) {
+                if (rit2.Move()) {
+                    Console.WriteLine($"{rit2.Current().Title} publication year: {rit2.Current().Year} page count: {rit2.Current().PageCount}");
+                }
+            }
 
 
 
