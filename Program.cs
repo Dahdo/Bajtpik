@@ -483,12 +483,13 @@ namespace Client {
                 }
             }
 
-            Project1_Adapter.NewsPaper testNwp = Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.Find(nwpVector,(T) => T.Year == 1869 , false);
+            //Project1_Adapter.NewsPaper testNwp = Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.Find(nwpVector,(T) => T.Year == 1869 , false);
+            //Console.WriteLine("Moment of truth:");
+            //Console.WriteLine($"{testNwp.Title} publication year: {testNwp.Year} page count: {testNwp.PageCount}");
             Console.WriteLine("Moment of truth:");
-            Console.WriteLine($"{testNwp.Title} publication year: {testNwp.Year} page count: {testNwp.PageCount}");
+            Project2_Algorithms.Algorithms<Project1_Adapter.Book>.Print(bookVector, (T) => T.Year < 2030, false);
 
-
-
+            
 #if PRINTPROJ2_0
 
 #endif
