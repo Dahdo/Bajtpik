@@ -1,8 +1,10 @@
-﻿namespace Project1_Adapter {
+﻿using System.Text;
+
+namespace Project1_Adapter {
     public class BookAdapter : Book {
         private readonly SecondaryFormat.Book book;
         private readonly int numRepr;
-        string Book.Title {
+        public string Title {
             get {
                 if (numRepr == 1)
                    return Client.Program.stringMap[book.Title];
@@ -16,7 +18,7 @@
                     Client.Program.stringHashMap[book.Title] = value;
             }
         }
-        List<Author> Book.Authors {
+        public List<Author> Authors {
             get {
                 if(numRepr == 1) {
                     List<Author> authorList = new List<Author>();
@@ -40,11 +42,11 @@
             set {}
             
         }
-        int Book.Year {
+        public int Year {
             get => (int)Client.Program.intMap[book.Year];
             set => Client.Program.intMap[book.Year] = value; 
         }
-        int Book.PageCount {
+        public int PageCount {
             get => (int)Client.Program.intMap[book.PageCount];
             set => Client.Program.intMap[book.PageCount] = value;
         }
@@ -53,12 +55,23 @@
             this.book = book;
             this.numRepr = numRepr;
         }
+
+        public override string ToString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("[BOOK] ");
+            stringBuilder.Append($"Title: {this.Title}, Year: {this.Year}, Pages: {this.PageCount}, Author(s):\n");
+            foreach (Author author in this.Authors) {
+                stringBuilder.Append(author.ToString());
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 
     public class NewsPaperAdapter : NewsPaper {
         private readonly SecondaryFormat.NewsPaper newsPaper;
         private readonly int numRepr;
-        string NewsPaper.Title {
+        public string Title {
             get {
                 if(numRepr == 1)
                     return Client.Program.stringMap[newsPaper.Title];
@@ -72,11 +85,11 @@
                     Client.Program.stringHashMap[newsPaper.Title] = value;
             }
         }
-        int NewsPaper.Year {
+        public int Year {
             get => (int)Client.Program.intMap[newsPaper.Year];
             set => Client.Program.intMap[newsPaper.Year] = value;
         }
-        int NewsPaper.PageCount {
+        public int PageCount {
             get => (int)Client.Program.intMap[newsPaper.PageCount];
             set => Client.Program.intMap[newsPaper.PageCount] = value;
         }
@@ -85,12 +98,20 @@
             this.newsPaper = newspaper;
             this.numRepr = numRepr;
         }
+
+        public override string ToString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("[News Paper] ");
+            stringBuilder.Append($"Title: {this.Title}, Year: {this.Year}, Pages: {this.PageCount}");
+
+            return stringBuilder.ToString();
+        }
     }
 
     public class BoardGameAdapter : BoardGame {
         private readonly SecondaryFormat.BoardGame boardGame;
         private readonly int numRepr;
-        string BoardGame.Title {
+        public string Title {
             get {
                 if(numRepr == 1)
                     return Client.Program.stringMap[boardGame.Title];
@@ -104,19 +125,19 @@
                     Client.Program.stringHashMap[boardGame.Title] = value;
             }
         }
-        int BoardGame.MinPlayer {
+        public int MinPlayer {
             get => (int)Client.Program.intMap[boardGame.MinPlayer];
             set => Client.Program.intMap[boardGame.MinPlayer] = value;
         }
-        int BoardGame.MaxPlayer {
+        public int MaxPlayer {
             get => (int)Client.Program.intMap[boardGame.MaxPlayer];
             set => Client.Program.intMap[boardGame.MaxPlayer] = value;
         }
-        int BoardGame.Diffuculty {
+        public int Diffuculty {
             get => (int)Client.Program.intMap[boardGame.Diffuculty];
             set => Client.Program.intMap[boardGame.Diffuculty] = value;
         }
-        List<Author> BoardGame.Authors {
+        public List<Author> Authors {
             get {
                 if(numRepr == 1) {
                     List<Author> authorList = new List<Author>();
@@ -145,12 +166,22 @@
             this.boardGame = boardGame;
             this.numRepr = numRepr;
         }
+
+        public override string ToString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("[Board Game] ");
+            stringBuilder.Append($"Title: {this.Title}, Min. Players: {this.MinPlayer}, Max. Players: {this.MaxPlayer}, Difficulty: {this.Diffuculty} Author(s):\n");
+            foreach (Project1_Adapter.Author author in this.Authors) {
+                stringBuilder.Append(author.ToString());
+            }
+            return stringBuilder.ToString();
+        }
     }
 
     public class AuthorAdapter : Author {
         private readonly SecondaryFormat.Author author;
         private readonly int numRepr;
-        string Author.Name {
+        public string Name {
             get {
                 if(numRepr == 1)
                     return Client.Program.stringMap[author.Name];
@@ -164,7 +195,7 @@
                     Client.Program.stringHashMap[author.Name] = value;
             }
         }
-        string Author.Surname {
+        public string Surname {
             get {
                 if (numRepr == 1)
                     return Client.Program.stringMap[author.Surname];
@@ -178,7 +209,7 @@
                     Client.Program.stringHashMap[author.Surname] = value;
             }
         }
-        string? Author.Nickname {
+        public string? Nickname {
             get {
                 if (numRepr == 1)
                     return Client.Program.stringMap[author.Nickname];
@@ -192,7 +223,7 @@
                     Client.Program.stringHashMap[author.Nickname] = value;
             }
         }
-        int Author.BirthYear {
+        public int BirthYear {
             get => (int)Client.Program.intMap[author.BirthYear];
             set => Client.Program.intMap[author.BirthYear] = value;
         }
@@ -200,6 +231,14 @@
         public AuthorAdapter(SecondaryFormat.Author author, int numRepr) {
             this.author = author;
             this.numRepr = numRepr;
+        }
+
+        public override string ToString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("[Author] ");
+            stringBuilder.Append($"Names: {this.Name} {this.Surname} {this.Nickname}, Born: {this.BirthYear}");
+
+            return stringBuilder.ToString();
         }
     }
 }
