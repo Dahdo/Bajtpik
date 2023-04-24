@@ -4,15 +4,10 @@ using System.Runtime.CompilerServices;
 
 namespace Project2_Algorithms {
     public static class Algorithms<T> {
-        public static T? Find(BajtpikCollection<T> collection, Func<T, bool> condition, bool begin) {
-            if (collection == null || condition == null)
+        public static T? Find(BajtpikIterator<T> it, Func<T, bool> condition) {
+            if (it == null)
                 return default;
 
-            BajtpikIterator<T> it;
-            if (begin)
-                it = collection.GetForwardIterator();
-            else
-                it = collection.GetReverseIterator();
             do {
                 if (condition(it.Current()))
                     return it.Current();
