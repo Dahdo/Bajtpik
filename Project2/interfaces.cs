@@ -17,7 +17,7 @@ namespace Project2_Collections {
 
 namespace Project2_Iterators {
     public abstract class BajtpikIterator<T> {
-        public abstract T Current();
+        public abstract T? Current();
         public abstract bool Move();
         public abstract void Reset();
         public abstract bool IsDone();
