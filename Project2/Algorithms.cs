@@ -16,6 +16,44 @@ namespace Project2_Algorithms {
             return default;
         }
 
+        public static int CountIf(BajtpikIterator<T> it, Func<T, bool> condition) {
+            if (it == null)
+                return default;
+            int count = 0;
+
+            do {
+                if (condition(it.Current()))
+                    count++;
+            } while (it.Move());
+
+            return count;
+        }
+
+        public static void ForEach(BajtpikIterator<T> it, Action<T> action) {
+            if (it == null)
+                return;
+
+            do {
+                T? currentItem;
+                if (typeof(T) == typeof(Project1_Adapter.Book))
+                    currentItem = (T)((Project1_Adapter.Book)it.Current()!)?.Clone()!;
+
+                else if (typeof(T) == typeof(Project1_Adapter.Author))
+                    currentItem = (T)((Project1_Adapter.Author)it.Current()!)?.Clone()!;
+
+                else if (typeof(T) == typeof(Project1_Adapter.NewsPaper))
+                    currentItem = (T)((Project1_Adapter.NewsPaper)it.Current()!)?.Clone()!;
+
+                else if (typeof(T) == typeof(Project1_Adapter.BoardGame))
+                    currentItem = (T)((Project1_Adapter.BoardGame)it.Current()!)?.Clone()!;
+
+                else
+                    return;
+
+                action(currentItem);
+            } while (it.Move());
+        }
+
         public static void Print(BajtpikCollection<T> collection, Func<T, bool> condition, bool begin) {
             if (collection == null || condition == null)
                 return;
