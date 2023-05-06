@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Project1_Adapter {
     public class BookAdapter : Book {
@@ -66,6 +67,9 @@ namespace Project1_Adapter {
 
             return stringBuilder.ToString();
         }
+        public Book Clone() {
+            return (Book)this.MemberwiseClone();
+        }
     }
 
     public class NewsPaperAdapter : NewsPaper {
@@ -105,6 +109,10 @@ namespace Project1_Adapter {
             stringBuilder.Append($"Title: {this.Title}, Year: {this.Year}, Pages: {this.PageCount}");
 
             return stringBuilder.ToString();
+        }
+
+        public NewsPaper Clone() {
+            return (NewsPaper)this.MemberwiseClone();
         }
     }
 
@@ -176,6 +184,10 @@ namespace Project1_Adapter {
             }
             return stringBuilder.ToString();
         }
+
+        public BoardGame Clone() {
+            return (BoardGame)this.MemberwiseClone();
+        }
     }
 
     public class AuthorAdapter : Author {
@@ -239,6 +251,10 @@ namespace Project1_Adapter {
             stringBuilder.Append($"Names: {this.Name} {this.Surname} {this.Nickname}, Born: {this.BirthYear}");
 
             return stringBuilder.ToString();
+        }
+
+        public Author Clone() {
+            return (Author)this.MemberwiseClone();
         }
     }
 }

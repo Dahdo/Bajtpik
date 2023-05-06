@@ -23,6 +23,10 @@ namespace MainFormat {
 
             return stringBuilder.ToString();
         }
+
+        public Project1_Adapter.Book Clone() {
+            return (Book)this.MemberwiseClone();
+        }
     }
 
     public class NewsPaper : Project1_Adapter.NewsPaper {
@@ -41,6 +45,10 @@ namespace MainFormat {
             stringBuilder.Append($"Title: {this.Title}, Year: {this.Year}, Pages: {this.PageCount}");
 
             return stringBuilder.ToString();
+        }
+
+        public Project1_Adapter.NewsPaper Clone() {
+            return (NewsPaper)this.MemberwiseClone();
         }
     }
     public class BoardGame : Project1_Adapter.BoardGame {
@@ -65,6 +73,10 @@ namespace MainFormat {
             }
             return stringBuilder.ToString();
         }
+
+        public Project1_Adapter.BoardGame Clone() {
+            return (BoardGame)this.MemberwiseClone();
+        }
     }
 
     public class Author : Project1_Adapter.Author {
@@ -86,6 +98,9 @@ namespace MainFormat {
             stringBuilder.Append($"Names: {this.Name} {this.Surname} {this.Nickname}, Born: {this.BirthYear}");
 
             return stringBuilder.ToString();
+        }
+        public Project1_Adapter.Author Clone() {
+            return (Author)this.MemberwiseClone();
         }
     }
 }

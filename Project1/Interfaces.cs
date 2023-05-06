@@ -1,12 +1,11 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Project1_Adapter {
+﻿namespace Project1_Adapter {
     public interface Book {
         public string Title { get; set; }
         public List<Author> Authors { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
         public string ToString();
+        public Book Clone();
     }
 
     public interface NewsPaper {
@@ -15,6 +14,7 @@ namespace Project1_Adapter {
         public int PageCount { get; set; }
 
         public string ToString();
+        public NewsPaper Clone();
     }
 
     public interface BoardGame {
@@ -25,6 +25,7 @@ namespace Project1_Adapter {
         public List<Author> Authors { get; set; }
 
         public string ToString();
+        public BoardGame Clone();
     }
 
     public interface Author {
@@ -34,5 +35,6 @@ namespace Project1_Adapter {
         public int BirthYear { get; set; }
 
         public string ToString();
+        public Author Clone();
     }
 }
