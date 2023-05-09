@@ -1,4 +1,5 @@
 ﻿using Project2_Iterators;
+using Project3_Strategy;
 namespace Project2_Collections {
     public abstract class BajtpikCollection<T> {
         public abstract bool Remove(T item);
@@ -6,6 +7,9 @@ namespace Project2_Collections {
         public abstract int Size();
         public abstract ForwardIterator<T> GetForwardIterator();
         public abstract ReverseIterator<T> GetReverseIterator();
+
+        //for project3
+        public abstract void SetStrategy(Strategy strategy);
 
         //for iterators' sake
         internal abstract T? First();

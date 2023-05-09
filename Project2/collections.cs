@@ -1,8 +1,11 @@
 ﻿using Project2_Iterators;
+using Project3_Strategy;
+
 namespace Project2_Collections {
     public class Vector<T> : BajtpikCollection<T> {
         private T[] Items;
         private int Count;
+        private Strategy strategy;
 
         public Vector() {
             Items = new T[0];
@@ -86,6 +89,10 @@ namespace Project2_Collections {
         public override ReverseIterator<T> GetReverseIterator() {
             return new ReverseIterator<T>(this);
         }
+
+        public override void SetStrategy(Strategy strategy) {
+            throw new NotImplementedException();
+        }
     }
 
     //DoublyLinkedList
@@ -104,6 +111,7 @@ namespace Project2_Collections {
         private Node? Head;
         private Node? Tail;
         private int Count;
+        private Strategy strategy;
 
         public DoublelyLinkedList() {
             Head = Tail = null;
@@ -199,6 +207,10 @@ namespace Project2_Collections {
         public override ReverseIterator<T> GetReverseIterator() {
             return new ReverseIterator<T>(this);
         }
+
+        public override void SetStrategy(Strategy strategy) {
+            throw new NotImplementedException();
+        }
     }
 
 
@@ -206,6 +218,7 @@ namespace Project2_Collections {
     public class Heap<T> : BajtpikCollection<T> {
         private readonly Func<T, T, bool> Comparator;
         private List<T> HeapList;
+        private Strategy strategy;
 
         public Heap(Func<T, T, bool> comparator) {
             this.Comparator = comparator;
@@ -305,6 +318,10 @@ namespace Project2_Collections {
                 return HeapList[prevIndex];
             else
                 return default;
+        }
+
+        public override void SetStrategy(Strategy strategy) {
+            throw new NotImplementedException();
         }
     }
 
