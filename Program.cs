@@ -1,7 +1,8 @@
-﻿#define PRINTMAIN
-#define PRINTREP1
-#define PRINTREP4
-#define PRINTPROJ2
+﻿//#define PRINTMAIN
+//#define PRINTREP1
+//#define PRINTREP4
+//#define PRINTPROJ2
+#define PRINTPROJ3
 
 using Project2_Collections;
 using SecondaryFormat;
@@ -407,7 +408,7 @@ namespace Client {
 
             #endregion
 
-            #region Project2_0
+#region Project2_0
 
             Project2_Collections.Vector<Project1_Adapter.Book> bookVector = new Project2_Collections.Vector<Project1_Adapter.Book>();
             bookVector.Add(book1_4a);
@@ -529,9 +530,13 @@ namespace Client {
             Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.ForEach(ffit, myAction);
             Project2_Algorithms.Algorithms<Project1_Adapter.Book>.Print(bookVector, (T) => T.Year < 2030, false);
 
-            #endif
+#endif
 
             #endregion
+
+#region Project_3
+
+#endregion
         }
     }
 }
