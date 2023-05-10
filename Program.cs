@@ -6,7 +6,6 @@
 
 using Project2_Collections;
 using SecondaryFormat;
-using Project3_Strategy;
 
 namespace Client {
     internal class Program {
@@ -533,10 +532,7 @@ namespace Client {
             #endregion
 
             #region Project_3
-            Dictionary<String, Strategy> commandStrategyMap = new Dictionary<string, Strategy>();
-
             //creating collections of objects of different representations.
-
             Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
                 new Project2_Collections.Vector<Project1_Adapter.Book>();
                     //secondary representation (adapted)

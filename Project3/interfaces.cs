@@ -1,6 +1,6 @@
 ﻿
-namespace Project3_Strategy {
-    public interface Strategy {
+namespace Project3_Visitor {
+    public interface Visitor<T> {
         public void print();
     }
 }
