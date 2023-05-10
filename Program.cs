@@ -594,9 +594,9 @@ namespace Client {
             //Project2_Algorithms.Algorithms<Project1_Adapter.BoardGame>.ForEach(bGameFit, bGamePrintAction);
 
 
-            //while (!String.Equals(Console.ReadLine(), "exit", StringComparison.OrdinalIgnoreCase)) {
+            while (!String.Equals(Console.ReadLine(), "exit", StringComparison.OrdinalIgnoreCase)) {
 
-            //}
+            }
             #endregion
         }
     }
