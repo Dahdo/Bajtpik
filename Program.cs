@@ -6,9 +6,7 @@
 
 using Project2_Collections;
 using SecondaryFormat;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Project3_Strategy;
 
 namespace Client {
     internal class Program {
@@ -534,9 +532,72 @@ namespace Client {
 
             #endregion
 
-#region Project_3
+            #region Project_3
+            Dictionary<String, Strategy> commandStrategyMap = new Dictionary<string, Strategy>();
 
-#endregion
+            //creating collections of objects of different representations.
+
+            Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
+                new Project2_Collections.Vector<Project1_Adapter.Book>();
+                    //secondary representation (adapted)
+                bookVector_proj2.Add(book1_1a);
+                bookVector_proj2.Add(book2_1a);
+                bookVector_proj2.Add(book3_1a);
+                    //base representation
+                bookVector_proj2.Add(book4);
+                bookVector_proj2.Add(book5);
+
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.Book> bookFit =
+            //    bookVector_proj2.GetForwardIterator();
+
+            Project2_Collections.Heap<Project1_Adapter.BoardGame> bGameHeap_proj2 =
+                new Project2_Collections.Heap<Project1_Adapter.BoardGame>((a, b) => a.MaxPlayer < b.MaxPlayer);
+                    //secondary representation (adapted)
+                 bGameHeap_proj2.Add(boardGame1_4a);
+                 bGameHeap_proj2.Add(boardGame2_4a);
+                    //base representation
+                 bGameHeap_proj2.Add(scrabble);
+                 bGameHeap_proj2.Add(twilightImperium);
+
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.BoardGame> bGameFit =
+            //    bGameHeap_proj2.GetForwardIterator();
+
+
+            Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper> nwpLinkedList_proj2 = 
+                new Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper>();
+                    //secondary representation(adapted)
+                nwpLinkedList_proj2.Add(nwp1_1a);
+                nwpLinkedList_proj2.Add(nwp2_1a);
+                    //base representation
+                nwpLinkedList_proj2.Add(nwp3);
+                nwpLinkedList_proj2.Add(nwp4);
+
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> nwpFit =
+            //    nwpLinkedList_proj2.GetForwardIterator();
+
+            //Action<Project1_Adapter.Book> bookPrintAction = (T) => {
+            //    Console.WriteLine(T.ToString());
+            //};
+
+            //Action<Project1_Adapter.NewsPaper> nwpPrintAction = (T) => {
+            //    Console.WriteLine(T.ToString());
+            //};
+
+            //Action<Project1_Adapter.BoardGame> bGamePrintAction = (T) => {
+            //    Console.WriteLine(T.ToString());
+            //};
+            //Console.WriteLine("\nBook\n--------------------------");
+            //Project2_Algorithms.Algorithms<Project1_Adapter.Book>.ForEach(bookFit, bookPrintAction);
+            //Console.WriteLine("\nNews paper\n--------------------------");
+            //Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.ForEach(nwpFit, nwpPrintAction);
+            //Console.WriteLine("\nBoard game\n--------------------------");
+            //Project2_Algorithms.Algorithms<Project1_Adapter.BoardGame>.ForEach(bGameFit, bGamePrintAction);
+
+
+            //while (!String.Equals(Console.ReadLine(), "exit", StringComparison.OrdinalIgnoreCase)) {
+
+            //}
+            #endregion
         }
     }
 }
