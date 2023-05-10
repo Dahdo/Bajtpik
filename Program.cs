@@ -5,6 +5,8 @@
 #define PRINTPROJ3
 
 using Project2_Collections;
+using Project3_CollectionWrapper;
+using Project3_Visitor;
 using SecondaryFormat;
 
 namespace Client {
@@ -589,6 +591,16 @@ namespace Client {
             //Console.WriteLine("\nBoard game\n--------------------------");
             //Project2_Algorithms.Algorithms<Project1_Adapter.BoardGame>.ForEach(bGameFit, bGamePrintAction);
 
+            Dictionary<String, CollectionWrapper> collectionsDictionary = new Dictionary<string, CollectionWrapper>();
+            collectionsDictionary.Add("book", bookVector_proj2);
+            collectionsDictionary.Add("newspaper", nwpLinkedList_proj2);
+            collectionsDictionary.Add("boardgame", bGameHeap_proj2);
+
+
+            Dictionary<String, Visitor> commandsDictionary = new Dictionary<String, Visitor>();
+            commandsDictionary.Add("list", new ListVisitor());
+            commandsDictionary.Add("find", new FindVisitor());
+            commandsDictionary.Add("add", new AddVisitor());
 
             while (!String.Equals(Console.ReadLine(), "exit", StringComparison.OrdinalIgnoreCase)) {
 
