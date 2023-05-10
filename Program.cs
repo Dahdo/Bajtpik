@@ -533,8 +533,44 @@ namespace Client {
 
             #endregion
 
-            #region Project_3
+#region Project_3
+            #region someAuthors
+            //some Authors objects. (adapted seconary representation)
+            Project1_Adapter.Author jamey_s_1a = new Project1_Adapter.AuthorAdapter(jamey_s, 1);
+            Project1_Adapter.Author jakub_s_1a = new Project1_Adapter.AuthorAdapter(jakub_s, 1);
+            Project1_Adapter.Author klaus_s_1a = new Project1_Adapter.AuthorAdapter(klaus_s, 1);
+            Project1_Adapter.Author alfred_s_1a = new Project1_Adapter.AuthorAdapter(alfred_s, 1);
+            Project1_Adapter.Author james_s_1a = new Project1_Adapter.AuthorAdapter(james_s, 1);
+            Project1_Adapter.Author christian_s_1a = new Project1_Adapter.AuthorAdapter(christian_s, 1);
+            #endregion
+
             //creating collections of objects of different representations.
+            Project2_Collections.DoublelyLinkedList<Project1_Adapter.Author> authorLinkedlist_proj2 =
+                new Project2_Collections.DoublelyLinkedList<Project1_Adapter.Author>();
+            
+            //base representation
+            
+            //secondary representation (adapted)
+            authorLinkedlist_proj2.Add(james_s_1a);
+            authorLinkedlist_proj2.Add(jakub_s_1a);
+            authorLinkedlist_proj2.Add(klaus_s_1a);
+            authorLinkedlist_proj2.Add(alfred_s_1a);
+            authorLinkedlist_proj2.Add(james_s_1a);
+            authorLinkedlist_proj2.Add(christian_s_1a);
+
+            authorLinkedlist_proj2.Add(douglas);
+            authorLinkedlist_proj2.Add(tom);
+            authorLinkedlist_proj2.Add(elmar);
+            authorLinkedlist_proj2.Add(michael1);
+            authorLinkedlist_proj2.Add(ulf);
+            authorLinkedlist_proj2.Add(michael2);
+            authorLinkedlist_proj2.Add(frank);
+            authorLinkedlist_proj2.Add(terry);
+            authorLinkedlist_proj2.Add(neil);
+
+            Project2_Iterators.ForwardIterator<Project1_Adapter.Author> authorFit =
+                authorLinkedlist_proj2.GetForwardIterator();
+
             Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
                 new Project2_Collections.Vector<Project1_Adapter.Book>();
                     //secondary representation (adapted)
@@ -570,6 +606,7 @@ namespace Client {
                 nwpLinkedList_proj2.Add(nwp3);
                 nwpLinkedList_proj2.Add(nwp4);
 
+
             //Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> nwpFit =
             //    nwpLinkedList_proj2.GetForwardIterator();
 
@@ -584,6 +621,13 @@ namespace Client {
             //Action<Project1_Adapter.BoardGame> bGamePrintAction = (T) => {
             //    Console.WriteLine(T.ToString());
             //};
+
+            Action<Project1_Adapter.Author> authorPrintAction = (T) => {
+                Console.WriteLine(T.ToString());
+            };
+
+            Console.WriteLine("\nAuthors\n--------------------------");
+            Project2_Algorithms.Algorithms<Project1_Adapter.Author>.ForEach(authorFit, authorPrintAction);
             //Console.WriteLine("\nBook\n--------------------------");
             //Project2_Algorithms.Algorithms<Project1_Adapter.Book>.ForEach(bookFit, bookPrintAction);
             //Console.WriteLine("\nNews paper\n--------------------------");
