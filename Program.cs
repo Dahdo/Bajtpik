@@ -549,15 +549,6 @@ namespace Client {
                 new Project2_Collections.DoublelyLinkedList<Project1_Adapter.Author>();
             
             //base representation
-            
-            //secondary representation (adapted)
-            authorLinkedlist_proj2.Add(james_s_1a);
-            authorLinkedlist_proj2.Add(jakub_s_1a);
-            authorLinkedlist_proj2.Add(klaus_s_1a);
-            authorLinkedlist_proj2.Add(alfred_s_1a);
-            authorLinkedlist_proj2.Add(james_s_1a);
-            authorLinkedlist_proj2.Add(christian_s_1a);
-
             authorLinkedlist_proj2.Add(douglas);
             authorLinkedlist_proj2.Add(tom);
             authorLinkedlist_proj2.Add(elmar);
@@ -567,9 +558,16 @@ namespace Client {
             authorLinkedlist_proj2.Add(frank);
             authorLinkedlist_proj2.Add(terry);
             authorLinkedlist_proj2.Add(neil);
+            //secondary representation (adapted)
+            authorLinkedlist_proj2.Add(james_s_1a);
+            authorLinkedlist_proj2.Add(jakub_s_1a);
+            authorLinkedlist_proj2.Add(klaus_s_1a);
+            authorLinkedlist_proj2.Add(alfred_s_1a);
+            authorLinkedlist_proj2.Add(james_s_1a);
+            authorLinkedlist_proj2.Add(christian_s_1a);
 
-            Project2_Iterators.ForwardIterator<Project1_Adapter.Author> authorFit =
-                authorLinkedlist_proj2.GetForwardIterator();
+            //Project2_Iterators.ForwardIterator<Project1_Adapter.Author> authorFit =
+            //    authorLinkedlist_proj2.GetForwardIterator();
 
             Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
                 new Project2_Collections.Vector<Project1_Adapter.Book>();
@@ -622,12 +620,12 @@ namespace Client {
             //    Console.WriteLine(T.ToString());
             //};
 
-            Action<Project1_Adapter.Author> authorPrintAction = (T) => {
-                Console.WriteLine(T.ToString());
-            };
+            //Action<Project1_Adapter.Author> authorPrintAction = (T) => {
+            //    Console.WriteLine(T.ToString());
+            //};
 
-            Console.WriteLine("\nAuthors\n--------------------------");
-            Project2_Algorithms.Algorithms<Project1_Adapter.Author>.ForEach(authorFit, authorPrintAction);
+            //Console.WriteLine("\nAuthors\n--------------------------");
+            //Project2_Algorithms.Algorithms<Project1_Adapter.Author>.ForEach(authorFit, authorPrintAction);
             //Console.WriteLine("\nBook\n--------------------------");
             //Project2_Algorithms.Algorithms<Project1_Adapter.Book>.ForEach(bookFit, bookPrintAction);
             //Console.WriteLine("\nNews paper\n--------------------------");
@@ -646,8 +644,9 @@ namespace Client {
             commandsDictionary.Add("find", new FindVisitor());
             commandsDictionary.Add("add", new AddVisitor());
 
-            while (!String.Equals(Console.ReadLine(), "exit", StringComparison.OrdinalIgnoreCase)) {
-
+            string input = Console.ReadLine();
+            while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
+                input = Console.ReadLine();
             }
             #endregion
         }
