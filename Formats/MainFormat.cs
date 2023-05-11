@@ -7,6 +7,9 @@ namespace MainFormat {
         public int Year { get; set; }
         public int PageCount { get; set; }
 
+        public Book() {
+
+        }
         public Book(string Title, int year, int pageCount, List<Author> authors) {
             this.Title = Title;
             this.Year = year;
@@ -33,7 +36,7 @@ namespace MainFormat {
         public string Title { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
-
+        public NewsPaper() { }
         public NewsPaper(string title, int year, int pageCount) {
             this.Title = title;
             this.Year = year;
@@ -57,6 +60,8 @@ namespace MainFormat {
         public int MaxPlayer { get; set; }
         public int Diffuculty { get; set; }
         public List<Project1_Adapter.Author> Authors { get; set; }
+
+        public BoardGame() { }
         public BoardGame(string title, int minplayer, int maxplayer, int difficulty, List<Author> authors) {
             this.Title = title;
             this.MinPlayer = minplayer;
@@ -84,7 +89,7 @@ namespace MainFormat {
         public string Surname { get; set; }
         public string? Nickname { get; set; }
         public int BirthYear { get; set; }
-
+        public Author() { }
         public Author(string name, string surname, int birthYear, string nickName = null) {
             this.Name = name;
             this.Surname = surname;

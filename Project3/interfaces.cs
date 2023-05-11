@@ -9,6 +9,7 @@ namespace Project3_Visitor {
         public void Visit<NewsPaper>(DoublelyLinkedList<NewsPaper> newsPaper);
         public void Visit<Author>(BajtpikCollection<Author> collection);
         public Visitor AddRequirements(List<String> requirements);
+        public Visitor AddNameTypes(Dictionary<String, Type> dict);
     }
 }
 
