@@ -8,6 +8,7 @@ using Project3_CollectionWrapper;
 
 namespace Project3_Visitor {
     public class ListVisitor : Visitor {
+        private List<String> requirements;
         public ListVisitor() { }
         public void Visit<Book>(Vector<Book> book) {
             ForwardIterator<Book > fid = book.GetForwardIterator();
@@ -28,9 +29,16 @@ namespace Project3_Visitor {
             ForwardIterator<Author> fid = author.GetForwardIterator();
             Algorithms<Author>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
         }
+
+        public Visitor AddRequirements(List<String> requirements) {
+            this.requirements = requirements;
+            return this;
+        
+        }
     }
 
     public class FindVisitor : Visitor {
+        private List<String> requirements;
         public void Visit<Book>(Vector<Book> book) {
             ForwardIterator<Book> fid = book.GetForwardIterator();
             Algorithms<Book>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
@@ -49,10 +57,15 @@ namespace Project3_Visitor {
         public void Visit<Author>(BajtpikCollection<Author> author) {
             ForwardIterator<Author> fid = author.GetForwardIterator();
             Algorithms<Author>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+        }
+        public Visitor AddRequirements(List<String> requirements) {
+            this.requirements = requirements;
+            return this;
         }
     }
 
     public class AddVisitor : Visitor {
+        private List<String> requirements;
         public void Visit<Book>(Vector<Book> book) {
             ForwardIterator<Book> fid = book.GetForwardIterator();
             Algorithms<Book>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
@@ -71,6 +84,11 @@ namespace Project3_Visitor {
         public void Visit<Author>(BajtpikCollection<Author> author) {
             ForwardIterator<Author> fid = author.GetForwardIterator();
             Algorithms<Author>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+        }
+
+        public Visitor AddRequirements(List<String> requirements) {
+            this.requirements = requirements;
+            return this;
         }
     }
 

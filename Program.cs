@@ -10,6 +10,8 @@ using Project3_CollectionWrapper;
 using Project3_Visitor;
 using SecondaryFormat;
 using System.Reflection;
+using System.Security.AccessControl;
+using System.Text.RegularExpressions;
 
 namespace Client {
     internal class Program {
@@ -571,7 +573,7 @@ namespace Client {
             //Project2_Iterators.ForwardIterator<Project1_Adapter.Author> authorFit =
             //    authorLinkedlist_proj2.GetForwardIterator();
 
-            Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
+           Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
                 new Project2_Collections.Vector<Project1_Adapter.Book>();
                     //secondary representation (adapted)
                 bookVector_proj2.Add(book1_1a);
@@ -639,6 +641,7 @@ namespace Client {
             collectionsDictionary.Add("book", bookVector_proj2);
             collectionsDictionary.Add("newspaper", nwpLinkedList_proj2);
             collectionsDictionary.Add("boardgame", bGameHeap_proj2);
+            collectionsDictionary.Add("author", authorLinkedlist_proj2);
 
 
             Dictionary<String, Visitor> commandsDictionary = new Dictionary<String, Visitor>();
@@ -648,25 +651,101 @@ namespace Client {
 
             string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
-                //commandsDictionary[input].Visit(collectionsDictionary["book"]);
-                //input = Console.ReadLine();
+                List<String> inputList = ParseInput(input);
+                if (inputList.Count == 1)
+                    if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
+                        Console.WriteLine("Command not supported!");
+                if (inputList.Count >= 2)
+                    HandleCommands(inputList, commandsDictionary, collectionsDictionary);
+                input = Console.ReadLine();
             }
 
-            var bindingFlags = BindingFlags.Instance |
-                   BindingFlags.NonPublic |
-                   BindingFlags.Public;
-            //var fieldValues = book1.GetType()
-            //                     .GetFields(bindingFlags)
-            //                     .Select(field => field.Name)
-            //                     .ToList();
-            var fields = book1.GetType().GetFields(bindingFlags);
+            //var bindingFlags = BindingFlags.Instance |
+            //       BindingFlags.NonPublic |
+            //       BindingFlags.Public;
+            ////var fieldValues = book1.GetType()
+            ////                     .GetFields(bindingFlags)
+            ////                     .Select(field => field.Name)
+            ////                     .ToList();
+            //var fields = book1.GetType().GetFields(bindingFlags);
 
-            foreach (var field in fields) {
-                Console.WriteLine($"Field Name: {field.Name}, Field Type: {field.FieldType}");
-            }
+            //foreach (var field in fields) {
+            //    Console.WriteLine($"Field Name: {field.Name}, Field Type: {field.FieldType}");
+            //}
 
 
             #endregion
+        }
+
+        private static List<string> ParseInput(string input) {
+            List<String> inputList = new List<String>();
+            string pattern = "\"([^\"]+)\"|([^ ]+)";
+
+            MatchCollection matches = Regex.Matches(input, pattern);
+            foreach (Match match in matches) {
+                if (match.Groups[1].Success)
+                {
+                    string word = match.Groups[1].Value;
+                    inputList.Add(word);
+                }
+                else if (match.Groups[2].Success)
+                {
+                    string word = match.Groups[2].Value;
+                    inputList.Add(word);
+                }
+            }
+
+            return inputList;
+        }
+
+        private static void HandleCommands(List<String> inputList, Dictionary<String, Visitor> commandDict, Dictionary<String, CollectionWrapper> collectionDict) {
+            string command = inputList[0];
+            string classType = inputList[1];
+            List<String> requirements = inputList.Count > 2 ? inputList.GetRange(2, inputList.Count - 2) : new List<string>();
+            if (classType == "Book") {
+                BajtpikCollection<Project1_Adapter.Book> collection = (BajtpikCollection<Project1_Adapter.Book>)collectionDict["book"];
+                try {
+                    commandDict[command].AddRequirements(requirements).Visit(collection);
+                } catch(KeyNotFoundException e) {
+                    Console.WriteLine($"{command} is not a valid command!");
+                    return;
+                }
+            }
+            else if(classType == "NewsPaper") {
+                BajtpikCollection<Project1_Adapter.NewsPaper> collection = (BajtpikCollection<Project1_Adapter.NewsPaper>)collectionDict["newspaper"];
+                try {
+                    commandDict[command].AddRequirements(requirements).Visit(collection);
+                }
+                catch (KeyNotFoundException e) {
+                    Console.WriteLine($"{command} is not a valid command!");
+                    return;
+                }
+            }
+            else if(classType == "BoardGame") {
+                BajtpikCollection<Project1_Adapter.BoardGame> collection = (BajtpikCollection<Project1_Adapter.BoardGame>)collectionDict["boardgame"];
+                try {
+                    commandDict[command].AddRequirements(requirements).Visit(collection);
+                }
+                catch (KeyNotFoundException e) {
+                    Console.WriteLine($"{command} is not a valid command!");
+                    return;
+                }
+            }
+            else if(classType == "Author") {
+                BajtpikCollection<Project1_Adapter.Author> collection = (BajtpikCollection<Project1_Adapter.Author>)collectionDict["author"];
+                try {
+                    commandDict[command].AddRequirements(requirements).Visit(collection);
+                }
+                catch (KeyNotFoundException e) {
+                    Console.WriteLine($"{command} is not a valid command!");
+                    return;
+                }
+            }
+            else {
+                Console.WriteLine("Class not supported!");
+                return;
+            }
+
         }
     }
 }
