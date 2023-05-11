@@ -17,9 +17,9 @@ namespace MainFormat {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("[BOOK] ");
             stringBuilder.Append($"Title: {this.Title}, Year: {this.Year}, Pages: {this.PageCount}, Author(s):\n");
-            foreach (Author author in this.Authors) {
-                stringBuilder.Append(author.ToString());
-            }
+            //foreach (Author author in this.Authors) {
+            //    stringBuilder.Append(author.ToString());
+            //}
 
             return stringBuilder.ToString();
         }
@@ -68,9 +68,9 @@ namespace MainFormat {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("[Board Game] ");
             stringBuilder.Append($"Title: {this.Title}, Min. Players: {this.MinPlayer}, Max. Players: {this.MaxPlayer}, Difficulty: {this.Diffuculty} Author(s):\n");
-            foreach (Project1_Adapter.Author author in this.Authors) {
-                stringBuilder.Append(author.ToString());
-            }
+            //foreach (Project1_Adapter.Author author in this.Authors) {
+            //    stringBuilder.Append(author.ToString());
+            //}
             return stringBuilder.ToString();
         }
 

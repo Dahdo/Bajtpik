@@ -2,6 +2,7 @@
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 
+
 namespace Project2_Collections {
     public abstract class BajtpikCollection<T> : CollectionWrapper {
         public abstract bool Remove(T item);
@@ -16,7 +17,7 @@ namespace Project2_Collections {
         internal abstract T? Next(T item);
         internal abstract T? Prev(T item);
 
-        //for project3
+         //for project3
         public void Accept(Visitor visitor) {
             visitor.Visit(this);
         }

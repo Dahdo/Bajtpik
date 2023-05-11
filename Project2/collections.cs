@@ -1,4 +1,5 @@
 ﻿using Project2_Iterators;
+using Project3_CollectionWrapper;
 
 namespace Project2_Collections {
     public class Vector<T> : BajtpikCollection<T> {

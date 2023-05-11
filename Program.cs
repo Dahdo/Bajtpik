@@ -4,10 +4,12 @@
 //#define PRINTPROJ2
 #define PRINTPROJ3
 
+using Project1_Adapter;
 using Project2_Collections;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 using SecondaryFormat;
+using System.Reflection;
 
 namespace Client {
     internal class Program {
@@ -644,10 +646,26 @@ namespace Client {
             commandsDictionary.Add("find", new FindVisitor());
             commandsDictionary.Add("add", new AddVisitor());
 
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
-                input = Console.ReadLine();
+                //commandsDictionary[input].Visit(collectionsDictionary["book"]);
+                //input = Console.ReadLine();
             }
+
+            var bindingFlags = BindingFlags.Instance |
+                   BindingFlags.NonPublic |
+                   BindingFlags.Public;
+            //var fieldValues = book1.GetType()
+            //                     .GetFields(bindingFlags)
+            //                     .Select(field => field.Name)
+            //                     .ToList();
+            var fields = book1.GetType().GetFields(bindingFlags);
+
+            foreach (var field in fields) {
+                Console.WriteLine($"Field Name: {field.Name}, Field Type: {field.FieldType}");
+            }
+
+
             #endregion
         }
     }
