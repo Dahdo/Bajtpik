@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 
 namespace Project1_Adapter {
     public class BookAdapter : Book {

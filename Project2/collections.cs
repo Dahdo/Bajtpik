@@ -1,5 +1,7 @@
-﻿using Project2_Iterators;
+﻿using Project1_Adapter;
+using Project2_Iterators;
 using Project3_CollectionWrapper;
+using Project3_Visitor;
 
 namespace Project2_Collections {
     public class Vector<T> : BajtpikCollection<T> {
@@ -11,7 +13,7 @@ namespace Project2_Collections {
             Count = 0;
         }
 
-        public override void Add(T item) {
+        public void Add(T item) {
             Array.Resize(ref Items, ++Count);
             Items[Count - 1] = item;
         }
@@ -44,7 +46,7 @@ namespace Project2_Collections {
             return -1;
         }
 
-        public override bool Remove(T item) {
+        public  bool Remove(T item) {
             int index = IndexOf(item);
 
             if (index > -1)
@@ -53,19 +55,19 @@ namespace Project2_Collections {
                 return false;
         }
 
-        public override int Size() {
+        public  int Size() {
             return Count;
         }
 
         //for iterators' sake
 
-        internal override T? First() {
+        public  T? First() {
             return Items[0];
         }
-        internal override T? Last() {
+        public  T? Last() {
             return Items[Count - 1];
         }
-        internal override T? Prev(T item) {
+        public  T? Prev(T item) {
             int index = IndexOf(item);
             if (index > 0)
                 return Items[index - 1];
@@ -73,7 +75,7 @@ namespace Project2_Collections {
                 return default;
         }
 
-        internal override T? Next(T item) {
+        public  T? Next(T item) {
             int index = IndexOf(item);
             if (index < Count - 1)
                 return Items[index + 1];
@@ -81,11 +83,11 @@ namespace Project2_Collections {
                 return default;
         }
 
-        public override ForwardIterator<T> GetForwardIterator() {
+        public  ForwardIterator<T> GetForwardIterator() {
             return new ForwardIterator<T>(this);
         }
 
-        public override ReverseIterator<T> GetReverseIterator() {
+        public  ReverseIterator<T> GetReverseIterator() {
             return new ReverseIterator<T>(this);
         }
     }
@@ -110,7 +112,7 @@ namespace Project2_Collections {
         public DoublelyLinkedList() {
             Head = Tail = null;
         }
-        public override void Add(T item) {
+        public  void Add(T item) {
             Node tmpNode = new Node(item);
 
             if(Head == null)
@@ -124,7 +126,7 @@ namespace Project2_Collections {
             Count++;
         }
 
-        public override bool Remove(T item) {
+        public  bool Remove(T item) {
             Node currentNode = Head;
             while(currentNode != null) {
                 if (EqualityComparer<T>.Default.Equals(currentNode.Data, item)) {
@@ -149,7 +151,7 @@ namespace Project2_Collections {
 
             return false;
         }
-        public override int Size() {
+        public  int Size() {
             return Count;
         }
 
@@ -168,17 +170,17 @@ namespace Project2_Collections {
             return null;
         }
 
-        internal override T First() {
+        public  T First() {
             if (Head == null)
                 return default(T);
             return Head.Data;
         }
-        internal override T Last() {
+        public  T Last() {
             if (Tail == null)
                 return default(T);
             return Tail.Data;
         }
-        internal override T Prev(T item) {
+        public  T Prev(T item) {
             Node currNode = GetNodeOf(item);
 
             if (currNode.Prev == null)
@@ -186,7 +188,7 @@ namespace Project2_Collections {
             return currNode.Prev.Data;
         }
 
-        internal override T Next(T item) {
+        public  T Next(T item) {
             Node currNode = GetNodeOf(item);
 
             if (currNode.Next == null)
@@ -194,11 +196,11 @@ namespace Project2_Collections {
             return currNode.Next.Data;
         }
 
-        public override ForwardIterator<T> GetForwardIterator() {
+        public  ForwardIterator<T> GetForwardIterator() {
             return new ForwardIterator<T>(this);
         }
 
-        public override ReverseIterator<T> GetReverseIterator() {
+        public  ReverseIterator<T> GetReverseIterator() {
             return new ReverseIterator<T>(this);
         }
 
@@ -215,16 +217,16 @@ namespace Project2_Collections {
             HeapList = new List<T>();
         }
 
-        public override ForwardIterator<T> GetForwardIterator() {
+        public  ForwardIterator<T> GetForwardIterator() {
             return new ForwardIterator<T>(this);
         }
 
-        public override ReverseIterator<T> GetReverseIterator() {
+        public  ReverseIterator<T> GetReverseIterator() {
             return new ReverseIterator<T>(this);
         }
 
 
-        public override void Add(T item) {
+        public  void Add(T item) {
             HeapList.Add(item);
             int current = HeapList.Count - 1;
 
@@ -269,32 +271,32 @@ namespace Project2_Collections {
             return returnItem;
         }
 
-        public override int Size() {
+        public  int Size() {
             return HeapList.Count;
         }
         //this method is obsolete in case of a heap
-        public override bool Remove(T item) {
+        public  bool Remove(T item) {
             throw new NotImplementedException();
         }
 
         //for iterators's sake
         //iterators just iterates throught the list. no regards to it being a heap
 
-        internal override T? First() {
+        public  T? First() {
             if (HeapList.Count == 0)
                 return default;
             else
                 return HeapList[0];
         }
 
-        internal override T? Last() {
+        public  T? Last() {
             if (HeapList.Count == 0)
                 return default;
             else
                 return HeapList[HeapList.Count - 1];
         }
 
-        internal override T? Next(T item) {
+        public T? Next(T item) {
             int nextIndex = HeapList.IndexOf(item) + 1;
             if (nextIndex < HeapList.Count)
                 return HeapList[nextIndex];
@@ -302,14 +304,13 @@ namespace Project2_Collections {
                 return default;
         }
 
-        internal override T? Prev(T item) {
+        public T? Prev(T item) {
             int prevIndex = HeapList.IndexOf(item) - 1;
             if (prevIndex > -1)
                 return HeapList[prevIndex];
             else
                 return default;
         }
-
     }
 
 }

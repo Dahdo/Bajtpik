@@ -10,15 +10,15 @@ namespace Project2_Iterators {
             CurrentItem = collection.First();
         }
 
-        public override T? Current() {
+        public T? Current() {
             return CurrentItem;
         }
 
-        public override bool IsDone() {
+        public bool IsDone() {
             return EqualityComparer<T>.Default.Equals(CurrentItem, collection.Last());
         }
 
-        public override bool Move() {
+        public bool Move() {
             T? prosedCurrent = collection.Next(CurrentItem);
             if (prosedCurrent == null)
                 return false;
@@ -28,7 +28,7 @@ namespace Project2_Iterators {
             }
         }
 
-        public override void Reset() {
+        public void Reset() {
             CurrentItem = collection.First();
         }
     }
@@ -45,15 +45,15 @@ namespace Project2_Iterators {
             CurrentItem = collection.Last();
         }
 
-        public override T? Current() {
+        public T? Current() {
             return CurrentItem;
         }
 
-        public override bool IsDone() {
+        public bool IsDone() {
             return EqualityComparer<T>.Default.Equals(CurrentItem, collection.First());
         }
 
-        public override bool Move() {
+        public bool Move() {
             T prosedCurrent = collection.Prev(CurrentItem);
             if (EqualityComparer<T>.Default.Equals(prosedCurrent, default(T)))
                 return false;
@@ -63,7 +63,7 @@ namespace Project2_Iterators {
             }
         }
 
-        public override void Reset() {
+        public void Reset() {
             CurrentItem = collection.First();
         }
     }

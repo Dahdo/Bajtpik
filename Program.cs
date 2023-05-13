@@ -8,9 +8,6 @@ using Project1_Adapter;
 using Project2_Collections;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
-using SecondaryFormat;
-using System.Reflection;
-using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 
 namespace Client {
@@ -538,7 +535,7 @@ namespace Client {
             #endregion
 
 #region Project_3
-            #region someAuthors
+            #region instations
             //some Authors objects. (adapted seconary representation)
             Project1_Adapter.Author jamey_s_1a = new Project1_Adapter.AuthorAdapter(jamey_s, 1);
             Project1_Adapter.Author jakub_s_1a = new Project1_Adapter.AuthorAdapter(jakub_s, 1);
@@ -546,7 +543,6 @@ namespace Client {
             Project1_Adapter.Author alfred_s_1a = new Project1_Adapter.AuthorAdapter(alfred_s, 1);
             Project1_Adapter.Author james_s_1a = new Project1_Adapter.AuthorAdapter(james_s, 1);
             Project1_Adapter.Author christian_s_1a = new Project1_Adapter.AuthorAdapter(christian_s, 1);
-            #endregion
 
             //creating collections of objects of different representations.
             Project2_Collections.DoublelyLinkedList<Project1_Adapter.Author> authorLinkedlist_proj2 =
@@ -570,9 +566,6 @@ namespace Client {
             authorLinkedlist_proj2.Add(james_s_1a);
             authorLinkedlist_proj2.Add(christian_s_1a);
 
-            //Project2_Iterators.ForwardIterator<Project1_Adapter.Author> authorFit =
-            //    authorLinkedlist_proj2.GetForwardIterator();
-
            Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
                 new Project2_Collections.Vector<Project1_Adapter.Book>();
                     //secondary representation (adapted)
@@ -583,8 +576,6 @@ namespace Client {
                 bookVector_proj2.Add(book4);
                 bookVector_proj2.Add(book5);
 
-            //Project2_Iterators.ForwardIterator<Project1_Adapter.Book> bookFit =
-            //    bookVector_proj2.GetForwardIterator();
 
             Project2_Collections.Heap<Project1_Adapter.BoardGame> bGameHeap_proj2 =
                 new Project2_Collections.Heap<Project1_Adapter.BoardGame>((a, b) => a.MaxPlayer < b.MaxPlayer);
@@ -595,9 +586,6 @@ namespace Client {
                  bGameHeap_proj2.Add(scrabble);
                  bGameHeap_proj2.Add(twilightImperium);
 
-            //Project2_Iterators.ForwardIterator<Project1_Adapter.BoardGame> bGameFit =
-            //    bGameHeap_proj2.GetForwardIterator();
-
 
             Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper> nwpLinkedList_proj2 = 
                 new Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper>();
@@ -606,81 +594,24 @@ namespace Client {
                 nwpLinkedList_proj2.Add(nwp2_1a);
                     //base representation
                 nwpLinkedList_proj2.Add(nwp3);
-                nwpLinkedList_proj2.Add(nwp4);
-
-
-            //Project2_Iterators.ForwardIterator<Project1_Adapter.NewsPaper> nwpFit =
-            //    nwpLinkedList_proj2.GetForwardIterator();
-
-            //Action<Project1_Adapter.Book> bookPrintAction = (T) => {
-            //    Console.WriteLine(T.ToString());
-            //};
-
-            //Action<Project1_Adapter.NewsPaper> nwpPrintAction = (T) => {
-            //    Console.WriteLine(T.ToString());
-            //};
-
-            //Action<Project1_Adapter.BoardGame> bGamePrintAction = (T) => {
-            //    Console.WriteLine(T.ToString());
-            //};
-
-            //Action<Project1_Adapter.Author> authorPrintAction = (T) => {
-            //    Console.WriteLine(T.ToString());
-            //};
-
-            //Console.WriteLine("\nAuthors\n--------------------------");
-            //Project2_Algorithms.Algorithms<Project1_Adapter.Author>.ForEach(authorFit, authorPrintAction);
-            //Console.WriteLine("\nBook\n--------------------------");
-            //Project2_Algorithms.Algorithms<Project1_Adapter.Book>.ForEach(bookFit, bookPrintAction);
-            //Console.WriteLine("\nNews paper\n--------------------------");
-            //Project2_Algorithms.Algorithms<Project1_Adapter.NewsPaper>.ForEach(nwpFit, nwpPrintAction);
-            //Console.WriteLine("\nBoard game\n--------------------------");
-            //Project2_Algorithms.Algorithms<Project1_Adapter.BoardGame>.ForEach(bGameFit, bGamePrintAction);
+            nwpLinkedList_proj2.Add(nwp4);
+            #endregion
 
             Dictionary<String, CollectionWrapper> collectionsDictionary = new Dictionary<string, CollectionWrapper>();
-            collectionsDictionary.Add("book", bookVector_proj2);
-            collectionsDictionary.Add("newspaper", nwpLinkedList_proj2);
-            collectionsDictionary.Add("boardgame", bGameHeap_proj2);
-            collectionsDictionary.Add("author", authorLinkedlist_proj2);
+            collectionsDictionary.Add("book", new BookCollection(bookVector_proj2));
+            collectionsDictionary.Add("newspaper", new NewsPaperCollection(nwpLinkedList_proj2));
+            collectionsDictionary.Add("boardgame", new BoardGameCollection(bGameHeap_proj2));
+            collectionsDictionary.Add("author", new AuthorCollection(authorLinkedlist_proj2));
 
 
             Dictionary<String, Visitor> commandsDictionary = new Dictionary<String, Visitor>();
             commandsDictionary.Add("list", new ListVisitor());
             commandsDictionary.Add("find", new FindVisitor());
-            commandsDictionary.Add("add", new AddVisitor());
 
-            Dictionary<String, Type> bookNameType = new Dictionary<string, Type>();
-            Dictionary<String, Type> boardGameNameType = new Dictionary<string, Type>();
-            Dictionary<String, Type> nwpNameType = new Dictionary<string, Type>();
-            Dictionary<String, Type> authorNameType = new Dictionary<string, Type>();
-
-
-            var bindingFlags = BindingFlags.Instance |
-                   BindingFlags.NonPublic |
-                   BindingFlags.Public;
-            //book
-            var fields = book1.GetType().GetFields(bindingFlags);
-            foreach (var field in fields) {
-                bookNameType.Add(field.Name.Substring(field.Name.IndexOf("<") + 1, field.Name.IndexOf(">") - 1), field.FieldType);
-            }
-            //author
-            fields = jakub.GetType().GetFields(bindingFlags);
-            foreach (var field in fields) {
-                authorNameType.Add(field.Name.Substring(field.Name.IndexOf("<") + 1, field.Name.IndexOf(">") - 1), field.FieldType);
-            }
-            //news paper
-            fields = nwp1.GetType().GetFields(bindingFlags);
-            foreach (var field in fields) {
-                nwpNameType.Add(field.Name.Substring(field.Name.IndexOf("<") + 1, field.Name.IndexOf(">") - 1), field.FieldType);
-            }
-            //boardgame
-            fields = scythe.GetType().GetFields(bindingFlags);
-            foreach (var field in fields) {
-                boardGameNameType.Add(field.Name.Substring(field.Name.IndexOf("<") + 1, field.Name.IndexOf(">") - 1), field.FieldType);
-            }
-
-
-
+            //Dictionary<String, Type> bookNameType = new Dictionary<string, Type>();
+            //Dictionary<String, Type> boardGameNameType = new Dictionary<string, Type>();
+            //Dictionary<String, Type> nwpNameType = new Dictionary<string, Type>();
+            //Dictionary<String, Type> authorNameType = new Dictionary<string, Type>();
 
             string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
@@ -689,7 +620,7 @@ namespace Client {
                     if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
                         Console.WriteLine("Command not supported!");
                 if (inputList.Count >= 2)
-                    HandleCommands(inputList, commandsDictionary, collectionsDictionary, bookNameType, nwpNameType, boardGameNameType, authorNameType);
+                    collectionsDictionary["book"].Accept(commandsDictionary["list"]);
                 input = Console.ReadLine();
             }
 
@@ -727,59 +658,6 @@ namespace Client {
             }
 
             return inputList;
-        }
-
-
-
-        private static void HandleCommands(List<String> inputList, Dictionary<String, Visitor> commandDict, Dictionary<String, CollectionWrapper> collectionDict,
-            Dictionary<String, Type> bookNameType, Dictionary<String, Type> nwpNameType, Dictionary<String, Type> boardGameNameType, Dictionary<String, Type> authorNameType) {
-            string command = inputList[0];
-            string classType = inputList[1];
-            List<String> requirements = inputList.Count > 2 ? inputList.GetRange(2, inputList.Count - 2) : new List<string>();
-            if (classType == "Book") {
-                BajtpikCollection<Project1_Adapter.Book> collection = (BajtpikCollection<Project1_Adapter.Book>)collectionDict["book"];
-                try {
-                    commandDict[command].AddRequirements(requirements).AddNameTypes(bookNameType).Visit(collection);
-                } catch(KeyNotFoundException e) {
-                    Console.WriteLine($"{command} is not a valid command!");
-                    return;
-                }
-            }
-            else if(classType == "NewsPaper") {
-                BajtpikCollection<Project1_Adapter.NewsPaper> collection = (BajtpikCollection<Project1_Adapter.NewsPaper>)collectionDict["newspaper"];
-                try {
-                    commandDict[command].AddRequirements(requirements).AddNameTypes(nwpNameType).Visit(collection);
-                }
-                catch (KeyNotFoundException e) {
-                    Console.WriteLine($"{command} is not a valid command!");
-                    return;
-                }
-            }
-            else if(classType == "BoardGame") {
-                BajtpikCollection<Project1_Adapter.BoardGame> collection = (BajtpikCollection<Project1_Adapter.BoardGame>)collectionDict["boardgame"];
-                try {
-                    commandDict[command].AddRequirements(requirements).AddNameTypes(boardGameNameType).Visit(collection);
-                }
-                catch (KeyNotFoundException e) {
-                    Console.WriteLine($"{command} is not a valid command!");
-                    return;
-                }
-            }
-            else if(classType == "Author") {
-                BajtpikCollection<Project1_Adapter.Author> collection = (BajtpikCollection<Project1_Adapter.Author>)collectionDict["author"];
-                try {
-                    commandDict[command].AddRequirements(requirements).AddNameTypes(authorNameType).Visit(collection);
-                }
-                catch (KeyNotFoundException e) {
-                    Console.WriteLine($"{command} is not a valid command!");
-                    return;
-                }
-            }
-            else {
-                Console.WriteLine("Class not supported!");
-                return;
-            }
-
         }
     }
 }
