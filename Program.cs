@@ -616,12 +616,12 @@ namespace Client {
                     if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
                         Console.WriteLine("Command not supported!");
                 if (inputList.Count >= 2)
-                    try {
+                    //try {
                         collectionsDictionary[inputList[1].ToLower()].Accept(commandsDictionary[inputList[0]]
                             .AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
-                    } catch(Exception e) {
-                        Console.WriteLine($"Wrong input: [{e.Message}]");
-                    }
+                    //} catch(Exception e) {
+                        //Console.WriteLine($"Error: [{e.Message}]");
+                    //}
                 input = Console.ReadLine();
             }
             #endregion

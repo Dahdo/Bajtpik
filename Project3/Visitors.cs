@@ -5,6 +5,7 @@ using Project2_Algorithms;
 using Project2_Collections;
 using Project2_Iterators;
 using System.Reflection;
+using System.Security.Authentication.ExtendedProtection;
 
 namespace Project3_Visitor {
     public class ListVisitor : Visitor {
@@ -39,9 +40,11 @@ namespace Project3_Visitor {
         private List<String> fields;
         private List<Char> compOp;
         private List<String> values;
+        private Dictionary<char, Func<object, object, Type, bool>> compOpsFun;
         private Dictionary<String, Tuple<Object, Type>> classTuple;
 
         public FindVisitor() {
+            this.compOpsFun = new Dictionary<char, Func<object, object, Type, bool>>();
             this.classTuple = new Dictionary<string, Tuple<object, Type>>();
             this.requirements = new List<string>();
             this.fields = new List<String>();
@@ -53,42 +56,21 @@ namespace Project3_Visitor {
         public void Visit(BajtpikCollection<Book> book) {
             if (ParseRequirements());
             else return;
+            InitCompOps();
             ForwardIterator<Book> fid = book.GetForwardIterator();
-            InitClassTuple(fid.Current());
-            //Action<Project1_Adapter.Book> bookPrintAction = (T) => {
-            //    for(int i = 0; i < fields.Count; i++) {
-            //        String field = fields[i];
-            //        char op = compOp[i];
-            //        String val = values[i];
-
-            //        if(op == '=') {
-            //            if (field == "Title" && T.Title == val)
-            //                Console.WriteLine(T.ToString());
-            //            else if (field == "Year" && T.Year == int.Parse(val))
-            //                Console.WriteLine(T.ToString());
-            //            else if (field == "PageCount" && T.PageCount == int.Parse(val))
-            //                Console.WriteLine(T.ToString());
-            //        }
-            //        else if(op == '>') {
-            //            if (field == "Title" && String.Compare(val, T.Title) > 0)
-            //                Console.WriteLine(T.ToString());
-            //            else if (field == "Year" && T.Year > int.Parse(val))
-            //                Console.WriteLine(T.ToString());
-            //            else if (field == "PageCount" && T.PageCount > int.Parse(val))
-            //                Console.WriteLine(T.ToString());
-            //        }
-            //        else if(op == '<') {
-            //            if (field == "Title" && String.Compare(val, T.Title) < 0)
-            //                Console.WriteLine(T.ToString());
-            //            else if (field == "Year" && T.Year < int.Parse(val))
-            //                Console.WriteLine(T.ToString());
-            //            else if (field == "PageCount" && T.PageCount < int.Parse(val))
-            //                Console.WriteLine(T.ToString());
-            //        }
-            //    }
-            //    //Console.WriteLine(T.ToString());
-            //};
-            //Algorithms<Book>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+            while(fid.Current() != null) {
+                this.classTuple.Clear();
+                InitClassTuple(fid.Current());
+                for (int i = 0; i < fields.Count; i++) {
+                    object obj = classTuple[fields[i].ToLower()].Item1;
+                    Type type = classTuple[fields[i].ToLower()].Item2;
+                    Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
+                    if (fun != null && fun(obj, values[i], type)) {
+                        Console.WriteLine(fid.Current().ToString());
+                    }
+                }       
+                fid.Move();
+            }
         }
 
         public void Visit(BajtpikCollection<BoardGame> boardGame) {
@@ -143,7 +125,6 @@ namespace Project3_Visitor {
 
             return true;
         }
-
         private void InitClassTuple(Object obj) {
             Type type = obj.GetType();
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -154,11 +135,41 @@ namespace Project3_Visitor {
                 }
                 this.classTuple.Add(prop.Name.ToLower(), new Tuple<object, Type>(prop.GetValue(obj)!, prop.PropertyType));
             }
+        }
+        private void InitCompOps() {
+            this.compOpsFun.Add('=', (a, b, c) => {
+                if(c == typeof(int)) {
+                    return (int)a == int.Parse((string)b);
+                } else if(c == typeof(string)) {
+                    return string.Equals((string)a, (string)b, StringComparison.OrdinalIgnoreCase);
+                } else {
+                    return false;
+                }
+            });
 
-            foreach (var v in this.classTuple) {
-                Console.WriteLine(v.Key + ", " + v.Value.Item1 + ", " + v.Value.Item2);
-            }
+            this.compOpsFun.Add('>', (a, b, c) => {
+                if (c == typeof(int)) {
+                    return (int)a > int.Parse((string)b);
+                }
+                else if (c == typeof(string)) {
+                    return string.Compare((string)a, (string)b, StringComparison.OrdinalIgnoreCase) > 0;
+                }
+                else {
+                    return false;
+                }
+            });
 
+            this.compOpsFun.Add('<', (a, b, c) => {
+                if (c == typeof(int)) {
+                    return (int)a < int.Parse((string)b);
+                }
+                else if (c == typeof(string)) {
+                    return  string.Compare((string)a, (string)b, StringComparison.OrdinalIgnoreCase) < 0;
+                }
+                else {
+                    return false;
+                }
+            });
         }
     }
 }
