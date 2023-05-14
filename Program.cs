@@ -8,6 +8,7 @@ using Project1_Adapter;
 using Project2_Collections;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Client {
@@ -607,12 +608,7 @@ namespace Client {
             Dictionary<String, Visitor> commandsDictionary = new Dictionary<String, Visitor>();
             commandsDictionary.Add("list", new ListVisitor());
             commandsDictionary.Add("find", new FindVisitor());
-
-            //Dictionary<String, Type> bookNameType = new Dictionary<string, Type>();
-            //Dictionary<String, Type> boardGameNameType = new Dictionary<string, Type>();
-            //Dictionary<String, Type> nwpNameType = new Dictionary<string, Type>();
-            //Dictionary<String, Type> authorNameType = new Dictionary<string, Type>();
-
+           
             string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
                 List<String> inputList = ParseInput(input);
@@ -620,13 +616,16 @@ namespace Client {
                     if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
                         Console.WriteLine("Command not supported!");
                 if (inputList.Count >= 2)
-                    collectionsDictionary["book"].Accept(commandsDictionary["list"]);
+                    try {
+                        collectionsDictionary[inputList[1].ToLower()].Accept(commandsDictionary[inputList[0]]
+                            .AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
+                    } catch(Exception e) {
+                        Console.WriteLine($"Wrong input: [{e.Message}]");
+                    }
                 input = Console.ReadLine();
             }
-
             #endregion
         }
-
         private static List<string> ParseInput(string input) {
             List<string> inputList = new List<string>();
             string pattern = "\"([^\"]*)\"|([^\" ]+)";
