@@ -15,7 +15,8 @@ namespace Project2_Iterators {
         }
 
         public bool IsDone() {
-            return EqualityComparer<T>.Default.Equals(CurrentItem, collection.Last());
+            return EqualityComparer<T>.Default.Equals(CurrentItem, collection.Last())
+               && CurrentItem.GetHashCode == collection.Last().GetHashCode;
         }
 
         public bool Move() {
