@@ -1,5 +1,8 @@
 ﻿using BajtpikOOD;
 using Project1_Adapter;
+using Project2_Collections;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace Project3_Builder {
     public class BookBuilderBase : ResourceBuilder, BookBuilder {
@@ -81,10 +84,10 @@ namespace Project3_Builder {
         }
     }
 
-    public class NewsPaperBase : ResourceBuilder, NewsPaperBuilder {
+    public class NewsPaperBuilderBase : ResourceBuilder, NewsPaperBuilder {
         private MainFormat.NewsPaper newsPaper;
         private List<string> fields;
-        public NewsPaperBase() {
+        public NewsPaperBuilderBase() {
             this.newsPaper = new MainFormat.NewsPaper();
             this.fields = new List<string>();
         }
@@ -117,12 +120,12 @@ namespace Project3_Builder {
         }
     }
 
-    public class NewsPaperSecondary : ResourceBuilder, NewsPaperBuilder {
+    public class NewsPaperBuilderSecondary : ResourceBuilder, NewsPaperBuilder {
         private SecondaryFormat.NewsPaper newsPaper;
         private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
-        public NewsPaperSecondary() {
+        public NewsPaperBuilderSecondary() {
             this.newsPaper = new SecondaryFormat.NewsPaper();
             this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
@@ -159,10 +162,10 @@ namespace Project3_Builder {
         }
     }
 
-    public class BoardGameBase : ResourceBuilder, BoardGameBuilder {
+    public class BoardGameBuilderBase : ResourceBuilder, BoardGameBuilder {
         private MainFormat.BoardGame boardGame;
         private List<string> fields;
-        public BoardGameBase() {
+        public BoardGameBuilderBase() {
             this.boardGame = new MainFormat.BoardGame();
             this.fields = new List<string>();
         }
@@ -199,12 +202,12 @@ namespace Project3_Builder {
         }
     }
 
-    public class BoardGameSecondary : ResourceBuilder, BoardGameBuilder {
+    public class BoardGameBuilderSecondary : ResourceBuilder, BoardGameBuilder {
         private SecondaryFormat.BoardGame boardGame;
         private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
-        public BoardGameSecondary() {
+        public BoardGameBuilderSecondary() {
             this.boardGame = new SecondaryFormat.BoardGame();
             this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
@@ -246,10 +249,10 @@ namespace Project3_Builder {
         }
     }
 
-    public class AuthorBase : ResourceBuilder, AuthorBuilder {
+    public class AuthorBuilderBase : ResourceBuilder, AuthorBuilder {
         private MainFormat.Author author;
         private List<string> fields;
-        public AuthorBase() {
+        public AuthorBuilderBase() {
             this.author = new MainFormat.Author();
             this.fields = new List<string>();
         }
@@ -285,12 +288,12 @@ namespace Project3_Builder {
         }
     }
 
-    public class AuthorSecondary : ResourceBuilder, AuthorBuilder {
+    public class AuthorBuilderSecondary : ResourceBuilder, AuthorBuilder {
         private SecondaryFormat.Author author;
         private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
-        public AuthorSecondary() {
+        public AuthorBuilderSecondary() {
             this.author = new SecondaryFormat.Author();
             this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
@@ -333,24 +336,88 @@ namespace Project3_Builder {
     }
     
 
-
     //Director
     public class Director {
         private ResourceBuilder? resourceBuilder;
         Dictionary<string, Action<ResourceBuilder, string>> resourceActions;
+        BajtpikCollection<Resource>? collection;
+        public bool Cancelled;
 
         public Director() {
+            this.collection = null;
             resourceBuilder = null;
             resourceActions = new Dictionary<string, Action<ResourceBuilder, string>>();
+            this.Cancelled = false;
         }
 
-        public void MakeResource(BookBuilder bookBuilder) {
+        public void MakeResource(ResourceBuilder bookBuilder, BajtpikCollection<Book> collection) {
            this.resourceBuilder = (ResourceBuilder?)bookBuilder;
 
             this.resourceActions["title"] = (book, title) => ((BookBuilder)book).AddTitle(title);
             this.resourceActions["year"] = (book, year) => ((BookBuilder)book).AddYear(int.Parse(year));
             this.resourceActions["pagecount"] = (book, pagecount) => ((BookBuilder)book).AddPageCount(int.Parse(pagecount));
             Loop();
+
+            if (!Cancelled) {
+                collection.Add((Book)this.resourceBuilder?.GetResource()!);
+                Console.WriteLine("[Book added successfuly]");
+            }
+            else {
+                Console.WriteLine("[Book add failed]");
+            }
+        }
+
+        public void MakeResource(ResourceBuilder newsPaperBuilder, BajtpikCollection<NewsPaper> collection) {
+            this.resourceBuilder = (ResourceBuilder?)newsPaperBuilder;
+
+            this.resourceActions["title"] = (nwp, title) => ((NewsPaperBuilder)nwp).AddTitle(title);
+            this.resourceActions["year"] = (nwp, year) => ((NewsPaperBuilder)nwp).AddYear(int.Parse(year));
+            this.resourceActions["pagecount"] = (nwp, pagecount) => ((NewsPaperBuilder)nwp).AddPageCount(int.Parse(pagecount));
+            Loop();
+
+            if (!Cancelled) {
+                collection.Add((NewsPaper)this.resourceBuilder?.GetResource()!);
+                Console.WriteLine("[News paper added successfuly]");
+            }
+            else {
+                Console.WriteLine("[News paper add failed]");
+            }
+        }
+
+        public void MakeResource(ResourceBuilder boardGameBuilder, BajtpikCollection<BoardGame> collection) {
+            this.resourceBuilder = (ResourceBuilder?)boardGameBuilder;
+
+            this.resourceActions["title"] = (bgm, title) => ((BoardGameBuilder)bgm).AddTitle(title);
+            this.resourceActions["minplayer"] = (bgm, player) => ((BoardGameBuilder)bgm).AddMinPlayer(int.Parse(player));
+            this.resourceActions["maxplayer"] = (bgm, player) => ((BoardGameBuilder)bgm).AddMaxPlayer(int.Parse(player));
+            this.resourceActions["difficulty"] = (bgm, diff) => ((BoardGameBuilder)bgm).AddMaxPlayer(int.Parse(diff));
+            Loop();
+
+            if (!Cancelled) {
+                collection.Add((BoardGame)this.resourceBuilder?.GetResource()!);
+                Console.WriteLine("[Board game added successfuly]");
+            }
+            else {
+                Console.WriteLine("[Board game add failed]");
+            }
+        }
+
+        public void MakeResource(ResourceBuilder authorBuilder, BajtpikCollection<Author> collection) {
+            this.resourceBuilder = (ResourceBuilder?)authorBuilder;
+
+            this.resourceActions["name"] = (auth, name) => ((AuthorBuilder)auth).AddName(name);
+            this.resourceActions["surname"] = (auth, surname) => ((AuthorBuilder)auth).AddName(surname);
+            this.resourceActions["nickname"] = (auth, nickname) => ((AuthorBuilder)auth).AddName(nickname);
+            this.resourceActions["birthyear"] = (auth, birthyear) => ((AuthorBuilder)auth).AddName(birthyear);
+            Loop();
+
+            if (!Cancelled) {
+                collection.Add((Author)this.resourceBuilder?.GetResource()!);
+                Console.WriteLine("[Author added successfuly]");
+            }
+            else {
+                Console.WriteLine("[Author add failed]");
+            }
         }
 
         private void Loop() {
@@ -363,11 +430,11 @@ namespace Project3_Builder {
 
             string? input = Console.ReadLine();
             while (input?.ToLower() != "exit" && input?.ToLower() != "done") {
-                string[] parsedInput = input!.Split("=");
-                if (parsedInput.Length == 1)
+                List<string> parsedInput = GetVals(input);
+                if (parsedInput.Count == 1)
                     if (input.ToLower() != "exit" && input.ToLower() != "done")
                         Console.WriteLine("Command not supported!");
-                if (parsedInput.Length == 2)
+                if (parsedInput.Count == 2)
                     try {
                         this.resourceActions[parsedInput[0]](this.resourceBuilder!, parsedInput[1]);
                     }
@@ -376,14 +443,34 @@ namespace Project3_Builder {
                     }
                 input = Console.ReadLine();
             }
-
-            if(input?.ToLower() == "done") {
-                Console.WriteLine("[Added successfuly]");
-            }
             if (input?.ToLower() == "exit") {
                 this.resourceBuilder?.ResetData();
-                Console.WriteLine("[Add failed]");
+                this.Cancelled = true;
             }
+        }
+
+        private List<string> GetVals(string input) {
+            var vals = new List<string>();
+            for (int i = 0; i < input.Length; i++) {
+                if (input[i] == '=') {
+                    vals.Add(input.Substring(0, i));
+
+                    int startIdx = i + 1;
+
+                    if (startIdx < input.Length && input[startIdx] == '\"') {
+                        int endIdx = input.IndexOf('\"', startIdx + 1);
+                        if (endIdx != -1) {
+                            vals.Add(input.Substring(startIdx + 1, endIdx - startIdx - 1));
+                            break;
+                        }
+                    }
+                    else {
+                        vals.Add(input.Substring(startIdx, input.Length - startIdx));
+                        break;
+                    }
+                }
+            }
+            return vals;
         }
     }
 }
