@@ -26,7 +26,12 @@ namespace Project3_Visitor {
 
         public void Visit(BajtpikCollection<Author> author) {
             ForwardIterator<Author> fid = author.GetForwardIterator();
-            Algorithms<Author>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+            List<Author> authList = new List<Author>();
+            while (!authList.Contains(fid.Current())) {
+                Console.WriteLine(fid.Current()?.ToString());
+                authList.Add(fid.Current());
+                fid.Move();
+            }
         }
 
         public Visitor AddRequirements(List<String> requirements) {
