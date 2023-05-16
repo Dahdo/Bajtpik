@@ -330,6 +330,26 @@
     }
 
     public class Director {
+        private ResourceBuilder? resourceBuilder;
+        private Dictionary<string, string> fieldValue;
 
+        public Director() {
+            resourceBuilder = null;
+            fieldValue = new Dictionary<string, string>();
+        }
+
+        public void MakeResource(BookBuilder bookBuilder) {
+            this.resourceBuilder = (ResourceBuilder?)bookBuilder;
+           Dictionary<string, Action<BookBuilder, string>> bookActions = 
+           new Dictionary<string, Action<BookBuilder, string>>();
+
+            bookActions["title"] = (book, title) => book.AddTitle(title);
+            bookActions[""] = (book, title) => book.AddTitle(title);
+
+        }
+
+        private void Loop() {
+
+        }
     }
 }
