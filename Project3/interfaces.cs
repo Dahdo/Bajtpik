@@ -1,6 +1,7 @@
 ﻿using Project2_Collections;
 using Project1_Adapter;
 using Project3_Visitor;
+using Project3_Builder;
 
 namespace Project3_Visitor {
     public interface Visitor {
@@ -16,6 +17,7 @@ namespace Project3_Visitor {
 namespace Project3_CollectionWrapper {
     public interface CollectionWrapper {
         public void Accept(Visitor visitor);
+        public void Direct(Director director, ResourceBuilder builder);
     }
 }
 
