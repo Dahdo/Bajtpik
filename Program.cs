@@ -618,7 +618,7 @@ namespace Client {
                 if (inputList.Count >= 2)
                     try {
                         collectionsDictionary[inputList[1].ToLower()].Accept(commandsDictionary[inputList[0]]
-                            .AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
+                            .ClearData().AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
                     } catch(Exception e) {
                         Console.WriteLine($"Error: [{e.Message}]");
                     }

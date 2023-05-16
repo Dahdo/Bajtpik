@@ -9,6 +9,7 @@ namespace Project3_Visitor {
         public void Visit(BajtpikCollection<NewsPaper> newsPaper);
         public void Visit(BajtpikCollection<Author> collection);
         public Visitor AddRequirements(List<String> requirements);
+        public Visitor ClearData();
     }
 }
 

@@ -34,6 +34,10 @@ namespace Project3_Visitor {
         public Visitor AddRequirements(List<String> requirements) {
             return this;
         }
+
+        public Visitor ClearData() {
+            return this;
+        }
     }
 
     public class FindVisitor : Visitor {
@@ -197,13 +201,14 @@ namespace Project3_Visitor {
                 fid.Move();
             }
         }
-        private void ClearData() {
+        public Visitor ClearData() {
             requirements.Clear();
             classTuple.Clear();
             fields.Clear();
             compOp.Clear();
             values.Clear();
             compOpsFun.Clear();
+            return this;
         }
     }
 }
