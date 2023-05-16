@@ -421,11 +421,13 @@ namespace Project3_Builder {
         }
 
         private void Loop() {
-            Console.Write("Available fiels: [  ");
-            foreach(string field in this.resourceBuilder?.GetFields()!) {
+            List<string> fields = this.resourceBuilder?.GetFields()!;
+            Console.Write("Available fields: [  ");
+            foreach (string field in fields) {
                 Console.Write($"{field}  ");
             }
             Console.WriteLine("]");
+            fields.Clear();
 
 
             string? input = Console.ReadLine();
