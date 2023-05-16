@@ -23,7 +23,7 @@ namespace Project3_Builder {
     public interface ResourceBuilder {
         public ResourceBuilder AddRequirements(List<string> requirements);
         public ResourceBuilder ResetData();
-        public ResourceBuilder GetResource();
+        public Resource GetResource();
     }
     public interface BookBuilder {
         public void AddTitle(string title);

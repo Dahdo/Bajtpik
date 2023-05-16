@@ -1,4 +1,6 @@
-﻿namespace Project3_Builder {
+﻿using Project1_Adapter;
+
+namespace Project3_Builder {
     public class BookBuilderBase : ResourceBuilder, BookBuilder {
         private MainFormat.Book book;
         private List<string> requirements;
@@ -30,8 +32,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return this.book;
         }
     }
 
@@ -73,8 +75,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return new BookAdapter(this.book, 1);
         }
     }
 
@@ -104,8 +106,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return this.newsPaper;
         }
 
         public ResourceBuilder AddRequirements(List<string> requirements) {
@@ -147,8 +149,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return new NewsPaperAdapter(this.newsPaper, 1);
         }
         public ResourceBuilder AddRequirements(List<string> requirements) {
             this.requirements.AddRange(requirements);
@@ -186,7 +188,7 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
+        public Resource GetResource() {
             return this;
         }
 
@@ -234,8 +236,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return new BoardGameAdapter(this.boardGame, 1);
         }
         public ResourceBuilder AddRequirements(List<string> requirements) {
             this.requirements.AddRange(requirements);
@@ -273,8 +275,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return this.author;
         }
         public ResourceBuilder AddRequirements(List<string> requirements) {
             this.requirements.AddRange(requirements);
@@ -320,8 +322,8 @@
             return this;
         }
 
-        public ResourceBuilder GetResource() {
-            return this;
+        public Resource GetResource() {
+            return new AuthorAdapter(this.author, 1);
         }
         public ResourceBuilder AddRequirements(List<string> requirements) {
             this.requirements.AddRange(requirements);
