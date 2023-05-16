@@ -21,7 +21,7 @@ namespace Project3_CollectionWrapper {
 
 namespace Project3_Builder {
     public interface ResourceBuilder {
-        public ResourceBuilder AddRequirements(List<string> requirements);
+        public List<string> GetFields();
         public ResourceBuilder ResetData();
         public Resource GetResource();
     }

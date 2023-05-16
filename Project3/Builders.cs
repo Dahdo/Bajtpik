@@ -1,12 +1,13 @@
-﻿using Project1_Adapter;
+﻿using BajtpikOOD;
+using Project1_Adapter;
 
 namespace Project3_Builder {
     public class BookBuilderBase : ResourceBuilder, BookBuilder {
         private MainFormat.Book book;
-        private List<string> requirements;
+        private List<string> fields;
         public BookBuilderBase() {
             this.book = new MainFormat.Book();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
         }
 
         public void AddPageCount(int pageCount) {
@@ -21,13 +22,13 @@ namespace Project3_Builder {
             this.book.Year = year;
         }
 
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Book)));
+            return this.fields;
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.book = new MainFormat.Book();
             return this;
         }
@@ -39,12 +40,12 @@ namespace Project3_Builder {
 
     public class BookBuilderSecondary : ResourceBuilder, BookBuilder {
         private SecondaryFormat.Book book;
-        private List<string> requirements;
+        private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
         public BookBuilderSecondary() {
             this.book = new SecondaryFormat.Book();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
             this.stringMap = Client.Program.stringMap;
         }
@@ -64,13 +65,13 @@ namespace Project3_Builder {
             this.book.Year = intMap.Count - 1;
         }
 
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Book)));
+            return this.fields;
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.book = new SecondaryFormat.Book();
             return this;
         }
@@ -82,10 +83,10 @@ namespace Project3_Builder {
 
     public class NewsPaperBase : ResourceBuilder, NewsPaperBuilder {
         private MainFormat.NewsPaper newsPaper;
-        private List<string> requirements;
+        private List<string> fields;
         public NewsPaperBase() {
             this.newsPaper = new MainFormat.NewsPaper();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
         }
 
         public void AddPageCount(int pageCount) {
@@ -101,7 +102,7 @@ namespace Project3_Builder {
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.newsPaper = new MainFormat.NewsPaper();
             return this;
         }
@@ -110,20 +111,20 @@ namespace Project3_Builder {
             return this.newsPaper;
         }
 
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.NewsPaper)));
+            return this.fields;
         }
     }
 
     public class NewsPaperSecondary : ResourceBuilder, NewsPaperBuilder {
         private SecondaryFormat.NewsPaper newsPaper;
-        private List<string> requirements;
+        private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
         public NewsPaperSecondary() {
             this.newsPaper = new SecondaryFormat.NewsPaper();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
             this.stringMap = Client.Program.stringMap;
         }
@@ -144,7 +145,7 @@ namespace Project3_Builder {
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.newsPaper = new SecondaryFormat.NewsPaper();
             return this;
         }
@@ -152,18 +153,18 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return new NewsPaperAdapter(this.newsPaper, 1);
         }
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.NewsPaper)));
+            return this.fields;
         }
     }
 
     public class BoardGameBase : ResourceBuilder, BoardGameBuilder {
         private MainFormat.BoardGame boardGame;
-        private List<string> requirements;
+        private List<string> fields;
         public BoardGameBase() {
             this.boardGame = new MainFormat.BoardGame();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
         }
 
         public void AddTitle(string title) {
@@ -183,7 +184,7 @@ namespace Project3_Builder {
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.boardGame = new MainFormat.BoardGame();
             return this;
         }
@@ -192,20 +193,20 @@ namespace Project3_Builder {
             return this.boardGame;
         }
 
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.BoardGame)));
+            return this.fields;
         }
     }
 
     public class BoardGameSecondary : ResourceBuilder, BoardGameBuilder {
         private SecondaryFormat.BoardGame boardGame;
-        private List<string> requirements;
+        private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
         public BoardGameSecondary() {
             this.boardGame = new SecondaryFormat.BoardGame();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
             this.stringMap = Client.Program.stringMap;
         }
@@ -231,7 +232,7 @@ namespace Project3_Builder {
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.boardGame = new SecondaryFormat.BoardGame();
             return this;
         }
@@ -239,18 +240,18 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return new BoardGameAdapter(this.boardGame, 1);
         }
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.BoardGame)));
+            return this.fields;
         }
     }
 
     public class AuthorBase : ResourceBuilder, AuthorBuilder {
         private MainFormat.Author author;
-        private List<string> requirements;
+        private List<string> fields;
         public AuthorBase() {
             this.author = new MainFormat.Author();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
         }
 
         public void AddBirthYear(int year) {
@@ -270,7 +271,7 @@ namespace Project3_Builder {
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.author = new MainFormat.Author();
             return this;
         }
@@ -278,20 +279,20 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return this.author;
         }
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
+            return this.fields;
         }
     }
 
     public class AuthorSecondary : ResourceBuilder, AuthorBuilder {
         private SecondaryFormat.Author author;
-        private List<string> requirements;
+        private List<string> fields;
         private Dictionary<int, int> intMap;
         private Dictionary<int, string> stringMap;
         public AuthorSecondary() {
             this.author = new SecondaryFormat.Author();
-            this.requirements = new List<string>();
+            this.fields = new List<string>();
             this.intMap = Client.Program.intMap;
             this.stringMap = Client.Program.stringMap;
         }
@@ -317,7 +318,7 @@ namespace Project3_Builder {
         }
 
         public ResourceBuilder ResetData() {
-            this.requirements.Clear();
+            this.fields.Clear();
             this.author = new SecondaryFormat.Author();
             return this;
         }
@@ -325,12 +326,15 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return new AuthorAdapter(this.author, 1);
         }
-        public ResourceBuilder AddRequirements(List<string> requirements) {
-            this.requirements.AddRange(requirements);
-            return this;
+        public List<string> GetFields() {
+            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
+            return this.fields;
         }
     }
+    
 
+
+    //Director
     public class Director {
         private ResourceBuilder? resourceBuilder;
         Dictionary<string, Action<ResourceBuilder, string>> resourceActions;
@@ -350,6 +354,13 @@ namespace Project3_Builder {
         }
 
         private void Loop() {
+            Console.Write("Available fiels: [  ");
+            foreach(string field in this.resourceBuilder?.GetFields()!) {
+                Console.Write($"{field}  ");
+            }
+            Console.WriteLine("]");
+
+
             string? input = Console.ReadLine();
             while (input?.ToLower() != "exit" && input?.ToLower() != "done") {
                 string[] parsedInput = input!.Split("=");
