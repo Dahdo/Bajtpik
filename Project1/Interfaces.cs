@@ -1,5 +1,5 @@
 ﻿namespace Project1_Adapter {
-    public interface Book : LibraryResource {
+    public interface Book : Resource {
         public string Title { get; set; }
         public List<Author> Authors { get; set; }
         public int Year { get; set; }
@@ -8,7 +8,7 @@
         public Book Clone();
     }
 
-    public interface NewsPaper : LibraryResource {
+    public interface NewsPaper : Resource {
         public string Title { get; set; }
         public int Year { get; set; }
         public int PageCount { get; set; }
@@ -17,7 +17,7 @@
         public NewsPaper Clone();
     }
 
-    public interface BoardGame : LibraryResource {
+    public interface BoardGame : Resource {
         public string Title { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
@@ -28,7 +28,7 @@
         public BoardGame Clone();
     }
 
-    public interface Author : LibraryResource {
+    public interface Author : Resource {
         public string Name { get; set; }
         public string Surname { get; set; }
         public string? Nickname { get; set; }
@@ -37,7 +37,7 @@
         public string ToString();
         public Author Clone();
     }
-    public interface LibraryResource {
+    public interface Resource {
 
     }
 }
