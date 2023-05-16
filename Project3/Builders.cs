@@ -331,25 +331,46 @@
 
     public class Director {
         private ResourceBuilder? resourceBuilder;
-        private Dictionary<string, string> fieldValue;
+        Dictionary<string, Action<ResourceBuilder, string>> resourceActions;
 
         public Director() {
             resourceBuilder = null;
-            fieldValue = new Dictionary<string, string>();
+            resourceActions = new Dictionary<string, Action<ResourceBuilder, string>>();
         }
 
         public void MakeResource(BookBuilder bookBuilder) {
-            this.resourceBuilder = (ResourceBuilder?)bookBuilder;
-           Dictionary<string, Action<BookBuilder, string>> bookActions = 
-           new Dictionary<string, Action<BookBuilder, string>>();
+           this.resourceBuilder = (ResourceBuilder?)bookBuilder;
 
-            bookActions["title"] = (book, title) => book.AddTitle(title);
-            bookActions[""] = (book, title) => book.AddTitle(title);
-
+            this.resourceActions["title"] = (book, title) => ((BookBuilder)book).AddTitle(title);
+            this.resourceActions["year"] = (book, year) => ((BookBuilder)book).AddYear(int.Parse(year));
+            this.resourceActions["pagecount"] = (book, pagecount) => ((BookBuilder)book).AddPageCount(int.Parse(pagecount));
+            Loop();
         }
 
         private void Loop() {
+            string? input = Console.ReadLine();
+            while (input?.ToLower() != "exit" && input?.ToLower() != "done") {
+                string[] parsedInput = input!.Split("=");
+                if (parsedInput.Length == 1)
+                    if (input.ToLower() != "exit" && input.ToLower() != "done")
+                        Console.WriteLine("Command not supported!");
+                if (parsedInput.Length == 2)
+                    try {
+                        this.resourceActions[parsedInput[0]](this.resourceBuilder!, parsedInput[1]);
+                    }
+                    catch (Exception e) {
+                        Console.WriteLine($"Add error: [{e.Message}]");
+                    }
+                input = Console.ReadLine();
+            }
 
+            if(input?.ToLower() == "done") {
+                Console.WriteLine("[Added successfuly]");
+            }
+            if (input?.ToLower() == "exit") {
+                this.resourceBuilder?.ResetData();
+                Console.WriteLine("[Add failed]");
+            }
         }
     }
 }
