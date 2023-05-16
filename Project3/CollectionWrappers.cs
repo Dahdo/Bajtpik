@@ -1,6 +1,7 @@
 ﻿using Project2_Collections;
 using Project3_Visitor;
 using Project1_Adapter;
+using Project3_Builder;
 
 namespace Project3_CollectionWrapper {
     public class BookCollection : CollectionWrapper {
@@ -10,6 +11,9 @@ namespace Project3_CollectionWrapper {
         }
         public void Accept(Visitor visitor) {
             visitor.Visit(collection);
+        }
+        public void Direct(Director director, ResourceBuilder builder) {
+            director.MakeResource(builder, collection);
         }
     }
 
@@ -21,6 +25,10 @@ namespace Project3_CollectionWrapper {
         public void Accept(Visitor visitor) {
             visitor.Visit(collection);
         }
+
+        public void Direct(Director director, ResourceBuilder builder) {
+            director.MakeResource(builder, collection);
+        }
     }
 
     public class BoardGameCollection : CollectionWrapper {
@@ -31,6 +39,9 @@ namespace Project3_CollectionWrapper {
         public void Accept(Visitor visitor) {
             visitor.Visit(collection);
         }
+        public void Direct(Director director, ResourceBuilder builder) {
+            director.MakeResource(builder, collection);
+        }
     }
 
     public class AuthorCollection : CollectionWrapper {
@@ -40,6 +51,9 @@ namespace Project3_CollectionWrapper {
         }
         public void Accept(Visitor visitor) {
             visitor.Visit(collection);
+        }
+        public void Direct(Director director, ResourceBuilder builder) {
+            director.MakeResource(builder, collection);
         }
     }
 }
