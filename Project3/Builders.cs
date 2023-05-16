@@ -189,7 +189,7 @@ namespace Project3_Builder {
         }
 
         public Resource GetResource() {
-            return this;
+            return this.boardGame;
         }
 
         public ResourceBuilder AddRequirements(List<string> requirements) {
