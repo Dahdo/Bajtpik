@@ -6,6 +6,7 @@
 
 using Project1_Adapter;
 using Project2_Collections;
+using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 using System.Reflection;
@@ -596,7 +597,6 @@ namespace Client {
                     //base representation
                 nwpLinkedList_proj2.Add(nwp3);
             nwpLinkedList_proj2.Add(nwp4);
-            #endregion
 
             Dictionary<String, CollectionWrapper> collectionsDictionary = new Dictionary<string, CollectionWrapper>();
             collectionsDictionary.Add("book", new BookCollection(bookVector_proj2));
@@ -608,7 +608,19 @@ namespace Client {
             Dictionary<String, Visitor> commandsDictionary = new Dictionary<String, Visitor>();
             commandsDictionary.Add("list", new ListVisitor());
             commandsDictionary.Add("find", new FindVisitor());
-           
+
+            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict = new Dictionary<Tuple<string, string>, ResourceBuilder>();
+            buildersDict[Tuple.Create("book", "base")] = new BookBuilderBase();
+            buildersDict[Tuple.Create("book", "secondary")] = new BookBuilderSecondary();
+            buildersDict[Tuple.Create("newspaper", "base")] = new NewsPaperBuilderBase();
+            buildersDict[Tuple.Create("newspaper", "secondary")] = new NewsPaperBuilderSecondary();
+            buildersDict[Tuple.Create("boardgame", "base")] = new BoardGameBuilderBase();
+            buildersDict[Tuple.Create("boardgame", "secondary")] = new BoardGameBuilderSecondary();
+            buildersDict[Tuple.Create("author", "base")] = new AuthorBuilderBase();
+            buildersDict[Tuple.Create("author", "secondary")] = new AuthorBuilderSecondary();
+
+            
+            Director director = new Director();
             string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
                 List<String> inputList = ParseInput(input);
@@ -617,8 +629,14 @@ namespace Client {
                         Console.WriteLine("Command not supported!");
                 if (inputList.Count >= 2)
                     try {
-                        collectionsDictionary[inputList[1].ToLower()].Accept(commandsDictionary[inputList[0]]
+                        if (inputList[0] == "add") {
+                            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
+                            collectionsDictionary[inputList[1].ToLower()].Direct(director, buildersDict[search]);                      
+                        }
+                        else {
+                            collectionsDictionary[inputList[1].ToLower()].Accept(commandsDictionary[inputList[0]]
                             .ClearData().AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
+                        }   
                     } catch(Exception e) {
                         Console.WriteLine($"Error: [{e.Message}]");
                     }
@@ -658,5 +676,6 @@ namespace Client {
 
             return inputList;
         }
+#endregion
     }
 }
