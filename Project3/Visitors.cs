@@ -1,6 +1,4 @@
-﻿
-
-using Project1_Adapter;
+﻿using Project1_Adapter;
 using Project2_Algorithms;
 using Project2_Collections;
 using Project2_Iterators;

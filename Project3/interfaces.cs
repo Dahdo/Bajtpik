@@ -18,3 +18,34 @@ namespace Project3_CollectionWrapper {
         public void Accept(Visitor visitor);
     }
 }
+
+namespace Project3_Builder {
+    public interface ResourceBuilder {
+        public ResourceBuilder AddRequirements(List<string> requirements);
+        public ResourceBuilder ResetData();
+        public ResourceBuilder GetResource();
+    }
+    public interface BookBuilder {
+        public void AddTitle(string title);
+        public void AddYear(int year);
+        public void AddPageCount(int pageCount);
+    }
+    public interface NewsPaperBuilder {
+        public void AddTitle(string title);
+        public void AddYear(int year);
+        public void AddPageCount(int pagecount);
+    }
+    public interface BoardGameBuilder {
+        public void AddTitle(string title); 
+        public void AddMinPlayer(int player);
+        public void AddMaxPlayer(int player);
+        public void AddDifficulty(int difficulty);
+    }
+    public interface AuthorBuilder {
+        public void AddName(string name);
+        public void AddSurname(string surname);
+        public void AddNickname(string nickname);
+        public void AddBirthYear(int year);
+
+    }
+}
