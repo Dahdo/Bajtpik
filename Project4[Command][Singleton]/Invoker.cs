@@ -30,5 +30,12 @@
                 command.Execute();
             }
         }
+        public static void Dismiss() {
+            Invoker.CommandQueue?.Clear();
+        }
+
+        public static void load() {
+            new NotImplementedException();
+        }
     }
 }
