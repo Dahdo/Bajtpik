@@ -442,7 +442,7 @@ namespace Project3_Builder {
                 foreach(var arg in this.Arguments) {
                     List<string> parsedInput = Util.GetFieldVal(arg);
                     try {
-                        this.resourceActions[parsedInput[0]](this.resourceBuilder!, parsedInput[1]);
+                        this.resourceActions[parsedInput[0].ToLower()](this.resourceBuilder!, parsedInput[1]);
                     }
                     catch (Exception e) {
                         Console.WriteLine($"Add error: [{e.Message}]");
