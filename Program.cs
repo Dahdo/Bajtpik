@@ -645,12 +645,6 @@ namespace Client {
             }
 #endif
 #endregion
-
-#region Project_4
-            ListVisitor listVisitor = new ListVisitor();
-            ListCommand listCommand = new ListCommand(collectionsDictionary["book"], listVisitor);
-            listCommand.Execute();
-#endregion
         }
         private static List<string> ParseInput(string input) {
             List<string> inputList = new List<string>();
