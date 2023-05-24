@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BajtpikOOD.Project4_Command_ {
-    internal class Interfaces {
+namespace Project4_Command{
+    interface ICommand {
+        void Execute();
     }
 }

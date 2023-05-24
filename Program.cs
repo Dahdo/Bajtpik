@@ -9,6 +9,7 @@ using Project2_Collections;
 using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
+using Project4_Command;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -537,7 +538,7 @@ namespace Client {
             #endregion
 
 #region Project_3
-            #region instations
+            #region instantiation
             //some Authors objects. (adapted seconary representation)
             Project1_Adapter.Author jamey_s_1a = new Project1_Adapter.AuthorAdapter(jamey_s, 1);
             Project1_Adapter.Author jakub_s_1a = new Project1_Adapter.AuthorAdapter(jakub_s, 1);
@@ -618,8 +619,8 @@ namespace Client {
             buildersDict[Tuple.Create("boardgame", "secondary")] = new BoardGameBuilderSecondary();
             buildersDict[Tuple.Create("author", "base")] = new AuthorBuilderBase();
             buildersDict[Tuple.Create("author", "secondary")] = new AuthorBuilderSecondary();
-
-            
+            #endregion
+        #if PRINTPROJ3
             Director director = new Director();
             string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
@@ -642,7 +643,14 @@ namespace Client {
                     }
                 input = Console.ReadLine();
             }
-            #endregion
+#endif
+#endregion
+
+#region Project_4
+            ListVisitor listVisitor = new ListVisitor();
+            ListCommand listCommand = new ListCommand(collectionsDictionary["book"], listVisitor);
+            listCommand.Execute();
+#endregion
         }
         private static List<string> ParseInput(string input) {
             List<string> inputList = new List<string>();
@@ -676,6 +684,5 @@ namespace Client {
 
             return inputList;
         }
-#endregion
     }
 }
