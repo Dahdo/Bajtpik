@@ -4,13 +4,16 @@
 //#define PRINTPROJ2
 #define PRINTPROJ3
 
+using BajtpikOOD;
 using Project1_Adapter;
 using Project2_Collections;
 using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 using Project4_Command;
+using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Client {
@@ -606,9 +609,9 @@ namespace Client {
             collectionsDictionary.Add("author", new AuthorCollection(authorLinkedlist_proj2));
 
 
-            Dictionary<String, Visitor> commandsDictionary = new Dictionary<String, Visitor>();
-            commandsDictionary.Add("list", new ListVisitor());
-            commandsDictionary.Add("find", new FindVisitor());
+            Dictionary<String, Visitor> visitorsDictionary = new Dictionary<String, Visitor>();
+            visitorsDictionary.Add("list", new ListVisitor());
+            visitorsDictionary.Add("find", new FindVisitor());
 
             Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict = new Dictionary<Tuple<string, string>, ResourceBuilder>();
             buildersDict[Tuple.Create("book", "base")] = new BookBuilderBase();
@@ -620,7 +623,7 @@ namespace Client {
             buildersDict[Tuple.Create("author", "base")] = new AuthorBuilderBase();
             buildersDict[Tuple.Create("author", "secondary")] = new AuthorBuilderSecondary();
             #endregion
-        #if PRINTPROJ3
+#if PRINTPROJ3
             Director director = new Director();
             string? input = Console.ReadLine();
             while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
@@ -632,10 +635,11 @@ namespace Client {
                     try {
                         if (inputList[0] == "add") {
                             Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-                            collectionsDictionary[inputList[1].ToLower()].Direct(director, buildersDict[search]);                      
+                            List<string> arguments = Util.SecondaryLoop(buildersDict[search].GetFields());
+                            collectionsDictionary[inputList[1].ToLower()].Direct(director.AddArguments(arguments), buildersDict[search]);                                                 
                         }
                         else {
-                            collectionsDictionary[inputList[1].ToLower()].Accept(commandsDictionary[inputList[0]]
+                            collectionsDictionary[inputList[1].ToLower()].Accept(visitorsDictionary[inputList[0]]
                             .ClearData().AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
                         }   
                     } catch(Exception e) {
@@ -644,7 +648,42 @@ namespace Client {
                 input = Console.ReadLine();
             }
 #endif
-#endregion
+            #endregion
+//            #region
+//            Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary =
+//                new Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>>();
+//            commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
+//            commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new ListVisitor(), cWrapper, list);
+
+//            Director director = new Director();
+//            string? input = Console.ReadLine();
+//            while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
+//                List<String> inputList = ParseInput(input);
+//                if (inputList.Count == 1)
+//                    if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
+//                        Console.WriteLine("Command not supported!");
+//                if (inputList.Count >= 2)
+//                    try {
+//                        if (inputList[0] == "add") {
+//                            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
+//                            List<string> arguments = Util.SecondaryLoop(buildersDict[search].GetFields());
+//                            collectionsDictionary[inputList[1].ToLower()].Direct(director.AddArguments(arguments), buildersDict[search]);
+//                        }
+//                        else if (inputList[0] == "queue") {
+//                            Invoker.Print();
+//                        }
+//                        else {
+//                            ICommand command = commandsDictionary[inputList[0]](collectionsDictionary[inputList[1]], inputList);
+//                            Invoker.AddCommand(command);
+//                        }                        
+//                    }
+//                    catch (Exception e) {
+//                        Console.WriteLine($"Error: [{e.Message}]");
+//                    }
+//                input = Console.ReadLine();
+//            }
+//#endregion
+
         }
         private static List<string> ParseInput(string input) {
             List<string> inputList = new List<string>();
