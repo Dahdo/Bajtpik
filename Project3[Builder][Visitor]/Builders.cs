@@ -26,7 +26,8 @@ namespace Project3_Builder {
         }
 
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Book)));
+            if (this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
 
@@ -69,7 +70,8 @@ namespace Project3_Builder {
         }
 
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Book)));
+            if (this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
 
@@ -113,9 +115,9 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return this.newsPaper;
         }
-
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.NewsPaper)));
+            if (this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
     }
@@ -157,7 +159,8 @@ namespace Project3_Builder {
             return new NewsPaperAdapter(this.newsPaper, 1);
         }
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.NewsPaper)));
+            if (this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
     }
@@ -197,7 +200,8 @@ namespace Project3_Builder {
         }
 
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.BoardGame)));
+            if(this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
     }
@@ -244,7 +248,8 @@ namespace Project3_Builder {
             return new BoardGameAdapter(this.boardGame, 1);
         }
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.BoardGame)));
+            if (this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
     }
@@ -283,7 +288,8 @@ namespace Project3_Builder {
             return this.author;
         }
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
+            if (this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
     }
@@ -330,7 +336,8 @@ namespace Project3_Builder {
             return new AuthorAdapter(this.author, 1);
         }
         public List<string> GetFields() {
-            this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
+            if(this.fields.Count == 0)
+                this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
     }
@@ -341,6 +348,7 @@ namespace Project3_Builder {
         private ResourceBuilder? resourceBuilder;
         Dictionary<string, Action<ResourceBuilder, string>> resourceActions;
         BajtpikCollection<Resource>? collection;
+        private List<string> Arguments;
         public bool Cancelled;
 
         public Director() {
@@ -348,6 +356,7 @@ namespace Project3_Builder {
             resourceBuilder = null;
             resourceActions = new Dictionary<string, Action<ResourceBuilder, string>>();
             this.Cancelled = false;
+            this.Arguments = new List<string>();
         }
 
         public void MakeResource(ResourceBuilder bookBuilder, BajtpikCollection<Book> collection) {
@@ -356,7 +365,7 @@ namespace Project3_Builder {
             this.resourceActions["title"] = (book, title) => ((BookBuilder)book).AddTitle(title);
             this.resourceActions["year"] = (book, year) => ((BookBuilder)book).AddYear(int.Parse(year));
             this.resourceActions["pagecount"] = (book, pagecount) => ((BookBuilder)book).AddPageCount(int.Parse(pagecount));
-            Loop();
+            DoActions();
 
             if (!Cancelled) {
                 collection.Add((Book)this.resourceBuilder?.GetResource()!);
@@ -373,7 +382,7 @@ namespace Project3_Builder {
             this.resourceActions["title"] = (nwp, title) => ((NewsPaperBuilder)nwp).AddTitle(title);
             this.resourceActions["year"] = (nwp, year) => ((NewsPaperBuilder)nwp).AddYear(int.Parse(year));
             this.resourceActions["pagecount"] = (nwp, pagecount) => ((NewsPaperBuilder)nwp).AddPageCount(int.Parse(pagecount));
-            Loop();
+            DoActions();
 
             if (!Cancelled) {
                 collection.Add((NewsPaper)this.resourceBuilder?.GetResource()!);
@@ -391,7 +400,7 @@ namespace Project3_Builder {
             this.resourceActions["minplayer"] = (bgm, player) => ((BoardGameBuilder)bgm).AddMinPlayer(int.Parse(player));
             this.resourceActions["maxplayer"] = (bgm, player) => ((BoardGameBuilder)bgm).AddMaxPlayer(int.Parse(player));
             this.resourceActions["difficulty"] = (bgm, diff) => ((BoardGameBuilder)bgm).AddMaxPlayer(int.Parse(diff));
-            Loop();
+            DoActions();
 
             if (!Cancelled) {
                 collection.Add((BoardGame)this.resourceBuilder?.GetResource()!);
@@ -409,7 +418,7 @@ namespace Project3_Builder {
             this.resourceActions["surname"] = (auth, surname) => ((AuthorBuilder)auth).AddName(surname);
             this.resourceActions["nickname"] = (auth, nickname) => ((AuthorBuilder)auth).AddName(nickname);
             this.resourceActions["birthyear"] = (auth, birthyear) => ((AuthorBuilder)auth).AddName(birthyear);
-            Loop();
+            DoActions();
 
             if (!Cancelled) {
                 collection.Add((Author)this.resourceBuilder?.GetResource()!);
@@ -420,59 +429,25 @@ namespace Project3_Builder {
             }
         }
 
-        private void Loop() {
-            List<string> fields = this.resourceBuilder?.GetFields()!;
-            Console.Write("Available fields: [  ");
-            foreach (string field in fields) {
-                Console.Write($"{field}  ");
-            }
-            Console.WriteLine("]");
-            fields.Clear();
+        public Director AddArguments(List<string> args) {
+            this.Arguments = args.GetRange(0, args.Count);
+            return this;
+        }
 
-
-            string? input = Console.ReadLine();
-            while (input?.ToLower() != "exit" && input?.ToLower() != "done") {
-                List<string> parsedInput = GetVals(input);
-                if (parsedInput.Count == 1)
-                    if (input.ToLower() != "exit" && input.ToLower() != "done")
-                        Console.WriteLine("Command not supported!");
-                if (parsedInput.Count == 2)
+        private void DoActions() {
+                if(this.Arguments.Count == 0) {
+                this.Cancelled = true;
+                return;
+                }
+                foreach(var arg in this.Arguments) {
+                    List<string> parsedInput = Util.GetFieldVal(arg);
                     try {
                         this.resourceActions[parsedInput[0]](this.resourceBuilder!, parsedInput[1]);
                     }
                     catch (Exception e) {
                         Console.WriteLine($"Add error: [{e.Message}]");
                     }
-                input = Console.ReadLine();
-            }
-            if (input?.ToLower() == "exit") {
-                this.resourceBuilder?.ResetData();
-                this.Cancelled = true;
-            }
-        }
-
-        private List<string> GetVals(string input) {
-            var vals = new List<string>();
-            for (int i = 0; i < input.Length; i++) {
-                if (input[i] == '=') {
-                    vals.Add(input.Substring(0, i));
-
-                    int startIdx = i + 1;
-
-                    if (startIdx < input.Length && input[startIdx] == '\"') {
-                        int endIdx = input.IndexOf('\"', startIdx + 1);
-                        if (endIdx != -1) {
-                            vals.Add(input.Substring(startIdx + 1, endIdx - startIdx - 1));
-                            break;
-                        }
-                    }
-                    else {
-                        vals.Add(input.Substring(startIdx, input.Length - startIdx));
-                        break;
-                    }
-                }
-            }
-            return vals;
+                }    
         }
     }
 }
