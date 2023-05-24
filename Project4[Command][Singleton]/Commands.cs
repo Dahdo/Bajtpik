@@ -6,10 +6,12 @@ namespace Project4_Command {
     public class ListCommand : ICommand {
         private Visitor ListVisitor;
         private CollectionWrapper CollectionWrapper;
+        private List<string> Arguments;
 
-        public ListCommand(Visitor listVisitor, CollectionWrapper collectionWrapper) {
+        public ListCommand(Visitor listVisitor, CollectionWrapper collectionWrapper, List<string> args) {
             this.ListVisitor = listVisitor;
             this.CollectionWrapper = collectionWrapper;
+            this.Arguments = args;
         }
         public void Execute() {
             this.CollectionWrapper.Accept(this.ListVisitor);
@@ -19,15 +21,15 @@ namespace Project4_Command {
     public class FindCommand : ICommand {
         private Visitor FindVisitor;
         private CollectionWrapper CollectionWrapper;
-        private List<string> Requirements;
+        private List<string> Arguments;
 
-        public FindCommand(Visitor findVisitor, CollectionWrapper collectionWrapper, List<string> requirements) {
+        public FindCommand(Visitor findVisitor, CollectionWrapper collectionWrapper, List<string> args) {
             this.FindVisitor = findVisitor;
             this.CollectionWrapper = collectionWrapper;
-            this.Requirements = requirements; 
+            this.Arguments = args; 
         }
         public void Execute() {
-            this.FindVisitor.AddRequirements(Requirements);
+            this.FindVisitor.AddRequirements(Arguments);
             this.CollectionWrapper.Accept(this.FindVisitor);
         }
     }
@@ -36,10 +38,12 @@ namespace Project4_Command {
         private CollectionWrapper CollectionWrapper;
         private ResourceBuilder Builder;
         private Director Director;
-        public AddCommand(ResourceBuilder builder, Director director, CollectionWrapper collectionWrapper) {
+        private List<string> Arguments;
+        public AddCommand(ResourceBuilder builder, Director director, CollectionWrapper collectionWrapper, List<string> args) {
             this.Builder = builder;
             this.Director = director;
             this.CollectionWrapper = collectionWrapper;
+            this.Arguments = args;
         }
 
         public void Execute() {
