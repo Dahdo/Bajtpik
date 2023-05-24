@@ -2,7 +2,7 @@
 //#define PRINTREP1
 //#define PRINTREP4
 //#define PRINTPROJ2
-#define PRINTPROJ3
+//#define PRINTPROJ3
 
 using BajtpikOOD;
 using Project1_Adapter;
@@ -649,40 +649,43 @@ namespace Client {
             }
 #endif
             #endregion
-//            #region
-//            Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary =
-//                new Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>>();
-//            commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
-//            commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new ListVisitor(), cWrapper, list);
+#region
 
-//            Director director = new Director();
-//            string? input = Console.ReadLine();
-//            while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
-//                List<String> inputList = ParseInput(input);
-//                if (inputList.Count == 1)
-//                    if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
-//                        Console.WriteLine("Command not supported!");
-//                if (inputList.Count >= 2)
-//                    try {
-//                        if (inputList[0] == "add") {
-//                            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-//                            List<string> arguments = Util.SecondaryLoop(buildersDict[search].GetFields());
-//                            collectionsDictionary[inputList[1].ToLower()].Direct(director.AddArguments(arguments), buildersDict[search]);
-//                        }
-//                        else if (inputList[0] == "queue") {
-//                            Invoker.Print();
-//                        }
-//                        else {
-//                            ICommand command = commandsDictionary[inputList[0]](collectionsDictionary[inputList[1]], inputList);
-//                            Invoker.AddCommand(command);
-//                        }                        
-//                    }
-//                    catch (Exception e) {
-//                        Console.WriteLine($"Error: [{e.Message}]");
-//                    }
-//                input = Console.ReadLine();
-//            }
-//#endregion
+            Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary =
+                new Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>>();
+            commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
+            commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new ListVisitor(), cWrapper, list);
+
+            string? input = Console.ReadLine();
+            while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
+                List<String> inputList = ParseInput(input);
+                if (inputList.Count == 1)
+                    if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
+                        Console.WriteLine("Command not supported!");
+                if (inputList.Count >= 2)
+                    try {
+                        if (inputList[0] == "queue") {
+                            Invoker.Print();
+                        }
+                        else if (inputList[0] == "add") {
+                            Director director = new Director();
+                            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
+                            List<string> arguments = Util.SecondaryLoop(buildersDict[search].GetFields());
+                            AddCommand command = new AddCommand(buildersDict[search], director.AddArguments(arguments),
+                                collectionsDictionary[inputList[1].ToLower()], inputList);
+                            Invoker.AddCommand(command);
+                        }
+                        else {
+                            ICommand command = commandsDictionary[inputList[0].ToLower()](collectionsDictionary[inputList[1].ToLower()], inputList);
+                            Invoker.AddCommand(command);
+                        }
+                    }
+                    catch (Exception e) {
+                        Console.WriteLine($"Error: [{e.Message}]");
+                    }
+                input = Console.ReadLine();
+            }
+            #endregion
 
         }
         private static List<string> ParseInput(string input) {
