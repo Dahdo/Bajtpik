@@ -602,6 +602,12 @@ namespace Client {
                 nwpLinkedList_proj2.Add(nwp3);
             nwpLinkedList_proj2.Add(nwp4);
 
+            Dictionary<string, Type> typeDict = new Dictionary<string, Type>();
+            typeDict["book"] = typeof(MainFormat.Book);
+            typeDict["author"] = typeof(MainFormat.Author);
+            typeDict["newspaper"] = typeof(MainFormat.NewsPaper);
+            typeDict["boardgame"] = typeof(MainFormat.BoardGame);
+
             Dictionary<String, CollectionWrapper> collectionsDictionary = new Dictionary<string, CollectionWrapper>();
             collectionsDictionary.Add("book", new BookCollection(bookVector_proj2));
             collectionsDictionary.Add("newspaper", new NewsPaperCollection(nwpLinkedList_proj2));
@@ -635,7 +641,7 @@ namespace Client {
                     try {
                         if (inputList[0] == "add") {
                             Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-                            List<string> arguments = Util.SecondaryLoop(buildersDict[search].GetFields());
+                            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             collectionsDictionary[inputList[1].ToLower()].Direct(director.AddArguments(arguments), buildersDict[search]);                                                 
                         }
                         else {
@@ -656,22 +662,27 @@ namespace Client {
             commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
             commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new ListVisitor(), cWrapper, list);
 
-            string? input = Console.ReadLine();
-            while (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase)) {
-                List<String> inputList = ParseInput(input);
+            Dictionary<string, Action> invokerActionsDict = new Dictionary<string, Action>();
+            invokerActionsDict["print"] = () => Invoker.Print();
+            invokerActionsDict["commit"] = () => Invoker.Commit();
+            invokerActionsDict["export"] = () => Invoker.Export();
+
+            string? userInput = Console.ReadLine();
+            while (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase)) {
+                List<String> inputList = ParseInput(userInput!);
                 if (inputList.Count == 1)
-                    if (!String.Equals(input, "exit", StringComparison.OrdinalIgnoreCase))
+                    if (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase))
                         Console.WriteLine("Command not supported!");
                 if (inputList.Count >= 2)
                     try {
                         if (inputList[0] == "queue") {
-                            Invoker.Print();
+                            invokerActionsDict[inputList[1]]();
                         }
                         else if (inputList[0] == "add") {
-                            Director director = new Director();
+                            Director dirctr = new Director();
                             Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-                            List<string> arguments = Util.SecondaryLoop(buildersDict[search].GetFields());
-                            AddCommand command = new AddCommand(buildersDict[search], director.AddArguments(arguments),
+                            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
+                            AddCommand command = new AddCommand(buildersDict[search], dirctr.AddArguments(arguments),
                                 collectionsDictionary[inputList[1].ToLower()], inputList);
                             Invoker.AddCommand(command);
                         }
@@ -683,7 +694,7 @@ namespace Client {
                     catch (Exception e) {
                         Console.WriteLine($"Error: [{e.Message}]");
                     }
-                input = Console.ReadLine();
+                userInput = Console.ReadLine();
             }
             #endregion
 

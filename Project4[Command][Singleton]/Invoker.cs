@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project4_Command {
+﻿namespace Project4_Command {
+    //Singleton class
     public class Invoker {
         private static Queue<ICommand>? CommandQueue;
         private Invoker() {}

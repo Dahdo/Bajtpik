@@ -19,7 +19,8 @@ namespace BajtpikOOD {
             return fields;
         }
 
-        public static List<string> SecondaryLoop(List<string> fields) {
+        public static List<string> SecondaryLoop(Type type) {
+            List<string> fields = Util.GetFields(type);
             Console.Write("Available fields: [  ");
             foreach (string field in fields) {
                 Console.Write($"{field}  ");

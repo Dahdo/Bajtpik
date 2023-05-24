@@ -445,6 +445,7 @@ namespace Project3_Builder {
                         this.resourceActions[parsedInput[0].ToLower()](this.resourceBuilder!, parsedInput[1]);
                     }
                     catch (Exception e) {
+                        this.Cancelled = true;
                         Console.WriteLine($"Add error: [{e.Message}]");
                     }
                 }    
