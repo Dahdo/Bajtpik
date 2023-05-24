@@ -16,6 +16,9 @@ namespace Project4_Command {
         public void Execute() {
             this.CollectionWrapper.Accept(this.ListVisitor);
         }
+        public override string ToString() {
+            return string.Join(" ", this.Arguments);
+        }
     }
 
     public class FindCommand : ICommand {
@@ -31,6 +34,9 @@ namespace Project4_Command {
         public void Execute() {
             this.FindVisitor.AddRequirements(Arguments);
             this.CollectionWrapper.Accept(this.FindVisitor);
+        }
+        public override string ToString() {
+            return string.Join(" ", this.Arguments);
         }
     }
 
@@ -48,6 +54,9 @@ namespace Project4_Command {
 
         public void Execute() {
             this.CollectionWrapper.Direct(this.Director, this.Builder);
+        }
+        public override string ToString() {
+            return string.Join(" ", this.Arguments);
         }
     }
 }
