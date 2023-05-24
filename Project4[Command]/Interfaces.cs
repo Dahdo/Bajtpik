@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Project4_Command{
-    interface ICommand {
+    public interface ICommand {
         void Execute();
     }
 }
