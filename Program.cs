@@ -32,6 +32,12 @@ namespace Client {
         public static Dictionary<int, string> stringHashMap;
         public static Dictionary<int, List<SecondaryFormat.Author>> authorListHashMap;
 
+        //projects 3, ...
+        public static Dictionary<String, CollectionWrapper> collectionsDictionary;
+        public static Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary;
+        public static Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict;
+        public static Dictionary<string, Type> typeDict;
+
         public static void Main(string[] args) {
 
 #region MainRepresentation
@@ -606,13 +612,13 @@ namespace Client {
                 nwpLinkedList_proj2.Add(nwp3);
             nwpLinkedList_proj2.Add(nwp4);
 
-            Dictionary<string, Type> typeDict = new Dictionary<string, Type>();
+            typeDict = new Dictionary<string, Type>();
             typeDict["book"] = typeof(MainFormat.Book);
             typeDict["author"] = typeof(MainFormat.Author);
             typeDict["newspaper"] = typeof(MainFormat.NewsPaper);
             typeDict["boardgame"] = typeof(MainFormat.BoardGame);
 
-            Dictionary<String, CollectionWrapper> collectionsDictionary = new Dictionary<string, CollectionWrapper>();
+            collectionsDictionary = new Dictionary<string, CollectionWrapper>();
             collectionsDictionary.Add("book", new BookCollection(bookVector_proj2));
             collectionsDictionary.Add("newspaper", new NewsPaperCollection(nwpLinkedList_proj2));
             collectionsDictionary.Add("boardgame", new BoardGameCollection(bGameVector_proj2));
@@ -624,7 +630,7 @@ namespace Client {
             visitorsDictionary.Add("find", new FindVisitor());
             visitorsDictionary.Add("delete", new DeleteVisitor());
 
-            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict = new Dictionary<Tuple<string, string>, ResourceBuilder>();
+            buildersDict = new Dictionary<Tuple<string, string>, ResourceBuilder>();
             buildersDict[Tuple.Create("book", "base")] = new BookBuilderBase();
             buildersDict[Tuple.Create("book", "secondary")] = new BookBuilderSecondary();
             buildersDict[Tuple.Create("newspaper", "base")] = new NewsPaperBuilderBase();
@@ -663,7 +669,7 @@ namespace Client {
             #region Project_4
                             
 
-            Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary =
+            commandsDictionary =
                 new Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>>();
             commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
             commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new FindVisitor(), cWrapper, list);
@@ -688,10 +694,11 @@ namespace Client {
                         if (inputList[0] == "queue") {
                             if (inputList.Count > 2)
                                 Invoker.AddArguments(inputList.GetRange(2, inputList.Count - 2));
-                            invokerActionsDict[inputList[1]]();
+                            invokerActionsDict[inputList[1].ToLower()]();
                         }
                         else if (inputList[0] == "add") {
-                            ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList);
+                            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
+                            ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
                             Invoker.AddCommand(command);
                         }
                         else {
