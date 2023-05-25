@@ -140,9 +140,9 @@ namespace Project1_Adapter {
             get => (int)Client.Program.intMap[boardGame.MaxPlayer];
             set => Client.Program.intMap[boardGame.MaxPlayer] = value;
         }
-        public int Diffuculty {
-            get => (int)Client.Program.intMap[boardGame.Diffuculty];
-            set => Client.Program.intMap[boardGame.Diffuculty] = value;
+        public int Difficulty {
+            get => (int)Client.Program.intMap[boardGame.Difficulty];
+            set => Client.Program.intMap[boardGame.Difficulty] = value;
         }
         public List<Author> Authors {
             get {
@@ -177,7 +177,7 @@ namespace Project1_Adapter {
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("[Board Game] ");
-            stringBuilder.Append($"Title: {this.Title}, Min. Players: {this.MinPlayer}, Max. Players: {this.MaxPlayer}, Difficulty: {this.Diffuculty} Author(s):\n");
+            stringBuilder.Append($"Title: {this.Title}, Min. Players: {this.MinPlayer}, Max. Players: {this.MaxPlayer}, Difficulty: {this.Difficulty} Author(s):\n");
             //foreach (Project1_Adapter.Author author in this.Authors) {
             //    stringBuilder.Append(author.ToString());
             //}

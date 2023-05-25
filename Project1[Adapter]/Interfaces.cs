@@ -21,7 +21,7 @@
         public string Title { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
-        public int Diffuculty { get; set; }
+        public int Difficulty { get; set; }
         public List<Author> Authors { get; set; }
 
         public string ToString();
