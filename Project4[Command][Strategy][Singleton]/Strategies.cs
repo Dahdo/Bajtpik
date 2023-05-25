@@ -58,6 +58,14 @@ namespace Project4_Strategy {
                             Invoker.AddCommand(command);
                             reader.ReadLine();
                         }
+                        else if (strList[0] == "edit") {
+                            line = reader.ReadLine();
+                            List<string> arguments = line.Split(" ").ToList();
+                            ICommand command = Util.GetEditCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict,
+                                Client.Program.typeDict, strList, arguments);
+                            Invoker.AddCommand(command);
+                            reader.ReadLine();
+                        }
                         else {
                             ICommand command = 
                                 Util.GetCommand(Client.Program.commandsDictionary, 
