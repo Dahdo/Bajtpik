@@ -72,6 +72,31 @@ namespace Project4_Command {
         }
     }
 
+    public class EditCommand : ICommand {
+        private CollectionWrapper CollectionWrapper;
+        private ResourceBuilder Builder;
+        private Director Director;
+        private List<string> Arguments;
+        public EditCommand(ResourceBuilder builder, Director director, CollectionWrapper collectionWrapper, List<string> args) {
+            this.Builder = builder;
+            this.Director = director;
+            this.CollectionWrapper = collectionWrapper;
+            this.Arguments = args;
+        }
+
+        public void Execute() {
+            this.CollectionWrapper.Direct(this.Director, this.Builder);
+        }
+        public override string ToString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(string.Join(" ", this.Arguments))
+                .Append('\n').Append(string.Join(" ", this.Director.Arguments))
+                .Append('\n').Append("done");
+
+            return stringBuilder.ToString();
+        }
+    }
+
     public class DeleteCommand : ICommand {
         private Visitor DeleteVisitor;
         private CollectionWrapper CollectionWrapper;

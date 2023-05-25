@@ -666,7 +666,7 @@ namespace Client {
             }
 #endif
             #endregion
-            #region Project_4
+#region Project_4
                             
 
             commandsDictionary =
@@ -701,6 +701,19 @@ namespace Client {
                             ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
                             Invoker.AddCommand(command);
                         }
+                        else if (inputList[0] == "edit") {
+                            FindResource findRc = new FindResource();
+                            collectionsDictionary[inputList[1].ToLower()].Accept(findRc.
+                                ClearData().AddRequirements(inputList.GetRange(2, inputList.Count - 2)));
+
+                            Director dirctr = new Director();
+                            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), "base");
+                            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
+                            EditCommand command = new EditCommand(buildersDict[search].SetResource(findRc.Resource), dirctr.AddArguments(arguments),
+                                    collectionsDictionary[inputList[1].ToLower()], inputList);
+
+                           Invoker.AddCommand(command);
+                        }
                         else {
                             ICommand command = Util.GetCommand(commandsDictionary, collectionsDictionary, inputList);
                             Invoker.AddCommand(command);
@@ -711,7 +724,7 @@ namespace Client {
                     }
                 userInput = Console.ReadLine();
             }
-            #endregion
+#endregion
 
         }
         private static List<string> ParseInput(string input) {
