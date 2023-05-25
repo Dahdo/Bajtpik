@@ -388,7 +388,7 @@ namespace Project3_Builder {
         private ResourceBuilder? resourceBuilder;
         Dictionary<string, Action<ResourceBuilder, string>> resourceActions;
         BajtpikCollection<Resource>? collection;
-        private List<string> Arguments;
+        public List<string> Arguments { get; private set; }
         public bool Cancelled;
 
         public Director() {
