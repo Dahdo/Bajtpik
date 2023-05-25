@@ -7,12 +7,14 @@
 using BajtpikOOD;
 using Project1_Adapter;
 using Project2_Collections;
+using Project2_Iterators;
 using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 using Project4_Command;
 using System.IO;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -657,13 +659,15 @@ namespace Client {
             }
 #endif
             #endregion
-#region
+            #region Project_4
+                            
 
             Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary =
                 new Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>>();
             commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
             commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new FindVisitor(), cWrapper, list);
             commandsDictionary["delete"] = (cWrapper, list) => new DeleteCommand(new DeleteVisitor(), cWrapper, list);
+
 
             Dictionary<string, Action> invokerActionsDict = new Dictionary<string, Action>();
             invokerActionsDict["print"] = () => Invoker.Print();

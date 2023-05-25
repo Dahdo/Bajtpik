@@ -40,6 +40,11 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return this.book;
         }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.book = (MainFormat.Book)resource;
+            return this;
+        }
     }
 
     public class BookBuilderSecondary : ResourceBuilder, BookBuilder {
@@ -84,6 +89,11 @@ namespace Project3_Builder {
         public Resource GetResource() {
             return new BookAdapter(this.book, 1);
         }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.book = (SecondaryFormat.Book)resource;
+            return this;
+        }
     }
 
     public class NewsPaperBuilderBase : ResourceBuilder, NewsPaperBuilder {
@@ -119,6 +129,11 @@ namespace Project3_Builder {
             if (this.fields.Count == 0)
                 this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
+        }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.newsPaper = (MainFormat.NewsPaper)resource;
+            return this;
         }
     }
 
@@ -163,6 +178,11 @@ namespace Project3_Builder {
                 this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.newsPaper = (SecondaryFormat.NewsPaper)resource;
+            return this;
+        }
     }
 
     public class BoardGameBuilderBase : ResourceBuilder, BoardGameBuilder {
@@ -203,6 +223,11 @@ namespace Project3_Builder {
             if(this.fields.Count == 0)
                 this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
+        }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.boardGame = (MainFormat.BoardGame)resource;
+            return this;
         }
     }
 
@@ -252,6 +277,11 @@ namespace Project3_Builder {
                 this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
         }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.boardGame = (SecondaryFormat.BoardGame)resource;
+            return this;
+        }
     }
 
     public class AuthorBuilderBase : ResourceBuilder, AuthorBuilder {
@@ -291,6 +321,11 @@ namespace Project3_Builder {
             if (this.fields.Count == 0)
                 this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
+        }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.author = (MainFormat.Author)resource;
+            return this;
         }
     }
 
@@ -339,6 +374,11 @@ namespace Project3_Builder {
             if(this.fields.Count == 0)
                 this.fields.AddRange(Util.GetFields(typeof(MainFormat.Author)));
             return this.fields;
+        }
+
+        public ResourceBuilder SetResource(Resource resource) {
+            this.author = (SecondaryFormat.Author)resource;
+            return this;
         }
     }
     

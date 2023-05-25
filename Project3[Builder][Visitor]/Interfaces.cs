@@ -26,6 +26,7 @@ namespace Project3_Builder {
         public List<string> GetFields();
         public ResourceBuilder ResetData();
         public Resource GetResource();
+        public ResourceBuilder SetResource(Resource resource);
     }
     public interface BookBuilder {
         public void AddTitle(string title);
