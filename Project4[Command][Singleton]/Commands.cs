@@ -32,7 +32,7 @@ namespace Project4_Command {
             this.Arguments = args; 
         }
         public void Execute() {
-            this.FindVisitor.AddRequirements(Arguments);
+            this.FindVisitor.AddRequirements(Arguments.GetRange(2, Arguments.Count - 2));
             this.CollectionWrapper.Accept(this.FindVisitor);
         }
         public override string ToString() {
@@ -54,6 +54,25 @@ namespace Project4_Command {
 
         public void Execute() {
             this.CollectionWrapper.Direct(this.Director, this.Builder);
+        }
+        public override string ToString() {
+            return string.Join(" ", this.Arguments);
+        }
+    }
+
+    public class DeleteCommand : ICommand {
+        private Visitor DeleteVisitor;
+        private CollectionWrapper CollectionWrapper;
+        private List<string> Arguments;
+
+        public DeleteCommand(Visitor deleteVisitor, CollectionWrapper collectionWrapper, List<string> args) {
+            this.DeleteVisitor = deleteVisitor;
+            this.CollectionWrapper = collectionWrapper;
+            this.Arguments = args;
+        }
+        public void Execute() {
+            this.DeleteVisitor.AddRequirements(Arguments.GetRange(2, Arguments.Count - 2));
+            this.CollectionWrapper.Accept(this.DeleteVisitor);
         }
         public override string ToString() {
             return string.Join(" ", this.Arguments);

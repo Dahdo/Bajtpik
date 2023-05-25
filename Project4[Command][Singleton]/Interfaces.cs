@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Project4_Command{
     public interface ICommand {
-        void Execute();
+        public void Execute();
     }
 }

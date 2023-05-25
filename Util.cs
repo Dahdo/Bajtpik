@@ -30,8 +30,8 @@ namespace BajtpikOOD {
             List<string> inputList = new List<string>();
             string? input = Console.ReadLine();
             while (input?.ToLower() != "exit" && input?.ToLower() != "done") {
-                if(input != null)
-                    inputList.Add(input);               
+                if (input != null)
+                    inputList.Add(input);
                 input = Console.ReadLine();
             }
 
@@ -61,6 +61,21 @@ namespace BajtpikOOD {
             }
             return vals;
         }
+
+        public static Dictionary<String, Tuple<Object, Type>> GetNameValueTypeTuple(Object obj) {
+            Dictionary<String, Tuple<Object, Type>> nameValueTypeTuple = new Dictionary<string, Tuple<object, Type>>();
+            Type type = obj.GetType();
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (var prop in properties){
+                if (prop.Name == "Authors") 
+                    continue;
+             nameValueTypeTuple.Add(prop.Name.ToLower(), new Tuple<object, Type>(prop.GetValue(obj)!, prop.PropertyType));
+            }
+
+            return nameValueTypeTuple;                    
+        }
+             
+
     }
 
 }

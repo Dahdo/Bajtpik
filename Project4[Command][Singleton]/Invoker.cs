@@ -1,4 +1,6 @@
-﻿namespace Project4_Command {
+﻿using System.Xml;
+using System.Xml.Serialization;
+namespace Project4_Command {
     //Singleton class
     public class Invoker {
         private static Queue<ICommand>? CommandQueue;
@@ -20,7 +22,7 @@
         }
 
         public static void Export() {
-            new NotImplementedException();
+            
         }
 
         public static void Commit() {

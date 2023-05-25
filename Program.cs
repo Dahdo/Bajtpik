@@ -2,7 +2,7 @@
 //#define PRINTREP1
 //#define PRINTREP4
 //#define PRINTPROJ2
-//#define PRINTPROJ3
+#define PRINTPROJ3
 
 using BajtpikOOD;
 using Project1_Adapter;
@@ -618,6 +618,7 @@ namespace Client {
             Dictionary<String, Visitor> visitorsDictionary = new Dictionary<String, Visitor>();
             visitorsDictionary.Add("list", new ListVisitor());
             visitorsDictionary.Add("find", new FindVisitor());
+            visitorsDictionary.Add("delete", new DeleteVisitor());
 
             Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict = new Dictionary<Tuple<string, string>, ResourceBuilder>();
             buildersDict[Tuple.Create("book", "base")] = new BookBuilderBase();
@@ -660,12 +661,14 @@ namespace Client {
             Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary =
                 new Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>>();
             commandsDictionary["list"] = (cWrapper, list) => new ListCommand(new ListVisitor(), cWrapper, list);
-            commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new ListVisitor(), cWrapper, list);
+            commandsDictionary["find"] = (cWrapper, list) => new FindCommand(new FindVisitor(), cWrapper, list);
+            commandsDictionary["delete"] = (cWrapper, list) => new DeleteCommand(new DeleteVisitor(), cWrapper, list);
 
             Dictionary<string, Action> invokerActionsDict = new Dictionary<string, Action>();
             invokerActionsDict["print"] = () => Invoker.Print();
             invokerActionsDict["commit"] = () => Invoker.Commit();
             invokerActionsDict["export"] = () => Invoker.Export();
+            invokerActionsDict["dismiss"] = () => Invoker.Dismiss();
 
             string? userInput = Console.ReadLine();
             while (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase)) {
