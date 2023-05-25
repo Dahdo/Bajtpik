@@ -9,3 +9,9 @@ namespace Project4_Command{
         public void Execute();
     }
 }
+
+namespace Project4_Strategy {
+    public interface IStrategy {
+        public void Execute();
+    }
+}
