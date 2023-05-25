@@ -30,7 +30,7 @@
         public int Title { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
-        public int Diffuculty { get; set; }
+        public int Difficulty { get; set; }
         public int Authors { get; set; }
 
         public BoardGame() { }
@@ -38,7 +38,7 @@
             this.Title = title;
             this.MinPlayer = minplayer;
             this.MaxPlayer = maxplayer;
-            this.Diffuculty = difficulty;
+            this.Difficulty = difficulty;
             this.Authors = authors;
         }
     }

@@ -58,7 +58,7 @@ namespace MainFormat {
         public string Title { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
-        public int Diffuculty { get; set; }
+        public int Difficulty { get; set; }
         public List<Project1_Adapter.Author> Authors { get; set; }
 
         public BoardGame() { }
@@ -66,13 +66,13 @@ namespace MainFormat {
             this.Title = title;
             this.MinPlayer = minplayer;
             this.MaxPlayer = maxplayer;
-            this.Diffuculty = difficulty;
+            this.Difficulty = difficulty;
             this.Authors = new List<Project1_Adapter.Author>(authors);
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("[Board Game] ");
-            stringBuilder.Append($"Title: {this.Title}, Min. Players: {this.MinPlayer}, Max. Players: {this.MaxPlayer}, Difficulty: {this.Diffuculty} Author(s):\n");
+            stringBuilder.Append($"Title: {this.Title}, Min. Players: {this.MinPlayer}, Max. Players: {this.MaxPlayer}, Difficulty: {this.Difficulty} Author(s):\n");
             //foreach (Project1_Adapter.Author author in this.Authors) {
             //    stringBuilder.Append(author.ToString());
             //}
