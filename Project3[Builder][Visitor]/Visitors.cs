@@ -222,7 +222,6 @@ namespace Project3_Visitor {
         private List<String> values;
         private Dictionary<char, Func<object, object, Type, bool>> compOpsFun;
         private Dictionary<String, Tuple<Object, Type>> classTuple;
-        private List<string> Arguments;
 
         public DeleteVisitor() {
             this.compOpsFun = new Dictionary<char, Func<object, object, Type, bool>>();
@@ -231,26 +230,24 @@ namespace Project3_Visitor {
             this.fields = new List<String>();
             this.compOp = new List<char>();
             this.values = new List<String>();
-            this.Arguments = new List<string>();
         }
 
 
         public void Visit(BajtpikCollection<Book> book) {
-            if (!ParseRequirements() || Arguments.Count == 0)
-                return;
+            if (ParseRequirements()) ;
+            else return;
             InitCompOps();
             ForwardIterator<Book> fid = book.GetForwardIterator();
-            DoDelete(fid, book);
+            book.Remove(DoFind(fid));
             ClearData();
         }
 
         public void Visit(BajtpikCollection<BoardGame> boardGame) {
-            if (!ParseRequirements())
-                return;
-
+            if (ParseRequirements()) ;
+            else return;
             InitCompOps();
             ForwardIterator<BoardGame> fid = boardGame.GetForwardIterator();
-            DoDelete(fid, boardGame);
+            boardGame.Remove(DoFind(fid));
             ClearData();
         }
 
@@ -259,7 +256,7 @@ namespace Project3_Visitor {
             else return;
             InitCompOps();
             ForwardIterator<NewsPaper> fid = newsPaper.GetForwardIterator();
-            DoDelete(fid, newsPaper);
+            newsPaper.Remove(DoFind(fid));
             ClearData();
         }
 
@@ -278,7 +275,8 @@ namespace Project3_Visitor {
                     Type type = classTuple[fields[i].ToLower()].Item2;
                     Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
                     if (fun != null && fun(obj, values[i], type)) {
-                        Console.WriteLine(fid.Current().ToString());
+                        author.Remove(fid.Current());
+                        return;
                     }
                 }
                 authList.Add(fid.Current());
@@ -289,10 +287,6 @@ namespace Project3_Visitor {
         }
         public Visitor AddRequirements(List<String> requirements) {
             this.requirements = requirements;
-            return this;
-        }
-        public Visitor AddArguments(List<string> args) {
-            this.Arguments = args;
             return this;
         }
         private bool ParseRequirements() {
@@ -368,7 +362,7 @@ namespace Project3_Visitor {
                 }
             });
         }
-        private bool DoDelete<T>(ForwardIterator<T> fid, BajtpikCollection<T> collection) {
+        private T DoFind<T>(ForwardIterator<T> fid) {
             bool isDone = false;
             while (!isDone) {
                 this.classTuple.Clear();
@@ -378,7 +372,7 @@ namespace Project3_Visitor {
                     Type type = classTuple[fields[i].ToLower()].Item2;
                     Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
                     if (fun != null && fun(obj, values[i], type)) {
-                        return collection.Remove(fid.Current());
+                        return fid.Current();
                     }
                 }
                 isDone = fid.IsDone();
@@ -396,4 +390,189 @@ namespace Project3_Visitor {
             return this;
         }
     }
+
+
+    //public class DeleteVisitor : Visitor {
+    //    private List<String> requirements;
+    //    private List<String> fields;
+    //    private List<Char> compOp;
+    //    private List<String> values;
+    //    private Dictionary<char, Func<object, object, Type, bool>> compOpsFun;
+    //    private Dictionary<String, Tuple<Object, Type>> classTuple;
+    //    private List<string> Arguments;
+
+    //    public DeleteVisitor() {
+    //        this.compOpsFun = new Dictionary<char, Func<object, object, Type, bool>>();
+    //        this.classTuple = new Dictionary<string, Tuple<object, Type>>();
+    //        this.requirements = new List<string>();
+    //        this.fields = new List<String>();
+    //        this.compOp = new List<char>();
+    //        this.values = new List<String>();
+    //        this.Arguments = new List<string>();
+    //    }
+
+
+    //    public void Visit(BajtpikCollection<Book> book) {
+    //        if (!ParseRequirements() || Arguments.Count == 0)
+    //            return;
+    //        InitCompOps();
+    //        ForwardIterator<Book> fid = book.GetForwardIterator();
+    //        DoDelete(fid, book);
+    //        ClearData();
+    //    }
+
+    //    public void Visit(BajtpikCollection<BoardGame> boardGame) {
+    //        if (!ParseRequirements())
+    //            return;
+
+    //        InitCompOps();
+    //        ForwardIterator<BoardGame> fid = boardGame.GetForwardIterator();
+    //        DoDelete(fid, boardGame);
+    //        ClearData();
+    //    }
+
+    //    public void Visit(BajtpikCollection<NewsPaper> newsPaper) {
+    //        if (ParseRequirements()) ;
+    //        else return;
+    //        InitCompOps();
+    //        ForwardIterator<NewsPaper> fid = newsPaper.GetForwardIterator();
+    //        DoDelete(fid, newsPaper);
+    //        ClearData();
+    //    }
+
+    //    public void Visit(BajtpikCollection<Author> author) {
+    //        if (ParseRequirements()) ;
+    //        else return;
+    //        InitCompOps();
+    //        ForwardIterator<Author> fid = author.GetForwardIterator();
+    //        //author iterators have their own issue. custom DoFind here
+    //        List<Author> authList = new List<Author>();
+    //        while (!authList.Contains(fid.Current())) {
+    //            this.classTuple.Clear();
+    //            InitClassTuple(fid.Current());
+    //            for (int i = 0; i < fields.Count; i++) {
+    //                object obj = classTuple[fields[i].ToLower()].Item1;
+    //                Type type = classTuple[fields[i].ToLower()].Item2;
+    //                Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
+    //                if (fun != null && fun(obj, values[i], type)) {
+    //                    Console.WriteLine(fid.Current().ToString());
+    //                }
+    //            }
+    //            authList.Add(fid.Current());
+    //            fid.Move();
+    //        }
+    //        authList.Clear();
+    //        ClearData();
+    //    }
+    //    public Visitor AddRequirements(List<String> requirements) {
+    //        this.requirements = requirements;
+    //        return this;
+    //    }
+    //    public Visitor AddArguments(List<string> args) {
+    //        this.Arguments = args;
+    //        return this;
+    //    }
+    //    private bool ParseRequirements() {
+    //        foreach (String str in requirements) {
+    //            if (str.Contains("=")) {
+    //                fields.Add(str.Substring(0, str.IndexOf("=")));
+    //                compOp.Add('=');
+    //                values.Add(str.Substring(str.IndexOf("=") + 1));
+    //            }
+    //            else if (str.Contains("<")) {
+    //                fields.Add(str.Substring(0, str.IndexOf("<")));
+    //                compOp.Add('<');
+    //                values.Add(str.Substring(str.IndexOf("<") + 1));
+    //            }
+    //            else if (str.Contains(">")) {
+    //                fields.Add(str.Substring(0, str.IndexOf(">")));
+    //                compOp.Add('>');
+    //                values.Add(str.Substring(str.IndexOf(">") + 1));
+    //            }
+    //            else {
+    //                Console.WriteLine("invalid requirement input");
+    //                return false;
+    //            }
+    //        }
+
+    //        return true;
+    //    }
+    //    private void InitClassTuple(Object obj) {
+    //        Type type = obj.GetType();
+    //        PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+    //        foreach (var prop in properties) {
+    //            if (prop.Name == "Authors") {
+    //                continue;
+    //            }
+    //            this.classTuple.Add(prop.Name.ToLower(), new Tuple<object, Type>(prop.GetValue(obj)!, prop.PropertyType));
+    //        }
+    //    }
+    //    private void InitCompOps() {
+    //        this.compOpsFun.Add('=', (a, b, c) => {
+    //            if (c == typeof(int)) {
+    //                return (int)a == int.Parse((string)b);
+    //            }
+    //            else if (c == typeof(string)) {
+    //                return string.Equals((string)a, (string)b, StringComparison.OrdinalIgnoreCase);
+    //            }
+    //            else {
+    //                return false;
+    //            }
+    //        });
+
+    //        this.compOpsFun.Add('>', (a, b, c) => {
+    //            if (c == typeof(int)) {
+    //                return (int)a > int.Parse((string)b);
+    //            }
+    //            else if (c == typeof(string)) {
+    //                return string.Compare((string)a, (string)b, StringComparison.OrdinalIgnoreCase) > 0;
+    //            }
+    //            else {
+    //                return false;
+    //            }
+    //        });
+
+    //        this.compOpsFun.Add('<', (a, b, c) => {
+    //            if (c == typeof(int)) {
+    //                return (int)a < int.Parse((string)b);
+    //            }
+    //            else if (c == typeof(string)) {
+    //                return string.Compare((string)a, (string)b, StringComparison.OrdinalIgnoreCase) < 0;
+    //            }
+    //            else {
+    //                return false;
+    //            }
+    //        });
+    //    }
+    //    private bool DoDelete<T>(ForwardIterator<T> fid, BajtpikCollection<T> collection) {
+    //        bool isDone = false;
+    //        while (!isDone) {
+    //            this.classTuple.Clear();
+    //            InitClassTuple(fid.Current());
+    //            for (int i = 0; i < fields.Count; i++) {
+    //                object obj = classTuple[fields[i].ToLower()].Item1;
+    //                Type type = classTuple[fields[i].ToLower()].Item2;
+    //                Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
+    //                if (fun != null && fun(obj, values[i], type)) {
+    //                    T item = fid.Current();
+    //                    Console.WriteLine("yego yes: " + item);
+    //                    return collection.Remove(item);
+    //                }
+    //            }
+    //            isDone = fid.IsDone();
+    //            fid.Move();
+    //        }
+    //        return default;
+    //    }
+    //    public Visitor ClearData() {
+    //        requirements.Clear();
+    //        classTuple.Clear();
+    //        fields.Clear();
+    //        compOp.Clear();
+    //        values.Clear();
+    //        compOpsFun.Clear();
+    //        return this;
+    //    }
+    //}
 }

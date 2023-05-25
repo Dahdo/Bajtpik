@@ -186,7 +186,7 @@ namespace Project3_Builder {
         }
 
         public void AddDifficulty(int difficulty) {
-            this.boardGame.Diffuculty = difficulty;
+            this.boardGame.Difficulty = difficulty;
         }
 
         public ResourceBuilder ResetData() {
@@ -235,7 +235,7 @@ namespace Project3_Builder {
 
         public void AddDifficulty(int difficulty) {
             intMap.Add(intMap.Count, difficulty);
-            this.boardGame.Diffuculty = intMap.Count - 1;
+            this.boardGame.Difficulty = intMap.Count - 1;
         }
 
         public ResourceBuilder ResetData() {
