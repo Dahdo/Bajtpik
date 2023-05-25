@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
-
 namespace Project4_Strategy {
     public class TXTExporter : IStrategy {
         private string Path;

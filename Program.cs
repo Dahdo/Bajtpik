@@ -12,6 +12,7 @@ using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 using Project4_Command;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Metadata;
@@ -690,15 +691,11 @@ namespace Client {
                             invokerActionsDict[inputList[1]]();
                         }
                         else if (inputList[0] == "add") {
-                            Director dirctr = new Director();
-                            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-                            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
-                            AddCommand command = new AddCommand(buildersDict[search], dirctr.AddArguments(arguments),
-                                collectionsDictionary[inputList[1].ToLower()], inputList);
+                            ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList);
                             Invoker.AddCommand(command);
                         }
                         else {
-                            ICommand command = commandsDictionary[inputList[0].ToLower()](collectionsDictionary[inputList[1].ToLower()], inputList);
+                            ICommand command = Util.GetCommand(commandsDictionary, collectionsDictionary, inputList);
                             Invoker.AddCommand(command);
                         }
                     }

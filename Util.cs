@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Project3_Builder;
+using Project3_CollectionWrapper;
+using Project4_Command;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -75,7 +78,23 @@ namespace BajtpikOOD {
             return nameValueTypeTuple;                    
         }
              
+        //Methods used in main also
+        public static ICommand GetCommand(Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary,
+             Dictionary<String, CollectionWrapper> collectionsDictionary, List<String> inputList) {
+            ICommand command = commandsDictionary[inputList[0].ToLower()](collectionsDictionary[inputList[1].ToLower()], inputList);
+            return command;
+        }
 
+        public static ICommand GetAddCommand(Dictionary<String, CollectionWrapper> collectionsDictionary,
+            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList) {
+            Director dirctr = new Director();
+            Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
+            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
+            AddCommand command = new AddCommand(buildersDict[search], dirctr.AddArguments(arguments),
+                collectionsDictionary[inputList[1].ToLower()], inputList);
+
+            return command;
+        }
     }
 
 }
