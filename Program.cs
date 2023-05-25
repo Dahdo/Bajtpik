@@ -2,7 +2,7 @@
 //#define PRINTREP1
 //#define PRINTREP4
 //#define PRINTPROJ2
-#define PRINTPROJ3
+//#define PRINTPROJ3
 
 using BajtpikOOD;
 using Project1_Adapter;
@@ -14,6 +14,7 @@ using Project4_Command;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Client {
@@ -91,7 +92,7 @@ namespace Client {
 
             Console.WriteLine("\nBOARD GAMES:\n");
             foreach (MainFormat.BoardGame bgame in boardGameList_m) {
-                Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
+                Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Difficulty} by Author(s):");
                 foreach (MainFormat.Author author in bgame.Authors)
                     Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
                 Console.WriteLine();
@@ -215,7 +216,7 @@ namespace Client {
 
             Console.WriteLine("\nBOARD GAMES:\n");
             foreach (SecondaryFormat.BoardGame boardGame in boardGameList_1) {
-                Console.Write($"{stringMap[boardGame.Title]} min players: {intMap[boardGame.MinPlayer]} max players: {intMap[boardGame.MaxPlayer]} difficulty: {intMap[boardGame.Diffuculty]} by Author(s):");
+                Console.Write($"{stringMap[boardGame.Title]} min players: {intMap[boardGame.MinPlayer]} max players: {intMap[boardGame.MaxPlayer]} difficulty: {intMap[boardGame.Difficulty]} by Author(s):");
 
                 foreach (SecondaryFormat.Author author in authorListMap[boardGame.Authors]) {
                     Console.Write($" {stringMap[author.Name]} {stringMap[author.Surname]} {stringMap[author.Nickname]} born in {intMap[author.BirthYear]}");
@@ -268,7 +269,7 @@ namespace Client {
 
             Console.WriteLine("\nBOARD GAMES:\n");
             foreach (Project1_Adapter.BoardGame bgame in boardGameList_1a) {
-                Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
+                Console.Write($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Difficulty} by Author(s):");
                 foreach (Project1_Adapter.Author author in bgame.Authors)
                     Console.Write($" {author.Name} {author.Surname} {author.Nickname} born in {author.BirthYear}");
                 Console.WriteLine();
@@ -397,7 +398,7 @@ namespace Client {
             Console.WriteLine("\nBOARD GAMES [with atleast one author born after 1970]:\n");
             foreach (Project1_Adapter.BoardGame bgame in boardGameList_4a) {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Diffuculty} by Author(s):");
+                stringBuilder.Append($"{bgame.Title} min players: {bgame.MinPlayer} max players: {bgame.MaxPlayer} difficulty: {bgame.Difficulty} by Author(s):");
                 bool bornAfter1970 = false;
                 foreach (Project1_Adapter.Author author in bgame.Authors) {
                     if(author.BirthYear > 1970) {
@@ -551,26 +552,26 @@ namespace Client {
             Project1_Adapter.Author christian_s_1a = new Project1_Adapter.AuthorAdapter(christian_s, 1);
 
             //creating collections of objects of different representations.
-            Project2_Collections.DoublelyLinkedList<Project1_Adapter.Author> authorLinkedlist_proj2 =
-                new Project2_Collections.DoublelyLinkedList<Project1_Adapter.Author>();
+            Project2_Collections.Vector<Project1_Adapter.Author> authorVector_proj2 =
+                new Project2_Collections.Vector<Project1_Adapter.Author>();
             
             //base representation
-            authorLinkedlist_proj2.Add(douglas);
-            authorLinkedlist_proj2.Add(tom);
-            authorLinkedlist_proj2.Add(elmar);
-            authorLinkedlist_proj2.Add(michael1);
-            authorLinkedlist_proj2.Add(ulf);
-            authorLinkedlist_proj2.Add(michael2);
-            authorLinkedlist_proj2.Add(frank);
-            authorLinkedlist_proj2.Add(terry);
-            authorLinkedlist_proj2.Add(neil);
+            authorVector_proj2.Add(douglas);
+            authorVector_proj2.Add(tom);
+            authorVector_proj2.Add(elmar);
+            authorVector_proj2.Add(michael1);
+            authorVector_proj2.Add(ulf);
+            authorVector_proj2.Add(michael2);
+            authorVector_proj2.Add(frank);
+            authorVector_proj2.Add(terry);
+            authorVector_proj2.Add(neil);
             //secondary representation (adapted)
-            authorLinkedlist_proj2.Add(james_s_1a);
-            authorLinkedlist_proj2.Add(jakub_s_1a);
-            authorLinkedlist_proj2.Add(klaus_s_1a);
-            authorLinkedlist_proj2.Add(alfred_s_1a);
-            authorLinkedlist_proj2.Add(james_s_1a);
-            authorLinkedlist_proj2.Add(christian_s_1a);
+            authorVector_proj2.Add(james_s_1a);
+            authorVector_proj2.Add(jakub_s_1a);
+            authorVector_proj2.Add(klaus_s_1a);
+            authorVector_proj2.Add(alfred_s_1a);
+            authorVector_proj2.Add(james_s_1a);
+            authorVector_proj2.Add(christian_s_1a);
 
            Project2_Collections.Vector<Project1_Adapter.Book> bookVector_proj2 =
                 new Project2_Collections.Vector<Project1_Adapter.Book>();
@@ -583,14 +584,14 @@ namespace Client {
                 bookVector_proj2.Add(book5);
 
 
-            Project2_Collections.Heap<Project1_Adapter.BoardGame> bGameHeap_proj2 =
-                new Project2_Collections.Heap<Project1_Adapter.BoardGame>((a, b) => a.MaxPlayer < b.MaxPlayer);
+            Project2_Collections.Vector<Project1_Adapter.BoardGame> bGameVector_proj2 =
+                new Project2_Collections.Vector<Project1_Adapter.BoardGame>();
                     //secondary representation (adapted)
-                 bGameHeap_proj2.Add(boardGame1_4a);
-                 bGameHeap_proj2.Add(boardGame2_4a);
+                 bGameVector_proj2.Add(boardGame1_4a);
+                 bGameVector_proj2.Add(boardGame2_4a);
                     //base representation
-                 bGameHeap_proj2.Add(scrabble);
-                 bGameHeap_proj2.Add(twilightImperium);
+                 bGameVector_proj2.Add(scrabble);
+                 bGameVector_proj2.Add(twilightImperium);
 
 
             Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper> nwpLinkedList_proj2 = 
@@ -611,8 +612,8 @@ namespace Client {
             Dictionary<String, CollectionWrapper> collectionsDictionary = new Dictionary<string, CollectionWrapper>();
             collectionsDictionary.Add("book", new BookCollection(bookVector_proj2));
             collectionsDictionary.Add("newspaper", new NewsPaperCollection(nwpLinkedList_proj2));
-            collectionsDictionary.Add("boardgame", new BoardGameCollection(bGameHeap_proj2));
-            collectionsDictionary.Add("author", new AuthorCollection(authorLinkedlist_proj2));
+            collectionsDictionary.Add("boardgame", new BoardGameCollection(bGameVector_proj2));
+            collectionsDictionary.Add("author", new AuthorCollection(authorVector_proj2));
 
 
             Dictionary<String, Visitor> visitorsDictionary = new Dictionary<String, Visitor>();
