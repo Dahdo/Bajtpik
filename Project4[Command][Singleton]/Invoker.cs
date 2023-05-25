@@ -51,7 +51,16 @@ namespace Project4_Command {
         }
 
         public static void Load() {
-            
+            try {
+                if (Invoker.Arguments?.Count != 0)
+                    Invoker.context.SetStrategy(new TXTLoader(Invoker.Arguments[0]));
+                else
+                    Invoker.context.SetStrategy(new XMLExporter(Invoker.Arguments[0]));
+            }
+            catch (Exception e) {
+                Console.WriteLine($"Error: [{e.Message}]");
+            }
+            Invoker.context.DoStrategy();
         }
     }
 }

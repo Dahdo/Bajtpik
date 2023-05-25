@@ -1,7 +1,9 @@
-﻿using Project4_Command;
+﻿using BajtpikOOD;
+using Project4_Command;
 using System.Collections;
 using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
+using Client;
 namespace Project4_Strategy {
     public class TXTExporter : IStrategy {
         private string Path;
@@ -37,23 +39,36 @@ namespace Project4_Strategy {
 
     public class TXTLoader : IStrategy {
         private string Path;
-        private Queue<ICommand> CommandsQueue;
-        public TXTLoader(string path, Queue<ICommand> commandQ) {
+        public TXTLoader(string path) {
             this.Path = path;
-            this.CommandsQueue = commandQ;
         }
         public void Execute() {
             try {
                 using (StreamReader reader = new StreamReader(this.Path)) {
                     string line;
                     while ((line = reader.ReadLine()) != null){
-                        Console.WriteLine(line);
+                        List<string> strList = line.Split(" ").ToList();
+                        if (strList.Count == 0)
+                            continue;
+                        if (strList[0] == "add") {
+                            line = reader.ReadLine();
+                            List<string> arguments = line.Split(" ").ToList();
+                            ICommand command = Util.GetAddCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict, 
+                                Client.Program.typeDict, strList, arguments);
+                            Invoker.AddCommand(command);
+                            reader.ReadLine();
+                        }
+                        else {
+                            ICommand command = 
+                                Util.GetCommand(Client.Program.commandsDictionary, 
+                                Client.Program.collectionsDictionary, strList);
+                            Invoker.AddCommand(command);
+                        }
                     }
                 }
-
             }
             catch (Exception ex) {
-                Console.WriteLine($"[Failed to create file: [{ex.Message}]");
+                Console.WriteLine($"error: [{ex.Message}]");
             }
 
 
