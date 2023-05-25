@@ -1,7 +1,4 @@
 ﻿using Project4_Strategy;
-using System.Runtime.CompilerServices;
-using System.Xml;
-using System.Xml.Serialization;
 namespace Project4_Command {
     //Singleton class
     public class Invoker {
@@ -53,8 +50,8 @@ namespace Project4_Command {
             Invoker.CommandQueue?.Clear();
         }
 
-        public static void load() {
-            new NotImplementedException();
+        public static void Load() {
+            
         }
     }
 }

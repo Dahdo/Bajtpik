@@ -1,5 +1,6 @@
 ﻿using Project4_Command;
 using System.Collections;
+using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 
 namespace Project4_Strategy {
@@ -34,6 +35,32 @@ namespace Project4_Strategy {
             throw new NotImplementedException();
         }
     }
+
+    public class TXTLoader : IStrategy {
+        private string Path;
+        private Queue<ICommand> CommandsQueue;
+        public TXTLoader(string path, Queue<ICommand> commandQ) {
+            this.Path = path;
+            this.CommandsQueue = commandQ;
+        }
+        public void Execute() {
+            try {
+                using (StreamReader reader = new StreamReader(this.Path)) {
+                    string line;
+                    while ((line = reader.ReadLine()) != null){
+                        Console.WriteLine(line);
+                    }
+                }
+
+            }
+            catch (Exception ex) {
+                Console.WriteLine($"[Failed to create file: [{ex.Message}]");
+            }
+
+
+        }
+    }
+
 
     public class Context {
         private IStrategy? strategy;

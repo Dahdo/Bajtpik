@@ -674,6 +674,7 @@ namespace Client {
             invokerActionsDict["commit"] = () => Invoker.Commit();
             invokerActionsDict["export"] = () => Invoker.Export();
             invokerActionsDict["dismiss"] = () => Invoker.Dismiss();
+            invokerActionsDict["load"] = () => Invoker.Load();
 
             string? userInput = Console.ReadLine();
             while (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase)) {
@@ -684,6 +685,8 @@ namespace Client {
                 if (inputList.Count >= 2)
                     try {
                         if (inputList[0] == "queue") {
+                            if (inputList.Count > 2)
+                                Invoker.AddArguments(inputList.GetRange(2, inputList.Count - 2));
                             invokerActionsDict[inputList[1]]();
                         }
                         else if (inputList[0] == "add") {

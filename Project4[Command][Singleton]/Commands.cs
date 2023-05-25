@@ -1,6 +1,7 @@
 ﻿using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
+using System.Text;
 
 namespace Project4_Command {
     public class ListCommand : ICommand {
@@ -17,7 +18,10 @@ namespace Project4_Command {
             this.CollectionWrapper.Accept(this.ListVisitor);
         }
         public override string ToString() {
-            return string.Join(" ", this.Arguments);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(string.Join(" ", this.Arguments))
+                .Append('\n');
+            return stringBuilder.ToString();
         }
     }
 
@@ -36,7 +40,10 @@ namespace Project4_Command {
             this.CollectionWrapper.Accept(this.FindVisitor);
         }
         public override string ToString() {
-            return string.Join(" ", this.Arguments);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(string.Join(" ", this.Arguments))
+                .Append('\n');
+            return stringBuilder.ToString();
         }
     }
 
@@ -56,7 +63,12 @@ namespace Project4_Command {
             this.CollectionWrapper.Direct(this.Director, this.Builder);
         }
         public override string ToString() {
-            return string.Join(" ", this.Arguments);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(string.Join(" ", this.Arguments))
+                .Append('\n').Append(string.Join(" ", this.Director.Arguments))
+                .Append('\n').Append("done");
+
+            return stringBuilder.ToString();
         }
     }
 
@@ -75,7 +87,10 @@ namespace Project4_Command {
             this.CollectionWrapper.Accept(this.DeleteVisitor);
         }
         public override string ToString() {
-            return string.Join(" ", this.Arguments);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(string.Join(" ", this.Arguments))
+                .Append('\n');
+            return stringBuilder.ToString();
         }
     }
 }
