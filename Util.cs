@@ -86,10 +86,10 @@ namespace BajtpikOOD {
         }
 
         public static ICommand GetAddCommand(Dictionary<String, CollectionWrapper> collectionsDictionary,
-            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList) {
+            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList,
+            List<string> arguments) {
             Director dirctr = new Director();
             Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-            List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
             AddCommand command = new AddCommand(buildersDict[search], dirctr.AddArguments(arguments),
                 collectionsDictionary[inputList[1].ToLower()], inputList);
 
