@@ -1,5 +1,6 @@
 ﻿using Project2_Iterators;
 using Project3_CollectionWrapper;
+using Project5_Memento;
 
 namespace Project2_Collections {
     public interface BajtpikCollection<T> {
@@ -8,6 +9,8 @@ namespace Project2_Collections {
         public int Size();
         public ForwardIterator<T> GetForwardIterator();
         public ReverseIterator<T> GetReverseIterator();
+        public IMemento Save();
+        public void Restore(IMemento memento);
 
         //for iterators
         public T? First();

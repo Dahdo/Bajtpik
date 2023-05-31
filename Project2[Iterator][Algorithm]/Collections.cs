@@ -2,6 +2,7 @@
 using Project2_Iterators;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
+using Project5_Memento;
 
 namespace Project2_Collections {
     public class Vector<T> : BajtpikCollection<T> {
@@ -89,6 +90,24 @@ namespace Project2_Collections {
 
         public  ReverseIterator<T> GetReverseIterator() {
             return new ReverseIterator<T>(this);
+        }
+
+        //For memento
+
+        public IMemento Save() {
+            List<object> list = new List<object>();
+            foreach (var item in Items) {
+                list.Add(item);
+            }
+
+            return new Memento(list);
+
+        }
+
+        public void Restore(IMemento memento) {
+            var state = memento.GetState();
+            Items = state.Cast<T>().ToArray();
+            Count = Items.Length;
         }
     }
 
@@ -204,6 +223,29 @@ namespace Project2_Collections {
             return new ReverseIterator<T>(this);
         }
 
+        // For mementor
+        public IMemento Save() {
+            List<object> state = new List<object>();
+            T current = Head.Data;
+            state.Add(current);
+            while (!EqualityComparer<T>.Default.Equals(current, Last())) {
+                current = Next(current);
+                state.Add(current);
+            }
+            return new Memento(state);
+        }
+
+        public void Restore(IMemento memento) {
+            List<object> state = memento.GetState();
+            Node current = Head;
+            int count = 0;
+            while(!EqualityComparer<T>.Default.Equals(current.Data, Last())) {
+                current.Data = (T)state[count++];
+            }
+            if(state.Count > count) {
+                this.Add((T)state[count++]);
+            }
+        }
     }
 
 
@@ -310,6 +352,23 @@ namespace Project2_Collections {
                 return HeapList[prevIndex];
             else
                 return default;
+        }
+
+        //For memento
+        public IMemento Save() {
+            List<object> list = new List<object>();
+            foreach (var item in HeapList) {
+                list.Add(item);
+            }
+            return new Memento(list);
+        }
+
+        public void Restore(IMemento memento) {
+            HeapList.Clear();
+            List<object> list = memento.GetState();
+            foreach(var item in list) {
+                HeapList.Add((T)item);
+            }
         }
     }
 
