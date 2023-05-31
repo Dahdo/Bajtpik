@@ -55,7 +55,7 @@ namespace Project4_Strategy {
                             List<string> arguments = line.Split(" ").ToList();
                             ICommand command = Util.GetAddCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict, 
                                 Client.Program.typeDict, strList, arguments);
-                            Invoker.AddCommand(command);
+                            Invoker.Log(command);
                             reader.ReadLine();
                         }
                         else if (strList[0] == "edit") {
@@ -63,14 +63,14 @@ namespace Project4_Strategy {
                             List<string> arguments = line.Split(" ").ToList();
                             ICommand command = Util.GetEditCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict,
                                 Client.Program.typeDict, strList, arguments);
-                            Invoker.AddCommand(command);
+                            Invoker.Log(command);
                             reader.ReadLine();
                         }
                         else {
                             ICommand command = 
                                 Util.GetOtherCommand(Client.Program.commandsDictionary, 
                                 Client.Program.collectionsDictionary, strList);
-                            Invoker.AddCommand(command);
+                            Invoker.Log(command);
                         }
                     }
                 }

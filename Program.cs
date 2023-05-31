@@ -677,12 +677,13 @@ namespace Client {
 
 
             Dictionary<string, Action> invokerActionsDict = new Dictionary<string, Action>();
-            invokerActionsDict["print"] = () => Invoker.Print();
-            invokerActionsDict["commit"] = () => Invoker.Commit();
+            invokerActionsDict["history"] = () => Invoker.History();
+            invokerActionsDict["undo"] = () => Invoker.Undo();
+            invokerActionsDict["redo"] = () => Invoker.Redo();
             invokerActionsDict["export"] = () => Invoker.Export();
-            invokerActionsDict["dismiss"] = () => Invoker.Dismiss();
             invokerActionsDict["load"] = () => Invoker.Load();
 
+            int addCount = 0, delCount = 0, edCount = 0; // for initial state backup
             string? userInput = Console.ReadLine();
             while (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase)) {
                 List<String> inputList = ParseInput(userInput!);
@@ -699,19 +700,25 @@ namespace Client {
                         else if (inputList[0] == "add") {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
+                            if (++addCount == 1)
+                                Invoker.InitialBackup(command);
                             command.Execute();
-                            //Invoker.AddCommand(command);
+                            Invoker.Log(command);
                         }
                         else if (inputList[0] == "edit") {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetEditCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
+                            if (++edCount == 1)
+                                Invoker.InitialBackup(command);
                             command.Execute();
-                            //Invoker.AddCommand(command);
+                            Invoker.Log(command);
                         }
                         else {
                             ICommand command = Util.GetOtherCommand(commandsDictionary, collectionsDictionary, inputList);
+                            if (++delCount == 1 && inputList[0].ToLower() == "delete")
+                                Invoker.InitialBackup(command);
                             command.Execute();
-                            //Invoker.AddCommand(command);
+                            Invoker.Log(command);
                         }
                     }
                     catch (Exception e) {

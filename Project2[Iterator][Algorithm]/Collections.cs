@@ -99,7 +99,7 @@ namespace Project2_Collections {
             foreach (var item in Items) {
                 list.Add(item);
             }
-
+            Console.WriteLine($"Saved! length: {Count}");
             return new Memento(list);
 
         }
@@ -108,6 +108,7 @@ namespace Project2_Collections {
             var state = memento.GetState();
             Items = state.Cast<T>().ToArray();
             Count = Items.Length;
+            Console.WriteLine($"Restored! length: {Count}");
         }
     }
 

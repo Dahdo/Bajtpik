@@ -1,6 +1,7 @@
 ﻿using Project3_Builder;
 using Project3_CollectionWrapper;
 using Project3_Visitor;
+using Project5_Memento;
 using System.Text;
 
 namespace Project4_Command {
@@ -16,6 +17,9 @@ namespace Project4_Command {
         }
         public void Execute() {
             this.CollectionWrapper.Accept(this.ListVisitor);
+        }
+        public CollectionWrapper GetOriginator() {
+            return CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
@@ -39,6 +43,10 @@ namespace Project4_Command {
             this.FindVisitor.AddRequirements(Arguments.GetRange(2, Arguments.Count - 2));
             this.CollectionWrapper.Accept(this.FindVisitor);
         }
+
+        public CollectionWrapper GetOriginator() {
+            return CollectionWrapper;
+        }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(string.Join(" ", this.Arguments))
@@ -61,6 +69,10 @@ namespace Project4_Command {
 
         public void Execute() {
             this.CollectionWrapper.Direct(this.Director, this.Builder);
+        }
+
+        public CollectionWrapper GetOriginator() {
+            return CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
@@ -87,6 +99,10 @@ namespace Project4_Command {
         public void Execute() {
             this.CollectionWrapper.Direct(this.Director, this.Builder);
         }
+
+        public CollectionWrapper GetOriginator() {
+            return CollectionWrapper;
+        }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(string.Join(" ", this.Arguments))
@@ -110,6 +126,10 @@ namespace Project4_Command {
         public void Execute() {
             this.DeleteVisitor.AddRequirements(Arguments.GetRange(2, Arguments.Count - 2));
             this.CollectionWrapper.Accept(this.DeleteVisitor);
+        }
+
+        public CollectionWrapper GetOriginator() {
+            return CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
