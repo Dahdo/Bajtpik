@@ -2,6 +2,7 @@
 using Project3_CollectionWrapper;
 using Project3_Visitor;
 using Project5_Memento;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Project4_Command {
@@ -19,13 +20,13 @@ namespace Project4_Command {
             this.CollectionWrapper.Accept(this.ListVisitor);
         }
         public CollectionWrapper GetOriginator() {
-            return CollectionWrapper;
+            return this.CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(string.Join(" ", this.Arguments))
                 .Append('\n');
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().Trim();
         }
     }
 
@@ -45,13 +46,13 @@ namespace Project4_Command {
         }
 
         public CollectionWrapper GetOriginator() {
-            return CollectionWrapper;
+            return this.CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(string.Join(" ", this.Arguments))
                 .Append('\n');
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().Trim();
         }
     }
 
@@ -72,7 +73,7 @@ namespace Project4_Command {
         }
 
         public CollectionWrapper GetOriginator() {
-            return CollectionWrapper;
+            return this.CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
@@ -80,7 +81,7 @@ namespace Project4_Command {
                 .Append('\n').Append(string.Join(" ", this.Director.Arguments))
                 .Append('\n').Append("done");
 
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().Trim();
         }
     }
 
@@ -101,7 +102,7 @@ namespace Project4_Command {
         }
 
         public CollectionWrapper GetOriginator() {
-            return CollectionWrapper;
+            return this.CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
@@ -109,7 +110,7 @@ namespace Project4_Command {
                 .Append('\n').Append(string.Join(" ", this.Director.Arguments))
                 .Append('\n').Append("done");
 
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().Trim();
         }
     }
 
@@ -129,13 +130,13 @@ namespace Project4_Command {
         }
 
         public CollectionWrapper GetOriginator() {
-            return CollectionWrapper;
+            return this.CollectionWrapper;
         }
         public override string ToString() {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(string.Join(" ", this.Arguments))
                 .Append('\n');
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().Trim();
         }
     }
 }

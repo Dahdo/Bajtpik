@@ -53,7 +53,7 @@ namespace Project4_Command {
                 Console.WriteLine($"Error: [{e.Message}]");
             }
             Invoker.context.DoStrategy();
-        }    
+        }
 
         public static void Load() {
             try {
@@ -63,7 +63,7 @@ namespace Project4_Command {
                     Invoker.context.SetStrategy(new XMLExporter(Invoker.Arguments[0]));
             }
             catch (Exception e) {
-                Console.WriteLine($"Error: [{e.Message}]");
+                Console.WriteLine($"Error(Load): [{e.Message}]");
             }
             Invoker.context.DoStrategy();
         }
@@ -74,7 +74,7 @@ namespace Project4_Command {
                 Invoker.UndoMementoStack.Push(CurrentState);
                 UndoCommandStack.Push(CurrentCommand);
             }
-            initCurrent(command, command.GetOriginator().Save());
+            initCurrent(command);
         }
 
         public static void Undo() {
@@ -89,7 +89,7 @@ namespace Project4_Command {
             IMemento memento = Invoker.UndoMementoStack.Pop();
             ICommand command = Invoker.UndoCommandStack.Pop();
             command.GetOriginator().Restore(memento);
-            initCurrent(command, memento);
+            initCurrent(command);
             
         }
         public static void Redo() {
@@ -103,19 +103,21 @@ namespace Project4_Command {
             IMemento memento = Invoker.RedoMementoStack.Pop();
             ICommand command = Invoker.RedoCommandStack.Pop();
             command.GetOriginator().Restore(memento);
-            initCurrent(command, memento);
+            initCurrent(command);
         }
 
         public static void InitialStateBackup(ICommand command) {
             if (command.GetType() == typeof(EditCommand) || command.GetType() == typeof(DeleteCommand)
                 || command.GetType() == typeof(AddCommand)) {
-                initCurrent(command, command.GetOriginator().Save());
+                initCurrent(command);
             }
         }
 
-        private static void initCurrent(ICommand command, IMemento state) {
+        private static void initCurrent(ICommand command) {
+            CurrentCommand = null;
+            CurrentState = null;
             CurrentCommand = command;
-            CurrentState = state;
+            CurrentState = CurrentCommand.GetOriginator().Save();
         }
 
 
@@ -129,6 +131,12 @@ namespace Project4_Command {
         }
         public static void Dismiss() {
             Invoker.CommandQueue?.Clear();
+        }
+        public static void AddCommand(ICommand command) {
+            if (CommandQueue == null) {
+                Invoker.CommandQueue = new Queue<ICommand>();
+            }
+            CommandQueue.Enqueue(command);
         }
     }
 }
