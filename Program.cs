@@ -701,7 +701,7 @@ namespace Client {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
                             if (++addCount == 1)
-                                Invoker.InitialBackup(command);
+                                Invoker.InitialStateBackup(command);
                             command.Execute();
                             Invoker.Log(command);
                         }
@@ -709,14 +709,14 @@ namespace Client {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetEditCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
                             if (++edCount == 1)
-                                Invoker.InitialBackup(command);
+                                Invoker.InitialStateBackup(command);
                             command.Execute();
                             Invoker.Log(command);
                         }
                         else {
                             ICommand command = Util.GetOtherCommand(commandsDictionary, collectionsDictionary, inputList);
                             if (++delCount == 1 && inputList[0].ToLower() == "delete")
-                                Invoker.InitialBackup(command);
+                                Invoker.InitialStateBackup(command);
                             command.Execute();
                             Invoker.Log(command);
                         }

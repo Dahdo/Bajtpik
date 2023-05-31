@@ -1,6 +1,6 @@
-﻿using Project3_CollectionWrapper;
-using Project4_Strategy;
+﻿using Project4_Strategy;
 using Project5_Memento;
+using System.Transactions;
 
 namespace Project4_Command {
     //Singleton class
@@ -30,7 +30,6 @@ namespace Project4_Command {
             if(command.GetType() == typeof(EditCommand) || command.GetType() == typeof(DeleteCommand)
                 || command.GetType() == typeof(AddCommand)) {
                 Invoker.Backup(CurrentCommand);
-                initCurrent(command);
             }
         }
 
@@ -69,9 +68,13 @@ namespace Project4_Command {
             Invoker.context.DoStrategy();
         }
 
-        public static void Backup(ICommand command) {
-            Invoker.UndoMementoStack.Push(command.GetOriginator().Save());
-            UndoCommandStack.Push(command);
+        private static void Backup(ICommand command) {
+            //We first initialize the current state and command. The new state replaces them
+            if(CurrentState != null && CurrentCommand != null) {
+                Invoker.UndoMementoStack.Push(CurrentState);
+                UndoCommandStack.Push(CurrentCommand);
+            }
+            initCurrent(command, command.GetOriginator().Save());
         }
 
         public static void Undo() {
@@ -86,7 +89,7 @@ namespace Project4_Command {
             IMemento memento = Invoker.UndoMementoStack.Pop();
             ICommand command = Invoker.UndoCommandStack.Pop();
             command.GetOriginator().Restore(memento);
-            initCurrent(command);
+            initCurrent(command, memento);
             
         }
         public static void Redo() {
@@ -100,19 +103,19 @@ namespace Project4_Command {
             IMemento memento = Invoker.RedoMementoStack.Pop();
             ICommand command = Invoker.RedoCommandStack.Pop();
             command.GetOriginator().Restore(memento);
-            initCurrent(command);
+            initCurrent(command, memento);
         }
 
-        public static void InitialBackup(ICommand command) {
+        public static void InitialStateBackup(ICommand command) {
             if (command.GetType() == typeof(EditCommand) || command.GetType() == typeof(DeleteCommand)
                 || command.GetType() == typeof(AddCommand)) {
-                initCurrent(command);
+                initCurrent(command, command.GetOriginator().Save());
             }
         }
 
-        private static void initCurrent(ICommand command) {
+        private static void initCurrent(ICommand command, IMemento state) {
             CurrentCommand = command;
-            CurrentState = command.GetOriginator().Save();
+            CurrentState = state;
         }
 
 
