@@ -686,29 +686,32 @@ namespace Client {
             string? userInput = Console.ReadLine();
             while (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase)) {
                 List<String> inputList = ParseInput(userInput!);
-                if (inputList.Count == 1)
-                    if (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase))
-                        Console.WriteLine("Command not supported!");
-                if (inputList.Count >= 2)
+                //if (inputList.Count == 1)
+                //    if (inputList[0].ToLower() != "exit")
+                //        Console.WriteLine("Command not supported!");
+                if (inputList.Count >= 1)
                     try {
-                        if (inputList[0] == "queue") {
-                            if (inputList.Count > 2)
-                                Invoker.AddArguments(inputList.GetRange(2, inputList.Count - 2));
-                            invokerActionsDict[inputList[1].ToLower()]();
+                        if (invokerActionsDict.ContainsKey(inputList[0])) {
+                            if (inputList.Count > 1)
+                                Invoker.AddArguments(inputList.GetRange(1, inputList.Count - 1));
+                            invokerActionsDict[inputList[0].ToLower()]();
                         }
                         else if (inputList[0] == "add") {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
-                            Invoker.AddCommand(command);
+                            command.Execute();
+                            //Invoker.AddCommand(command);
                         }
                         else if (inputList[0] == "edit") {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetEditCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
-                            Invoker.AddCommand(command);
+                            command.Execute();
+                            //Invoker.AddCommand(command);
                         }
                         else {
-                            ICommand command = Util.GetCommand(commandsDictionary, collectionsDictionary, inputList);
-                            Invoker.AddCommand(command);
+                            ICommand command = Util.GetOtherCommand(commandsDictionary, collectionsDictionary, inputList);
+                            command.Execute();
+                            //Invoker.AddCommand(command);
                         }
                     }
                     catch (Exception e) {

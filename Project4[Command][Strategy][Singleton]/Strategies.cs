@@ -68,7 +68,7 @@ namespace Project4_Strategy {
                         }
                         else {
                             ICommand command = 
-                                Util.GetCommand(Client.Program.commandsDictionary, 
+                                Util.GetOtherCommand(Client.Program.commandsDictionary, 
                                 Client.Program.collectionsDictionary, strList);
                             Invoker.AddCommand(command);
                         }

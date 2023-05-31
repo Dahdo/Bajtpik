@@ -80,7 +80,7 @@ namespace BajtpikOOD {
         }
              
         //Methods used in main also
-        public static ICommand GetCommand(Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary,
+        public static ICommand GetOtherCommand(Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary,
              Dictionary<String, CollectionWrapper> collectionsDictionary, List<String> inputList) {
             ICommand command = commandsDictionary[inputList[0].ToLower()](collectionsDictionary[inputList[1].ToLower()], inputList);
             return command;
