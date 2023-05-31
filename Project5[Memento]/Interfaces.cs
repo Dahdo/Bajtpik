@@ -1,6 +1,6 @@
 ﻿namespace Project5_Memento {
     public interface IMemento {
-        public IMemento GetState();
+        public List<object> GetState();
         public DateTime GetDate();
     }
 }
