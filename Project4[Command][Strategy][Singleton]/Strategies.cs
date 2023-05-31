@@ -16,7 +16,7 @@ namespace Project4_Strategy {
         public void Execute() {
             try {
                 using (StreamWriter writer = new StreamWriter(this.Path)) {
-                    foreach(var command in this.CommandsQueue) {
+                    foreach (var command in this.CommandsQueue) {
                         writer.WriteLine(command.ToString());
                     }
                 }
@@ -46,16 +46,16 @@ namespace Project4_Strategy {
             try {
                 using (StreamReader reader = new StreamReader(this.Path)) {
                     string line;
-                    while ((line = reader.ReadLine()) != null){
+                    while ((line = reader.ReadLine()) != null) {
                         List<string> strList = line.Split(" ").ToList();
                         if (strList.Count == 0)
                             continue;
                         if (strList[0] == "add") {
                             line = reader.ReadLine();
                             List<string> arguments = line.Split(" ").ToList();
-                            ICommand command = Util.GetAddCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict, 
+                            ICommand command = Util.GetAddCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict,
                                 Client.Program.typeDict, strList, arguments);
-                            Invoker.Log(command);
+                            Invoker.AddCommand(command);
                             reader.ReadLine();
                         }
                         else if (strList[0] == "edit") {
@@ -63,20 +63,20 @@ namespace Project4_Strategy {
                             List<string> arguments = line.Split(" ").ToList();
                             ICommand command = Util.GetEditCommand(Client.Program.collectionsDictionary, Client.Program.buildersDict,
                                 Client.Program.typeDict, strList, arguments);
-                            Invoker.Log(command);
+                            Invoker.AddCommand(command);
                             reader.ReadLine();
                         }
                         else {
-                            ICommand command = 
-                                Util.GetOtherCommand(Client.Program.commandsDictionary, 
+                            ICommand command =
+                                Util.GetOtherCommand(Client.Program.commandsDictionary,
                                 Client.Program.collectionsDictionary, strList);
-                            Invoker.Log(command);
+                            Invoker.AddCommand(command);
                         }
                     }
                 }
             }
             catch (Exception ex) {
-                Console.WriteLine($"error: [{ex.Message}]");
+                Console.WriteLine($"error(Load Strategy): [{ex.Message}]");
             }
 
 
