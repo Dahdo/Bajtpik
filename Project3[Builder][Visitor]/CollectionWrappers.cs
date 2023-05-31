@@ -2,6 +2,8 @@
 using Project3_Visitor;
 using Project1_Adapter;
 using Project3_Builder;
+using Project5_Memento;
+using System.Runtime.InteropServices.ObjectiveC;
 
 namespace Project3_CollectionWrapper {
     public class BookCollection : CollectionWrapper {
@@ -14,6 +16,14 @@ namespace Project3_CollectionWrapper {
         }
         public void Direct(Director director, ResourceBuilder builder) {
             director.MakeResource(builder, collection);
+        }
+
+        public void Restore(IMemento memento) {
+            this.collection.Restore(memento);
+        }
+
+        public IMemento Save() {
+            return this.collection.Save();
         }
     }
 
@@ -29,6 +39,14 @@ namespace Project3_CollectionWrapper {
         public void Direct(Director director, ResourceBuilder builder) {
             director.MakeResource(builder, collection);
         }
+
+        public void Restore(IMemento memento) {
+            this.collection.Restore(memento);
+        }
+
+        public IMemento Save() {
+            return this.collection.Save();
+        }
     }
 
     public class BoardGameCollection : CollectionWrapper {
@@ -42,6 +60,14 @@ namespace Project3_CollectionWrapper {
         public void Direct(Director director, ResourceBuilder builder) {
             director.MakeResource(builder, collection);
         }
+
+        public void Restore(IMemento memento) {
+            this.collection.Restore(memento);
+        }
+
+        public IMemento Save() {
+            return this.collection.Save();
+        }
     }
 
     public class AuthorCollection : CollectionWrapper {
@@ -54,6 +80,14 @@ namespace Project3_CollectionWrapper {
         }
         public void Direct(Director director, ResourceBuilder builder) {
             director.MakeResource(builder, collection);
+        }
+
+        public void Restore(IMemento memento) {
+            this.collection.Restore(memento);
+        }
+
+        public IMemento Save() {
+            return this.collection.Save();
         }
     }
 }

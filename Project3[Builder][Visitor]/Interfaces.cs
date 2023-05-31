@@ -2,6 +2,7 @@
 using Project1_Adapter;
 using Project3_Visitor;
 using Project3_Builder;
+using Project5_Memento;
 
 namespace Project3_Visitor {
     public interface Visitor {
@@ -18,6 +19,8 @@ namespace Project3_CollectionWrapper {
     public interface CollectionWrapper {
         public void Accept(Visitor visitor);
         public void Direct(Director director, ResourceBuilder builder);
+        public IMemento Save();
+        public void Restore(IMemento memento);
     }
 }
 
