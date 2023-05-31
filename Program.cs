@@ -666,7 +666,7 @@ namespace Client {
             }
 #endif
             #endregion
-#region Project_4
+#region Project_4&Project_5
                             
 
             commandsDictionary =
@@ -722,7 +722,7 @@ namespace Client {
                         }
                     }
                     catch (Exception e) {
-                        Console.WriteLine($"Error: [{e.Message}]");
+                        Console.WriteLine($"Error(main): [{e.Message}]");
                     }
                 userInput = Console.ReadLine();
             }
