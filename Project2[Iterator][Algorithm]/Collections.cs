@@ -14,6 +14,10 @@ namespace Project2_Collections {
             Count = 0;
         }
 
+        public List<T> GetItems() {
+            return Items.ToList();
+        }
+
         public void Add(T item) {
             Array.Resize(ref Items, ++Count);
             Items[Count - 1] = item;
