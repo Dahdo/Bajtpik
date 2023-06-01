@@ -87,17 +87,17 @@ namespace BajtpikOOD {
         }
 
         public static ICommand GetAddCommand(Dictionary<String, CollectionWrapper> collectionsDictionary,
-            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList,
+            Dictionary<Tuple<string, string>, Func<ResourceBuilder>> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList,
             List<string> arguments) {
             Director dirctr = new Director();
             Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), inputList[2].ToLower());
-            AddCommand command = new AddCommand(buildersDict[search], dirctr.AddArguments(arguments),
+            AddCommand command = new AddCommand(buildersDict[search](), dirctr.AddArguments(arguments),
                 collectionsDictionary[inputList[1].ToLower()], inputList);
 
             return command;
         }
         public static ICommand GetEditCommand(Dictionary<String, CollectionWrapper> collectionsDictionary,
-            Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList,
+            Dictionary<Tuple<string, string>, Func<ResourceBuilder>> buildersDict, Dictionary<string, Type> typeDict, List<String> inputList,
             List<string> arguments) {
             FindResource findRc = new FindResource();
             collectionsDictionary[inputList[1].ToLower()].Accept(findRc.
@@ -105,7 +105,7 @@ namespace BajtpikOOD {
 
             Director dirctr = new Director();
             Tuple<string, string> search = Tuple.Create(inputList[1].ToLower(), "base");
-            EditCommand command = new EditCommand(buildersDict[search].SetResource(findRc.Resource), dirctr.AddArguments(arguments),
+            EditCommand command = new EditCommand(buildersDict[search]().SetResource(findRc.Resource), dirctr.AddArguments(arguments),
                     collectionsDictionary[inputList[1].ToLower()], inputList);
             return command;
         }
