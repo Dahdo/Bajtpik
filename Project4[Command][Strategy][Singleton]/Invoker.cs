@@ -90,6 +90,17 @@ namespace Project4_Command {
             ICommand command = Invoker.UndoCommandStack.Pop();
             command.GetOriginator().Restore(memento);
             initCurrent(command);
+
+            //to handle the copy of the same object
+            if(RedoMementoStack.Count > 0 && UndoMementoStack.Count != 0) {
+                RedoCommandStack.Push(CurrentCommand);
+                RedoMementoStack.Push(CurrentState);
+
+                memento = Invoker.UndoMementoStack.Pop();
+                command = Invoker.UndoCommandStack.Pop();
+                command.GetOriginator().Restore(memento);
+                initCurrent(command);
+            }
             
         }
         public static void Redo() {
@@ -104,12 +115,23 @@ namespace Project4_Command {
             ICommand command = Invoker.RedoCommandStack.Pop();
             command.GetOriginator().Restore(memento);
             initCurrent(command);
+
+            //to handle the copy of the same object
+            if (UndoMementoStack.Count > 0 && RedoMementoStack.Count != 0) {
+                UndoCommandStack.Push(CurrentCommand);
+                UndoMementoStack.Push(CurrentState);
+
+                memento = Invoker.RedoMementoStack.Pop();
+                command = Invoker.RedoCommandStack.Pop();
+                command.GetOriginator().Restore(memento);
+                initCurrent(command);
+            }
         }
 
         public static void InitialStateBackup(ICommand command) {
             if (command.GetType() == typeof(EditCommand) || command.GetType() == typeof(DeleteCommand)
                 || command.GetType() == typeof(AddCommand)) {
-                initCurrent(command);
+                Invoker.Backup(command);
             }
         }
 
