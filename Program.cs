@@ -35,7 +35,7 @@ namespace Client {
         //projects 3, ...
         public static Dictionary<String, CollectionWrapper> collectionsDictionary;
         public static Dictionary<string, Func<CollectionWrapper, List<string>, ICommand>> commandsDictionary;
-        public static Dictionary<Tuple<string, string>, ResourceBuilder> buildersDict;
+        public static Dictionary<Tuple<string, string>, Func<ResourceBuilder>> buildersDict;
         public static Dictionary<string, Type> typeDict;
 
         public static void Main(string[] args) {
@@ -603,14 +603,14 @@ namespace Client {
                  bGameVector_proj2.Add(twilightImperium);
 
 
-            Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper> nwpLinkedList_proj2 = 
-                new Project2_Collections.DoublelyLinkedList<Project1_Adapter.NewsPaper>();
+            Project2_Collections.Vector<Project1_Adapter.NewsPaper> nwpVector_proj2 = 
+                new Project2_Collections.Vector<Project1_Adapter.NewsPaper>();
                     //secondary representation(adapted)
-                nwpLinkedList_proj2.Add(nwp1_1a);
-                nwpLinkedList_proj2.Add(nwp2_1a);
+                nwpVector_proj2.Add(nwp1_1a);
+                nwpVector_proj2.Add(nwp2_1a);
                     //base representation
-                nwpLinkedList_proj2.Add(nwp3);
-            nwpLinkedList_proj2.Add(nwp4);
+                nwpVector_proj2.Add(nwp3);
+            nwpVector_proj2.Add(nwp4);
 
             typeDict = new Dictionary<string, Type>();
             typeDict["book"] = typeof(MainFormat.Book);
@@ -620,7 +620,7 @@ namespace Client {
 
             collectionsDictionary = new Dictionary<string, CollectionWrapper>();
             collectionsDictionary.Add("book", new BookCollection(bookVector_proj2));
-            collectionsDictionary.Add("newspaper", new NewsPaperCollection(nwpLinkedList_proj2));
+            collectionsDictionary.Add("newspaper", new NewsPaperCollection(nwpVector_proj2));
             collectionsDictionary.Add("boardgame", new BoardGameCollection(bGameVector_proj2));
             collectionsDictionary.Add("author", new AuthorCollection(authorVector_proj2));
 
@@ -630,15 +630,15 @@ namespace Client {
             visitorsDictionary.Add("find", new FindVisitor());
             visitorsDictionary.Add("delete", new DeleteVisitor());
 
-            buildersDict = new Dictionary<Tuple<string, string>, ResourceBuilder>();
-            buildersDict[Tuple.Create("book", "base")] = new BookBuilderBase();
-            buildersDict[Tuple.Create("book", "secondary")] = new BookBuilderSecondary();
-            buildersDict[Tuple.Create("newspaper", "base")] = new NewsPaperBuilderBase();
-            buildersDict[Tuple.Create("newspaper", "secondary")] = new NewsPaperBuilderSecondary();
-            buildersDict[Tuple.Create("boardgame", "base")] = new BoardGameBuilderBase();
-            buildersDict[Tuple.Create("boardgame", "secondary")] = new BoardGameBuilderSecondary();
-            buildersDict[Tuple.Create("author", "base")] = new AuthorBuilderBase();
-            buildersDict[Tuple.Create("author", "secondary")] = new AuthorBuilderSecondary();
+            buildersDict = new Dictionary<Tuple<string, string>, Func<ResourceBuilder>>();
+            buildersDict[Tuple.Create("book", "base")] = () => new BookBuilderBase();
+            buildersDict[Tuple.Create("book", "secondary")] = () => new BookBuilderSecondary();
+            buildersDict[Tuple.Create("newspaper", "base")] = () => new NewsPaperBuilderBase();
+            buildersDict[Tuple.Create("newspaper", "secondary")] = () => new NewsPaperBuilderSecondary();
+            buildersDict[Tuple.Create("boardgame", "base")] = () => new BoardGameBuilderBase();
+            buildersDict[Tuple.Create("boardgame", "secondary")] = () => new BoardGameBuilderSecondary();
+            buildersDict[Tuple.Create("author", "base")] = () => new AuthorBuilderBase();
+            buildersDict[Tuple.Create("author", "secondary")] = () => new AuthorBuilderSecondary();
             #endregion
 #if PRINTPROJ3
             Director director = new Director();
@@ -683,7 +683,7 @@ namespace Client {
             invokerActionsDict["export"] = () => Invoker.Export();
             invokerActionsDict["load"] = () => Invoker.Load();
 
-            int addCount = 0, delCount = 0, edCount = 0; // for initial state backup
+            //int addCount = 0, delCount = 0, edCount = 0; // for initial state backup
             string? userInput = Console.ReadLine();
             while (!String.Equals(userInput, "exit", StringComparison.OrdinalIgnoreCase)) {
                 List<String> inputList = ParseInput(userInput!);
@@ -700,22 +700,20 @@ namespace Client {
                         else if (inputList[0] == "add") {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetAddCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
-                            if (++addCount == 1)
-                                Invoker.InitialStateBackup(command);
+                            Invoker.InitialStateBackup(command);
                             command.Execute();
                             Invoker.Log(command);
                         }
                         else if (inputList[0] == "edit") {
                             List<string> arguments = Util.SecondaryLoop(typeDict[inputList[1].ToLower()]);
                             ICommand command = Util.GetEditCommand(collectionsDictionary, buildersDict, typeDict, inputList, arguments);
-                            if (++edCount == 1)
-                                Invoker.InitialStateBackup(command);
+                            Invoker.InitialStateBackup(command);
                             command.Execute();
                             Invoker.Log(command);
                         }
                         else {
                             ICommand command = Util.GetOtherCommand(commandsDictionary, collectionsDictionary, inputList);
-                            if (++delCount == 1 && inputList[0].ToLower() == "delete")
+                            if (inputList[0].ToLower() == "delete")
                                 Invoker.InitialStateBackup(command);
                             command.Execute();
                             Invoker.Log(command);
