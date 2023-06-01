@@ -2,6 +2,7 @@
 using Project2_Algorithms;
 using Project2_Collections;
 using Project2_Iterators;
+using System.Numerics;
 using System.Reflection;
 using System.Security.Authentication.ExtendedProtection;
 using System.Security.Cryptography;
@@ -11,27 +12,49 @@ namespace Project3_Visitor {
         public ListVisitor() { }
         public void Visit(BajtpikCollection<Book> book) {
             ForwardIterator<Book > fid = book.GetForwardIterator();
-            Algorithms<Book>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+            bool isDone = false;
+            while (!isDone) {
+                Console.WriteLine(fid.Current().ToString());
+                isDone = fid.IsDone();
+                fid.Move();
+            }
+            //Algorithms<Book>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
         }
 
         public void Visit(BajtpikCollection<BoardGame> boardGame) {
             ForwardIterator<BoardGame> fid = boardGame.GetForwardIterator();
-            Algorithms<BoardGame>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+            bool isDone = false;
+            while (!isDone) {
+                Console.WriteLine(fid.Current().ToString());
+                isDone = fid.IsDone();
+                fid.Move();
+            }
+            //Algorithms<BoardGame>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
         }
 
         public void Visit(BajtpikCollection<NewsPaper> newsPaper) {
             ForwardIterator<NewsPaper> fid = newsPaper.GetForwardIterator();
-            Algorithms<NewsPaper>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
+            bool isDone = false;
+            while (!isDone) {
+                Console.WriteLine(fid.Current().ToString());
+                isDone = fid.IsDone();
+                fid.Move();
+            }
+            //Algorithms<NewsPaper>.ForEach(fid, a => { Console.WriteLine(a.ToString()); });
         }
 
         public void Visit(BajtpikCollection<Author> author) {
-            ForwardIterator<Author> fid = author.GetForwardIterator();
-            List<Author> authList = new List<Author>();
-            while (!authList.Contains(fid.Current())) {
-                Console.WriteLine(fid.Current()?.ToString());
-                authList.Add(fid.Current());
-                fid.Move();
-            }
+            //ForwardIterator<Author> fid = author.GetForwardIterator();
+            //bool isDone = false;
+            //while (!isDone) {
+            //    Console.WriteLine(fid.Current().ToString());
+            //    isDone = fid.IsDone();
+            //    fid.Move();
+            //}
+            List<Author> authList = ((Project2_Collections.Vector<Author>)author).GetItems();
+            foreach (var auth in authList)
+                Console.WriteLine(auth.ToString());
+            
         }
 
         public Visitor AddRequirements(List<String> requirements) {
@@ -92,22 +115,36 @@ namespace Project3_Visitor {
             if (ParseRequirements());
             else return;
             InitCompOps();
-            ForwardIterator<Author> fid = author.GetForwardIterator();
+            //ForwardIterator<Author> fid = author.GetForwardIterator();
             //author iterators have their own issue. custom DoFind here
-            List<Author> authList = new List<Author>();
-            while (!authList.Contains(fid.Current())) {
+            //List<Author> authList = new List<Author>();
+
+            //while (!authList.Contains(fid.Current())) {
+            //    this.classTuple.Clear();
+            //    InitClassTuple(fid.Current());
+            //    for (int i = 0; i < fields.Count; i++) {
+            //        object obj = classTuple[fields[i].ToLower()].Item1;
+            //        Type type = classTuple[fields[i].ToLower()].Item2;
+            //        Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
+            //        if (fun != null && fun(obj, values[i], type)) {
+            //            Console.WriteLine(fid.Current().ToString());
+            //        }
+            //    }
+            //    authList.Add(fid.Current());
+            //    fid.Move();
+            //}
+            List<Author> authList = ((Project2_Collections.Vector<Author>)author).GetItems();
+            foreach (var auth in authList) {
                 this.classTuple.Clear();
-                InitClassTuple(fid.Current());
+                InitClassTuple(auth);
                 for (int i = 0; i < fields.Count; i++) {
                     object obj = classTuple[fields[i].ToLower()].Item1;
                     Type type = classTuple[fields[i].ToLower()].Item2;
                     Func<object, object, Type, bool> fun = compOpsFun[compOp[i]];
                     if (fun != null && fun(obj, values[i], type)) {
-                        Console.WriteLine(fid.Current().ToString());
+                        Console.WriteLine(auth.ToString());
                     }
                 }
-                authList.Add(fid.Current());
-                fid.Move();
             }
             authList.Clear();
             ClearData();
